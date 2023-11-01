@@ -9,3 +9,4 @@ It will be updated every day, make sure you have MySQL installed.
     pip install -r requirements.txt
     python manage.py migrate
     python manage.py createsuperuser
+    python manage.py runserver
