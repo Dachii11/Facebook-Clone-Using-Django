@@ -27,7 +27,7 @@ It will be updated every day, make sure you have **MySQL** installed.
               }
      }
      ```
-## commands for Create superuser
+## command for Create superuser
      python manage.py createsuperuser
 
 ## Make sure you have created profile for superuser
