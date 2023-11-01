@@ -35,3 +35,5 @@ It will be updated every day, make sure you have **MySQL** installed.
 ## commands for Create superuser and run server
      python manage.py createsuperuser
      python manage.py runserver
+
+**admin** page link: **loa1KDl0KL_03kffj_jKA_SF0k_l1K03_31KL_KDA/**
