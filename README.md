@@ -1,4 +1,4 @@
-## Facebook Clonse build in Python and MySQL database
+## Facebook Clonse build in Python with MySQL database
 MAKE SURE TO INSTALL IT IN VIRTUAL ENVIRONMENT
 The project is not complete and there will be bugs and unfinished pages.
 It will be updated every day, make sure you have **MySQL** installed.
