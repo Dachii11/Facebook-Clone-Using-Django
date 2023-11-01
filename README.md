@@ -27,11 +27,6 @@ It will be updated every day, make sure you have **MySQL** installed.
               }
      }
      ```
-
-## Run commands to migrate Database
-     python manage.py makemigrations
-     python manage.py migrate
-
 ## commands for Create superuser
      python manage.py createsuperuser
 
@@ -43,4 +38,7 @@ It will be updated every day, make sure you have **MySQL** installed.
      >>> admin = User.objects.get(username='YOUR_SUPERUSER_USERNAME')
      >>> Account.objects.create(user=admin,id_user=admin.id)
 
+## Run commands to migrate Database
+     python manage.py makemigrations
+     python manage.py migrate
 **admin** page link: **loa1KDl0KL_03kffj_jKA_SF0k_l1K03_31KL_KDA/**
