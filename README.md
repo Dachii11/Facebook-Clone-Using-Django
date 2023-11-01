@@ -42,3 +42,5 @@ It will be updated every day, make sure you have **MySQL** installed.
      python manage.py makemigrations
      python manage.py migrate
 **admin** page link: **loa1KDl0KL_03kffj_jKA_SF0k_l1K03_31KL_KDA/**
+
+![My Image](fb.png)
