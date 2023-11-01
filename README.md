@@ -32,8 +32,15 @@ It will be updated every day, make sure you have **MySQL** installed.
      python manage.py makemigrations
      python manage.py migrate
 
-## commands for Create superuser and run server
+## commands for Create superuser
      python manage.py createsuperuser
-     python manage.py runserver
+
+## Make sure you have created profile for superuser
+     ```
+     python manage.py shell
+     >>> from django.contrib.auth.models import User
+     >>> from accounts.models import Account
+     >>> admin = User.objects.get(username='YOUR_SUPERUSER_USERNAME')
+     >>> Account.objects.create(user=admin,id_user=admin.id)
 
 **admin** page link: **loa1KDl0KL_03kffj_jKA_SF0k_l1K03_31KL_KDA/**
