@@ -20,7 +20,7 @@ It will be updated every day, make sure you have **MySQL** installed.
          'default': {
              'ENGINE': 'django.db.backends.mysql',
              'NAME': 'YOUR_DATABASE_NAME',
-             'USER': 'DATABASE_USER',
+             'USER': 'MYSQL_USER',
              'PASSWORD': 'MySQL password',     // if password is not required remove this line of code.
              'HOST': 'localhost',
              'PORT': '3306',
