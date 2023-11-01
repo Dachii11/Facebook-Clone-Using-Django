@@ -133,9 +133,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'instagramcopyrightcomm0@gmail.com'
-EMAIL_HOST_PASSWORD = 'hdbavztogozirorq'
+EMAIL_HOST_USER = 'your_email_address'
+EMAIL_HOST_PASSWORD = 'your_password'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-DEFAULT_FROM_EMAIL = "Facebook <facebook.ge>"
+DEFAULT_FROM_EMAIL = "Facebook"
