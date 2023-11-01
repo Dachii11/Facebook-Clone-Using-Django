@@ -1,5 +1,4 @@
 # Facebook Clonse build in Python and MySQL database
-
+MAKE SURE TO INSTALL IT IN VIRTUAL ENVIRONMENT
 # SETUP GUIDE
-    Install requirements in your VIRTUAL ENVIRONMENT
-    git clone 
+    git clone https://github.com/Dachii11/Facebook-Clone-Using-Django.git
