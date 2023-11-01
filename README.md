@@ -12,3 +12,9 @@ It will be updated every day, make sure you have **MySQL** installed.
      python manage.py migrate
      python manage.py createsuperuser
      python manage.py runserver
+
+# In your fb/settings.py add your email.
+     ```
+     EMAIL_HOST_USER = 'your_email_address'
+     EMAIL_HOST_PASSWORD = 'your_password'
+     ```
