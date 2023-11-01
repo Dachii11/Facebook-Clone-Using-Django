@@ -1,0 +1,221 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'mainApp/home_style.css' %}">
+<link rel="stylesheet" href="{% static 'mainApp/comment_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/account_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/center.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/shared_post.css' %}">
+<style>
+  .center {
+    padding-top: 0;
+    width: 100%;
+  }
+   .friends_name .friends_name {
+        text-decoration: none;
+        color: black;
+    }
+
+  .main .center .friends_post .comment_wrapper .comment_search i {
+    padding: 5px 5px;
+  }
+  #edit-profile button{
+    background-color: #4267B2;
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 15px;
+  }
+  #edit-profile:hover {
+    opacity: 0.9;
+  }
+  .friends {
+    display: flex;
+  }
+  .acu {display: none;}
+  .friends img {
+    height: 80px;
+    width: 80px;
+    border-radius: 4px;
+    margin: 2px;
+  }
+  #profile-pic img {
+    height: 100%;
+  }
+  @media(max-width:545px){
+    .pv{display: none;}
+/*    #u-name{font-size: 17px;}*/
+    #profile-d{left: 30px;}
+
+  }
+    @media(max-width:470px){
+    .pv{display: none;}
+    #u-name{font-size: 24px;
+    }
+  }
+      @media(max-width:425px){
+        .center{
+          padding-left: 0;padding-right: 0;
+        } 
+  }
+        @media(max-width:400px){
+          #u-name{font-size: 20px;}
+          #profile-d{left: 20px;}
+  }
+          @media(max-width:360px){
+            #edit-profile button{
+              font-size: 12px;
+            }
+            #u-name{
+              font-size: 16px;
+            }
+          }
+  @media(max-width:768px){
+    .acu {
+      font-size: 18px;
+      display: flex;
+    }
+    #u-name{display: none;}
+  }
+</style>
+{% if my_profile.theme %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme.css' %}">
+{% endif %}
+
+{% include 'menu.html' %}
+ <div id="profile-upper">
+    <div id="profile-banner-image">
+      <!-- <img src="https://imagizer.imageshack.com/img921/9628/VIaL8H.jpg" alt="Banner image"> -->
+      <img src="{{account.cover_img.url}}">
+    </div>
+    <div id="profile-d">
+      <div id="profile-pic">
+        <img src="{{account.profile_img.url}}">
+      </div>
+      <div id="u-name">{{account.user}}</div>
+     
+	  <form method="POST" action="">
+		{% csrf_token %}
+		<!-- <input type='hidden' name='from_user' value="{{my_profile.user}}"> -->
+		<!-- <input type="hidden" name='to_user' value="{{account.user}}"> -->
+    <input type='hidden' name='from_user' value="{{my_profile.id}}">
+    <input type="hidden" name='to_user' value="{{account.user.id}}">
+    {% if my_profile.user == account.user %}
+      <a href="{% url 'accounts:edit_profile' %}"><div id="edit-profile">Edit</div></a>
+    {% elif my_profile.user in account.friends.all %}
+      <div id="edit-profile"><button type="submit" style="display: flex;"><i class="fa-solid fa-user-group" style="font-size:10px; padding-top: 4px;padding-right: 2px;"></i> friends</button></div>
+      <div id="edit-profile" style="right: 100px;"><button type="submit" name="rm-friend" style="display: flex;background: darkred;"><i class="fa-solid fa-user-minus" style="font-size:10px; padding-top: 4px;padding-right: 2px;"></i> Unfriend</button></div>
+    {% else %}
+  		{% if me_in_requests %}
+  			<div id="edit-profile"><button type="submit" name='rm-request'>Requested</button></div>
+  		{% else %}
+        {% if friend_request_permission %}
+  			 <div id="edit-profile"><button type="submit" name='add_friend'>Add Friend</button></div>
+        {% else %}
+          <div id="edit-profile"><a href="{% url 'chat:detail' account.id %}" style="color: #fff;padding: 5px;background-color: #4267B2;border-radius: 4px;font-size: 10px;">Message</a></div>
+        {% endif %}
+  		{% endif %}
+    {% endif %}
+	  </form>
+    </div>
+    <div id="black-grd"></div>
+  </div>
+  <p style="float: right; padding: 15px;padding-right: 25px;font-weight: bold;" class="acu">{{account.user}}</p>
+  <div id="main-content">
+    <div class="tb">
+      <div class="td" id="l-col">
+        <div class="l-cnt">
+          <div class="cnt-label">
+            <i class="l-i" id="l-i-i"></i>
+            <span>Intro</span>
+            <div class="lb-action"><i class="material-icons">edit</i></div>
+          </div>
+          <div id="i-box">
+            <!-- <div id="intro-line">Front-end Engineer</div> -->
+            <div id="u-occ"><i class="fa-solid fa-user-group"></i> {{account.friends.all.count}} <span style="font-size: 12px;opacity:0.9;">({{mfl}} Mutual Friends)</span></div>
+            <div id="u-occ"><i class="fa-solid fa-house"></i> {{account.from_country}}</div>
+            {% if email_view_permission %}
+              <div id="u-occ"><i class="fa-solid fa-envelope"></i> {{account.user.email}}</div>
+            {% endif %}
+            <div class="friends">
+            {% if friends %}
+              {% for friend in friends %}
+                <a href="{% url 'accounts:profile' friend.id %}"><img src="{{friend.profile_img.url}}"></a>
+              {% endfor %}
+            {% endif %}
+            </div>
+            <div id="u-occ">bio: {{account.bio}}</div>
+            <!-- <div id="u-loc"><i class="fa-solid fa-location-dot"></i><a href="#">Bengaluru</a>, <a href="#">India</a></div> -->
+          </div>
+        </div>
+         {% if images|length > 0 %}
+        <div class="l-cnt l-mrg">
+          <div class="cnt-label">
+            <i class="l-i" id="l-i-p"></i>
+            <span>Photos</span>
+            <!-- <div class="lb-action" id="b-i"><i class="material-icons">keyboard_arrow_down</i></div> -->
+          </div>
+            <div id="photos">
+              <div class="tb">
+                <div class="tr">
+                    {% for post in images %}
+                      <div class="td"><img src="{{post.file.url}}"></div>
+                    {% endfor %}
+                    {% if more_images_count %}
+                      <div class="td"><p style="text-align: center;font-weight: bold;margin: 0 auto;width: 100%;">{{more_images_count}} more</p></div>
+                    {% endif %}
+                </div>
+              </div>
+            </div>
+        </div>
+   {% endif %}
+      </div>
+
+    <div class="center"> 
+          {% if account.user == request.user %}
+         <div class="my_post">
+            <div class="post_top">
+                <form method="POST" action="">
+                    {% csrf_token %}
+                <img src="{{my_profile.profile_img.url}}">
+                <input type="text" name="post_text" placeholder="What's on your mind, {{my_profile.user}}?">
+                <input type="submit" class="sub-new-post">
+                </form>
+            </div>
+            <hr>
+            <div class="post_bottom">
+                <div class="post_icon">
+                    <i class="fa-solid fa-images green"></i>
+                    <p class="pv">Photo/video</p>
+                </div>
+                <div class="post_icon">
+                    <i class="fa-solid fa-user-tag" style="font-size: 20px;color: #7F00FF;"></i>
+                    <a href="{% url 'posts:add_post' %}" style="color: black;"><p class="pv">Tag Friends</p></a>
+                </div>
+                <div class="post_icon">
+                  <a href="{% url 'mainApp:feelings' %}" style="color:black;display: flex;">
+                    <i class="fa-regular fa-face-grin yellow"></i>
+                    <p class="pv" style="padding-top: 3px;">Feeling/activity</p>
+                  </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% if permission %}
+          {% include 'posts.html' %}
+        {% else %}
+          <p>Permission denied!</p>
+        {% endif %}
+    </div> 
+  
+</div>
+
+    </div> 
+
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+<script src="{% static 'js/emotion.js' %}"></script>
+<script src="{% static 'js/pageScroll.js' %}"></script>
+{% endblock %}

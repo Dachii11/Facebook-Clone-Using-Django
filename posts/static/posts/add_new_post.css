@@ -1,0 +1,125 @@
+body {
+	background: #f5f5f5;
+}
+.main {
+	width: 500px;
+	margin: 0 auto;
+	background: #fff;
+	padding: 10px;
+	border-radius: 15px;
+	box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+	margin-top: 70px;
+}
+.main form {
+	width: 100%;
+}
+.submit {
+	width: 100%;
+	border-radius: 5px;
+	height: 30px;
+	text-align: center;
+	color: #fff;
+	background: #4267B2;
+	box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+	border: none;
+}
+.main .tit {
+	display: flex;
+	justify-content: space-between;
+	padding: 5px;
+}
+.main .tit a{
+	text-decoration: none;
+	font-weight: bold;
+	color: black;
+}
+.main .tit .cr {
+	font-weight: bold;
+}
+.main .prf {
+	display: flex;
+	padding-top: 10px;
+}
+.main .prf .inf {
+	padding-left: 5px;
+	font-size: 14px;
+}
+.main .prf .inf select {
+	outline: none;
+}
+.main .prf .inf .usr {
+	font-weight: bold;
+}
+.main .prf img {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+}
+.main .inp {
+	padding-top: 10px;
+}
+.main #id_caption {
+	width: 100%;
+	resize: none;
+	border: none;
+	outline: none;
+	font-size: 16px;
+}
+.main .add-to-post {
+	display: flex;
+	justify-content: space-between;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: 10px;
+	padding: 10px;
+	margin-bottom: 7px;
+}
+.main .add-to-post p {
+	font-weight: bold;
+	font-size: 15px;
+}
+.main .add-to-post i {
+	font-size: 18px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.main .add-to-post .green {
+	color: #27cc37;
+}
+.main .add-to-post .yellow {
+	color: #f7b928;
+}
+.main .add-to-post .friend {
+	color: #4267B2;
+}
+.main .add-to-post .location {
+	color: red;
+}
+.main .add-to-post .video {
+	color: purple;
+}
+.main #id_file {
+	display: none;
+}
+#id_location {
+	width: 100%;
+	padding: 4px;
+	border-radius: 4px;
+	outline: none;
+	display: none;
+}
+@media(max-width:768px){
+	.main {
+		width: 80%;
+	}
+}
+@media(max-width:425px){
+	.main {
+		width: 100%;
+	}
+}
+@media(max-width:370px){
+	.main .add-to-post i {
+		padding-left: 1px;
+		padding-right: 1px;
+	}
+}

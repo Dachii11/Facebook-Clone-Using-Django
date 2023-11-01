@@ -1,0 +1,87 @@
+<div class="left">
+ 		<div class="url"><p>Marketplace</p></div>    
+        <div class="srch">
+            <form method="GET" action="{% url 'marketplace:search' %}">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Search" name="q" class="market-search">
+            <input type="submit" style="display:none;">
+            </form>
+        </div>
+        <hr>
+        <div class="filters">
+        	<p>Filters</p>
+        	<i class="fa-solid fa-chevron-down down" id="i1" style="font-size: 13px;padding: 5px;"></i>
+        </div>
+        <hr>
+        <form method="POST">
+            {% csrf_token %}
+        <div class="category">
+            <i class="fa-solid fa-shop"></i>
+            <button type="submit" name="all"><p>All category</p></button>
+        </div>
+        <div class="category">
+            <i class="fa-solid fa-hat-cowboy"></i>
+            <button type="submit" name="accessories"><p>Apperal & Accessories</p></button>
+        </div>
+        <div class="category">
+            <i class="fa-solid fa-palette"></i>
+            <button type="submit" name="arts"><p>Arts & Entertainment</p></button>
+        </div>
+        <div class="category">
+            <i class="fa-solid fa-bowl-food"></i>
+            <button type="submit" name="foods"><p>Food & Beverages</p></button>
+        </div>
+        <div class="category">
+            <i class="fa-solid fa-chair"></i>
+            <button type="submit" name="furniture"><p>Furniture & Hardware</p></button>
+        </div>
+        <div class="category">
+            <i class="fa-solid fa-briefcase"></i>
+            <button type="submit" name="bussiness"><p>Business</p></button>
+        </div>
+        <div class="category">
+            <i class="fa-solid fa-camera"></i>
+            <button type="submit" name="camera"><p>Camera & equipment's</p></button>
+        </div>
+        <div class="category">
+            <i class="fa-solid fa-tree"></i>
+            <button type="submit" name="garden"><p>Home & Garden</p></button>
+        </div>
+        <div class="category">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <button type="submit" name="bags"><p>Luggage & Bags</p></button>
+        </div>
+        <div class="category">
+            <i class="fa-solid fa-gamepad"></i>
+            <button type="submit" name="toys"><p>Toys and Games</p></button>
+        </div>
+        <div class="category">
+            <i class="fa-solid fa-truck"></i>
+            <button type="submit" name="vehicles"><p>Vehicles & Spare Parts</p></button>
+        </div>
+        <div class="category">
+            <i class="fa-solid fa-computer"></i>
+            <button type="submit" name="software"><p>Software & Hardware</p></button>
+        </div>
+        <div class="category">
+            <i class="fa-solid fa-volleyball"></i>
+            <button type="submit" name="sport"><p>Sporting goods</p></button>
+        </div>
+        <div class="category">
+            <i class="fa-solid fa-baby-carriage"></i>
+            <button type="submit" name="baby"><p>Baby Products</p></button>
+        </div>
+        <div class="category">
+            <i class="fa-solid fa-bolt"></i>
+            <button type="submit" name="electronics"><p>Electronics</p></button>
+        </div>
+        <div class="category">
+            <i class="fa-solid fa-notes-medical"></i>
+            <button type="submit" name="health"><p>Health & Beauty Products</p></button>
+        </div>
+        <div class="category">
+            <i class="fa-solid fa-stapler"></i>
+            <button type="submit" name="office"><p>Office Supplies</p></button>
+        </div>
+        </form>        
+    </div>

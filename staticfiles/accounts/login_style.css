@@ -1,0 +1,145 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Arial;
+}
+nav {
+  height: 50px;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.3);
+  width: 100%;
+}
+.nav-fb-icon {
+  color: #0B84ED;
+  font-weight: bold;
+  font-size: 25px;
+  padding: 10px;
+}
+.left-side {
+  padding: 100px;
+  display: inline-block;
+  padding-left: 0;
+}
+.left-side p {
+  font-size: 20px;
+  font-weight: bold;
+  max-width: 450px;
+  padding-left: 20px;
+}
+.right-side {
+  display: inline-block;
+  vertical-align: top;
+  padding-top: 110px;
+/*  width: 300px;*/
+  text-align: center;
+}
+.right-side .ddd {
+  box-shadow:
+            rgba(17, 17, 26, 0.1) 0px 4px 16px,
+            rgba(17, 17, 26, 0.1) 0px 8px 24px,
+            rgba(17, 17, 26, 0.1) 0px 16px 56px;
+  padding: 20px;
+  border-radius: 10px;
+
+}
+.main {
+  width: 1000px;
+  margin: 0 auto;
+}
+.right-side .ddd label {
+  display: none;
+}
+#id_username,
+#id_password1,
+#id_email,
+#id_password,
+#id_password2 {
+  border: none;
+    box-shadow:
+            rgba(17, 17, 26, 0.1) 0px 4px 16px,
+            rgba(17, 17, 26, 0.1) 0px 8px 24px,
+            rgba(17, 17, 26, 0.1) 0px 16px 56px;
+  outline: none;
+  padding: 6px;
+  width: 230px;
+}
+.login,
+.right-side button {
+  width: 230px;
+  background-color: #0B84ED;
+  padding: 5px;
+  border: none;
+  color: white;
+  font-size: 18px;
+  border-radius: 5px;
+}
+.right-side button {
+  width: 170px;
+  background-color: green;
+  font-size: 14px;
+}
+.errorlist {
+  max-width: 280px;
+  font-size: 13px;
+  list-style: none;
+  margin: 0 auto;
+  color: red;
+  padding: 5px;
+}
+@media (max-width:400px){
+  .left-side img {
+    width: 350px;
+  }
+  .left-side p {
+    width: 300px;
+  }
+  .right-side {
+    display: block;
+    width: 350px;
+  }
+  #id_username,
+  #id_password,
+  .right-side button,
+  .login {
+    width: 100%;
+  }
+}
+@media (max-width:1000px){
+  .main {
+    width: 100%;
+    text-align: center;
+  }
+ .right-side {
+    display: block;
+    width: 400px;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 20px;
+  }
+  .left-side,
+  .left-side p {
+    padding: 0;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+  }
+}
+@media (max-width:550px){
+  .left-side img {
+    width: 100%;
+  }
+  .left-side {
+    width: 100%;
+  }
+  .right-side {
+    width: 80%;
+  }
+}
+@media (max-width:250px){
+  #id_username,
+  #id_password,
+  .right-side button,
+  .login {
+    width: 100%;
+  }
+}
+

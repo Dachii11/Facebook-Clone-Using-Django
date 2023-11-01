@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/menu_style.css' %}">
+</head>
+<body>
+		<style type="text/css">
+			@media (max-width: 1100px){
+				.main .right {
+				    display: none;
+				}
+			}
+			@media (max-width: 920px){
+				.main .left {
+				    display: none;
+				}
+			}
+		</style>
+		{% include 'navbar.html' %}
+		{% block content %}
+		
+		{% endblock %}
+		{% block javascript %}
+			<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+			{{my_profile.id|json_script:"json-username"}}
+			<script src="{% static 'js/sockets.js' %}"></script>
+		{% endblock %}
+		<script src="{% static 'js/post_menu.js' %}"></script>
+</body>
+</html>

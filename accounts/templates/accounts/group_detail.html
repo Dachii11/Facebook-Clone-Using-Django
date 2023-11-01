@@ -1,0 +1,233 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'mainApp/home_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/group.css' %}">
+<link rel="stylesheet" href="{% static 'mainApp/comment_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/add_friend_style.css' %}">
+<style>.dropdown{display: none} .items .item ul a {text-decoration: none;}</style>
+<style type="text/css">
+	@media(max-width:1100px){
+		.main .right_side {
+			margin: 0 auto;
+		}
+	}
+	.menu_settings {
+		margin-top:50px;
+	}
+</style>
+{% if my_profile.theme %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme.css' %}">
+    <style>.gd{background: rgb(23, 23, 23);}</style>
+{% endif %}
+<style type="text/css">
+	.gd{display: flex;justify-content: space-between;width: 100%;}
+	.srch-div input {    padding: 8px;
+    position: relative;
+    border: none;
+    background-color: #efefef;
+    border-radius: 30px;
+    outline: none;
+	margin-top: 5px;
+	}
+	@media(max-width:1024px){
+		.right_side {margin: 0 auto;}
+	}
+	@media(max-width:768px){
+		.about{display: none;}
+	@media(max-width:520px){
+		.gd{display: block;}
+		.srch-div{display: flex;}
+		.items .item {
+			width: 90%;
+			margin: 0 auto;
+			justify-content: space-between;
+/*			display: flex;*/
+		}
+		.items .item ul {
+			width:100%;
+			justify-content: space-between;
+		}
+		.items {display: flex;}
+		.srch-div input {width: 90%;
+			margin: 0 auto;
+			margin: 3px;
+			margin: 0 auto;
+			margin-bottom: 5px;}
+	}
+	@media(max-width:375px){
+		.items ul li {
+			font-size: 14px;
+		}
+	}
+</style>
+{% include 'menu.html' %}
+<div class="main">
+	{% include 'accounts/groups_left_side.html' %}
+    <div class="right_side" style="display: block;">
+    	<div class="top">
+    		<div class="cover"><img src="{{group.group_cover.url}}" style="width: 100%;height: 300px;"></div>
+    		<div class="top_bottom">
+    			<div class="inf">
+    				<div class="group_name"><h2 class="group-title">{{group.group_name}}</h2></div>
+	    			<p class="info">
+	                    {% if group.privacy == "Public" %}
+	                        <i class="fa-solid fa-earth-americas"></i>
+	                    {% else %}
+	                        <i class="fa-solid fa-lock"></i>
+	                    {% endif %}
+	                    {{group.status}}
+	                     group &middot {{group.members.all.count}} members
+	                </p>
+	            </div>
+	                <div class="members">
+		    			{% for member in members %}
+		               		<img src="{{member.profile_img.url}}">
+		                {% endfor %}
+		                <button id="invite"><i class="fa-solid fa-plus"></i>Invite</button>
+		    		</div>
+    		</div>
+    		<hr>
+    		<div class="gd">
+    			<div class="items">
+    			<div class="item">
+    			<ul>
+    				<a href="{% url 'accounts:about' group.id %}"><li>About</li></a>
+    				<a href="{% url 'accounts:group' group.id %}"><li>Discussion</li></a>
+    				<a href="{% url 'accounts:members' group.id %}"><li>Members</li></a>
+    				<a href="{% url 'accounts:add_group_post' group.group_name %}" style="text-decoration: none;"><li>Post</li></a>
+    			</ul>
+    			</div>
+
+    		</div>
+    	<!-- 	<div class="srch-div">
+    				<input type="text" name="" placeholder="Search...">
+    		</div> -->
+    		</div>
+    	</div>
+    	<div class="bottom">
+    		<div class="bottom-top">
+    			 <div class="about aboutTwo">
+			        	<h3>About</h3>
+			        	<div class="description"><p>{{group.description}}</p></div>
+			        	<div>
+			        		<i class="fa-solid fa-earth-americas"></i><p class="tit"></p>
+			        		<p class="about-text">Anyone can see who's in the group and what they post</p>
+			        	</div>
+			        	<div>
+			        		<i class="fa-solid fa-eye"></i><p class="tit">Visible</p>
+			        		<p class="about-text">Anyone can find this group</p>
+			        	</div>
+			        	<div>
+			        		<i class="fa-solid fa-users"></i><p class="tit">{{group.group_type}} Group</p>
+			        	</div>
+			   		</div>
+
+			    <div class="center">
+			    	<div class="my_post" style="height: 120px;">
+			            <div class="post_top">
+			                <form method="POST" action="">
+			                    {% csrf_token %}
+			                <img src="{{my_profile.profile_img.url}}">
+			                <input type="text" name="group_post_text" placeholder="What's on your mind, {{my_profile.user}}?">
+			                <input type="hidden" name="group" value="{{group.id}}">
+			                <input type="submit" class="sub-new-post">
+			                </form>
+			            </div>
+			            <hr>
+			            <div class="post_bottom">
+			                <div class="post_icon">
+			                    <i class="fa-solid fa-images green"></i>
+			                    <p>Photo/video</p>
+			                </div>
+			                <div class="post_icon">
+			                    <i class="fa-regular fa-face-grin yellow"></i>
+			                    <p>Feeling/activity</p>
+			                </div>
+			            </div>
+			        </div>
+
+		   				{% include 'group_posts.html' %}
+			    </div>
+			    	<div class="about" style="width: 40%;height: min(300px, 500px);">
+			        	<h3>About</h3>
+			        	<div class="description"><p>{{group.description|truncatewords:50}}</p></div>
+			        	<div>
+			        		<!-- <i class="fa-solid fa-earth-americas"></i><p class="tit">{{group.status}}</p> -->
+		                    {% if group.status == "public" %}
+		                        <i class="fa-solid fa-earth-americas"></i><p class="tit">{{group.privacy}}</p>
+		                        <p class="about-text">Anyone can see who's in the group and what they post.</p>
+		                    {% else %}
+		                        <i class="fa-solid fa-lock"></i><p class="tit">{{group.privacy}}</p>
+		                        <p class="about-text">Only members can see who's in the group and what they post.</p>
+		                    {% endif %}
+			        	</div>
+			        	<div>
+			        		<i class="fa-solid fa-eye"></i><p class="tit">{{group.visibility}}</p>
+			        		<p class="about-text">Anyone can find this group.</p>
+			        	</div>
+			        	<div>
+			        		<i class="fa-solid fa-users"></i><p class="tit">{{group.group_type}} Group</p>
+			        	</div>
+			   		</div>
+				 
+
+			   	</div>
+			</div>
+     </div>
+     <div class="add-friend" style="top: 20px;width: 80%;">
+     	<div class="add-friend-block" style="position:fixed;width: 80%;text-align: center;">
+     		<div class="close" style="justify-content: space-between;">
+     			<p class="iv-txt">Invite your friends to like "{{group.group_name}}"</p>
+     			<p class="sp-close">close</p>
+     		</div>
+     		<form method="POST">
+     		<div class="invite-text">
+     			<textarea placeholder="Write message to friend/s..." rows="6" name="textt"></textarea>
+     		</div>
+     		<div class="invite-btns">
+     			<p>Not Invited (214)</p>
+     			<p>Selected (2)</p>
+     			<p>Invited (8)</p>
+     		</div>
+     			{% csrf_token %}
+     		<div class="srch-invite">
+     			<input type="text" name="invite_friend" placeholder="Search in All Friends">
+     			<p>Select All</p>
+     		</div>
+     		<div class="friend-list">
+     			{% for friend in friends %}
+     				<div class="friend">
+     					<div style="display: flex;">
+     						<img src="{{friend.profile_img.url}}">
+     						<p>{{friend.user}}</p>
+     					</div>
+     					<input type="checkbox" name="check" value="{{friend.id}}">
+     				</div>
+     				<hr>
+     			{% endfor %}
+     		</div>
+     			<div class="send-invite">
+     				<hr>
+     				<button>Send Invites</button>
+     			</div>
+     			<input type="hidden" name="g" value="{{group.id}}">
+     		</form>
+     	</div>
+     </div>
+</div>
+<script type="text/javascript">
+
+	document.getElementById("invite").addEventListener("click",function(){
+		document.querySelector(".add-friend").style.display='flex';
+	})
+	document.querySelector(".sp-close").addEventListener("click",function(){
+		document.querySelector(".add-friend").style.display="none";
+	})
+</script>
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+<script src="{% static 'js/emotion.js' %}"></script>
+<script src="{% static 'js/pageScroll.js' %}"></script>
+{% endblock %}

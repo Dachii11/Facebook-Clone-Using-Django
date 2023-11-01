@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+{% if my_profile.theme %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme.css' %}">
+    <style type="text/css">h2 {color: #fff;}.tt p {color: #fff;}</style>
+{% endif %}
+<div class="main" style="margin-top: 70px;">
+	<p>Are your sure you want to leave "{{group.title}}"?</p>
+	<form method="POST">
+		{% csrf_token %}
+		<a href="#">Cancel</a><button type="submit">Remove</button>
+	</form>
+</div>
+
+{% endblock %}

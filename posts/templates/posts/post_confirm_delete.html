@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<style type="text/css">.menu_settings .sets {margin-top: 0;}.menu_settings{margin-top: 0;}</style>
+{% include 'menu.html' %}
+<div class="center" style="margin-top: 100px;">
+<div class="form">
+	<h2>Are your sure you want to delete the post?</h2>
+	<form action="" method="POST">
+		{% csrf_token %}
+		<a href="{{request.META.HTTP_REFERER}}">Back</a>
+		<input type="submit" value="Yes">
+	</form>
+</div>
+</div>
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+{{my_profile.id|json_script:"json-username"}}
+<script src="{% static 'js/websocket.js' %}"></script>
+{% endblock %}

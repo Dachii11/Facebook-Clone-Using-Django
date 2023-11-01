@@ -1,0 +1,13 @@
+nav {
+	background: #fff;
+}
+.comment a {
+	text-decoration: none;
+	color: black;
+}
+.center .friends_post .like .like_icon a,
+.center .friends_post .comment_section .comment-btns a,
+.center .friends_post .comment_section .comment-btns p {
+	text-decoration: none;
+	color: #919191;
+}

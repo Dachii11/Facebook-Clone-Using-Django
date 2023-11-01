@@ -1,0 +1,104 @@
+{% load static %}
+<div class="menu_settings" id="menu" style="display: none;z-index: 3;">
+	<div class="sets" style="z-index: 10; overflow: hidden;height: 47vh; overflow-y: scroll;">
+		<div>
+			<a href="{% url 'accounts:profile' my_profile.id %}">
+			<div class="profile">
+				<img src="{{my_profile.profile_img.url}}">
+				<p class="tx">my profile</p>
+			</div>
+		</a>
+		<hr>
+		<a href="{% url 'accounts:friends' %}">
+			<div class="profile" id="list-items">
+				<img src="{% static 'images/friends.png' %}">
+				<p class="tx">Friends</p>
+			</div>
+		</a>
+		<hr>
+		<a href="{% url 'accounts:suggestions' %}">
+			<div class="profile" id="list-items">
+				<i class="fa-solid fa-people-line"></i>
+				<p class="tx">Suggestions</p>
+			</div>
+		</a>
+		<hr>
+		<a href="{% url 'posts:add_post' %}">
+			<div class="profile" id="list-items">
+				<i class="fa-solid fa-plus"></i>
+				<p class="tx">Add Post</p>
+			</div>
+		</a>
+		<hr>
+		<a href="{% url 'posts:saves' %}">
+			<div class="profile" id="list-items">
+				<img src="{% static 'images/save.png' %}">
+				<p class="tx">Saved</p>
+			</div>
+		</a>
+		<hr>
+		<a href="{% url 'chat:chat_home' %}">
+			<div class="profile" id="list-items">
+				<i class="fa-brands fa-facebook-messenger"></i>
+				<p class="tx">Chat</p>
+			</div>
+		</a>
+		<hr>
+		<a href="{% url 'accounts:groups' %}">
+			<div class="profile">
+				<img src="{% static 'images/groups-icon.png' %}">
+				<p class="tx">Groups</p>
+			</div>
+		</a>
+		<hr>
+		<a href="{% url 'posts:watch' %}">
+			<div class="profile" id="list-items">
+				<img src="{% static 'images/watch.png' %}">
+				<p class="tx">Watch</p>
+			</div>
+		</a>
+		<hr>
+		<a href="{% url 'accounts:settings' %}">
+			<div class="profile">
+				<i class="fa-solid fa-gear"></i>
+				<p class="tx">Settings</p>
+			</div>
+		</a>
+		<hr>
+		<a href="{% url 'mainApp:help' %}">
+			<div class="profile">
+				<i class="fa-solid fa-circle-info"></i>
+				<p class="tx">Help</p>
+			</div>
+		</a>
+		<hr>
+		<a href="{% url 'mainApp:report' %}">
+			<div class="profile">
+				<i class="fa-solid fa-bug"></i>
+				<p class="tx">Report</p>
+			</div>
+		</a>
+		<hr>
+			<div class="profile" id="list-items">
+				 <form method="POST">
+		            {% csrf_token %}
+            		<labeL for="theme"><i class="fa-solid fa-moon i"></i>
+            			{% if my_profile.theme %}
+            				Dark
+            			{% else %}
+            				Light
+            			{% endif %}
+            		</labeL>
+		            <input type="submit" id="theme" style="display: none;" name="theme">
+		        </form>
+			</div>
+		<hr>
+		<a href="{% url 'accounts:logout' %}">
+		<div class="profile">
+			<i class="fa-solid fa-right-from-bracket" style="color:darkred;"></i>
+			<p class="tx">Log Out</p>
+		</div>
+		</a>
+		</div>
+	</div>
+</div>

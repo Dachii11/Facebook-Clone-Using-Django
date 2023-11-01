@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+<form style="margin-top: 150px;" method="POST">
+	{% csrf_token %}
+	{{form.as_p}}
+	<input type="submit" value="Save">
+</form>
+{% endblock %}

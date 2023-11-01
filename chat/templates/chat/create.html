@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'chat/create.css' %}">
+{% include 'menu.html' %}
+<div class="main" style="margin-top: 80px;">
+	<form method="POST">
+		{% csrf_token %}
+		<input type="text" id="search" name="search" onkeyup="filter()" placeholder="Search Friends...">
+		
+		<div class="select-container">
+			<select name="tag_user" class="opts" multiple id="select">
+					{% for friend in friends %}
+						<option>
+							<img src="{{friend.profile_img.url}}">
+							{{friend}}
+						</option>
+					{% endfor %}
+			</select>
+			<p class="tag-text">Press Ctrl And Tag Friends!</p>
+		</div>
+		{{form.title}}
+		<input type="submit" value="POST" class="post-btn">
+	</form>
+</div>
+<script type="text/javascript">
+
+function filter() {
+    var keyword = document.getElementById("search").value;
+    var select = document.getElementById("select");
+    for (var i = 0; i < select.length; i++) {
+        var txt = select.options[i].text;
+        if (txt.substring(0, keyword.length).toLowerCase() !== keyword.toLowerCase() && keyword.trim() !== "") {
+            select.options[i].style.display = 'none';
+        } else {
+            select.options[i].style.display = 'list-item';
+        }
+    }
+}
+</script>
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+{{my_profile.id|json_script:"json-username"}}
+<script src="{% static 'js/websocket.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'posts/add_new_post.css' %}">
+<style type="text/css">
+	#id_tags,
+	#id_feeling {
+		width: 100%;
+		outline: none;
+		padding: 5px;		
+	}
+</style>
+{% if my_profile.theme %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme_style.css' %}">
+    <style>
+    	.main,body {background: rgb(18, 18, 18);color: #fff;}
+    	#id_caption {background: rgb(30, 30, 30);color: #fff;}
+    	.ssss {color: #fff;}
+    </style>
+{% endif %}
+{% include 'menu.html' %}
+<div class="main">
+	<div class="tit">
+		<p></p>
+		<p class="cr">Create post</p>
+		<a href="{{request.META.HTTP_REFERER}}"><p class="ssss">X</p></a>
+	</div>
+	<hr>
+	<form method="POST" action="" enctype="multipart/form-data">
+	<div class="prf">
+		<img src="{{my_profile.profile_img.url}}">
+		<div class="inf">
+			<p class="usr">{{my_profile.user}}</p>
+			{{form.status}}
+		</div>
+	</div>
+	<div class="inp">
+		{% csrf_token %}
+		{{form.caption}}
+		{{form.location}}
+		{{form.tags}}
+		{{form.feeling}}
+		<div class="add-to-post">
+			<p>Add to Your Post</p>
+			<div>
+				<label for="id_file"><i class="fa-solid fa-video video"></i></label>
+				<label for="id_file"><i class="fa-solid fa-images green"></i></label>
+				<label class="add-em"><i class="fa-regular fa-face-grin yellow"></i></label>
+				<label class="tag-fr"><i class="fa-solid fa-user-plus friend"></i></label>
+				<label class="add-loc"><i class="fa-solid fa-location-dot location"></i></label>
+			</div>
+		</div>
+		{{form.file}}
+		{% if messages %}
+			{% for message in messages %}
+				<p style="color:red;font-size: 13px;padding: 2px;">{{message}}</p>
+			{% endfor %}
+		{% endif %}
+		<input type="submit" value="Post" class="submit">
+	</div>
+	</form>
+<script>
+	let id_loc = document.getElementById("id_location");
+	let id_tags = document.getElementById("id_tags");
+	let id_feeling = document.getElementById("id_feeling");
+	id_loc.style.display="none";
+	id_tags.style.display="none";
+	id_feeling.style.display="none";
+	id_loc.setAttribute("placeholder","What's on your mind, {{my_profile.user}}");
+	id_loc.children[0].textContent="Select Country...";
+	id_loc.children[0].setAttribute("disabled","disabled");
+	id_feeling.children[0].textContent="What do you feel right now?";
+	id_feeling.children[0].setAttribute("disabled","disabled");
+	
+	document.querySelector(".add-loc").addEventListener("click",function(){
+		if (id_loc.style.display=='none'){
+			id_loc.style.display="flex";
+		}
+		else{
+			id_loc.style.display='none';
+		}
+	})
+	document.querySelector(".tag-fr").addEventListener("click",function(){
+		if (id_tags.style.display=='none'){
+			id_tags.style.display="flex";
+		}
+		else{
+			id_tags.style.display='none';
+		}
+	})
+	document.querySelector(".add-em").addEventListener("click",function(){
+		if (id_feeling.style.display=='none'){
+			id_feeling.style.display="flex";
+		}
+		else{
+			id_feeling.style.display='none';
+		}
+	})
+</script>
+</div>
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+{{my_profile.id|json_script:"json-username"}}
+<script src="{% static 'js/websocket.js' %}"></script>
+{% endblock %}

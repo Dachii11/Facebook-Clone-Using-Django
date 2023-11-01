@@ -1,0 +1,44 @@
+.main {
+	width: 700px;
+	margin: 0 auto;
+	margin-top: 70px;
+}
+.main .notifications .notification .ln {
+	display: flex;
+}
+.main .notifications .notification .ln .date {
+	font-size: 14px;
+	opacity: 0.9;
+}
+.main .notifications .notification .ln .dalk {
+	padding-left: 10px;
+}
+.main .notifications .notification .ln .btns button{
+	padding: 5px;
+	border: none;
+}
+.main .notifications .notification .ln .btns .accept {
+	background: #4267B2;
+	color: #fff;
+}
+.main .notifications .notification .ln .btns .view {
+	background: #fff;
+
+}
+.main .notifications .notification {
+	display: flex;
+	background: #f1f1f1;
+	margin: 5px;
+	padding: 8px;
+	border-radius: 8px;
+	justify-content: space-between;
+}
+.main .notifications .notification .pppp {
+	width: 50px;
+	height: 50px;
+}
+.main .notifications .notification .user-pr-pic{
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+}

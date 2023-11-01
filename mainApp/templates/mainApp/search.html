@@ -1,0 +1,94 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/center.css' %}">
+<link rel="stylesheet" href="{% static 'accounts/groups_list.css' %}">
+<style type="text/css">
+    .name a {
+        text-decoration: none;
+        color: black;
+    }
+    .public-gp-icon {
+        margin-top: 20px;
+    }
+    .public-gp-icon p {
+        color: white;
+        background-color: #4267B2;
+        padding: 8px 13px;
+        border-radius: 3px;
+        font-size: 15px;
+        transition: 0.2s;
+    }
+    .public-gp-icon:hover {
+        opacity: 0.9;
+    }
+    .user-found p{
+        font-family: Arial;
+        font-size: 14px;
+        color: #919191;
+    }
+</style>
+{% include 'menu.html' %}
+<div class="main">
+{% include 'left_side.html' %}
+    <div class="center">
+        {% if user_len > 0 %}
+            <div class="user-found"><p>{{user_len}} user found</p></div>
+            {% for res in users %}
+                <div class="groups">
+                    <div class="cover"><img src="{{res.profile_img.url}}"></div>
+                    <div class="groups_detail">
+                        <p class="name"><a href="{% url 'accounts:profile' res.id %}">{{res.user}}</a></p>
+                        <div class="inf"><p class="info">15 mutual</p></div>
+                    </div>
+                    <a href="{% url 'accounts:profile' res.id %}" style="text-decoration: none;"><div class="public-gp-icon"><p>Profile</p></div></a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="user-found"><p>{{user_len}} user found</p></div>
+        {% endif %}
+
+         {% if group_len > 0 %}
+            <div class="user-found"><p>{{group_len}} group found</p></div>
+            {% for res in groups %}
+                <div class="groups">
+                    <div class="cover"><img src="{{res.group_cover.url}}"></div>
+                    <div class="groups_detail">
+                        <p class="name"><a href="{% url 'accounts:group' res.id %}">{{res.group_name}}</a></p>
+                        <div class="inf"><p class="info">15 mutual</p></div>
+                    </div>
+                    <a href="{% url 'accounts:group' res.id %}" style="text-decoration: none;"><div class="public-gp-icon"><p>View</p></div></a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="user-found"><p>{{group_len}} group found</p></div>
+        {% endif %}
+    </div>
+{% include 'right_side.html' %}
+</div>
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+{{my_profile.id|json_script:"json-username"}}
+<script>
+    // const my_profile = JSON.parse(document.getElementById("json-username").textContent);
+    const chatSocket = new WebSocket('ws://'+window.location.host+"/ws/search/");
+    const my_profile = JSON.parse(document.getElementById("json-username").textContent);
+
+    chatSocket.onclose = function(e){
+        console.log("WebSocket Closed!");
+    }
+    chatSocket.onmessage = function(e){
+        const data = JSON.parse(e.data);
+        document.querySelector(".new-msg").innerHTML=data.new_notification;
+    }
+
+    setInterval(function(){
+        chatSocket.send(JSON.stringify({
+            "ask_for_new_message":"ask_for_new_message",
+            "my_profile":my_profile,
+        }));
+        return false;
+    },1000);
+</script>
+{% endblock %}

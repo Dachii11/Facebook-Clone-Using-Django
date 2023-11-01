@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<div class="main" style="margin-top: 70px;">
+	<p>Are your sure you want to remove "{{rm_user.user}}" from the group?</p>
+	<form method="POST">
+		{% csrf_token %}
+
+		<a>Cancel</a><button type="submit">Remove</button>
+	</form>
+</div>
+
+{% endblock %}

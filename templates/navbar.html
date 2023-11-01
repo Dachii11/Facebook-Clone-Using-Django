@@ -1,0 +1,101 @@
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/navbar_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/profile_menu_style.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% if my_profile.theme %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme.css' %}">
+{% endif %}
+<style type="text/css">
+    .cnt {
+        position: absolute;
+        text-decoration: none;
+    }
+    .new-msg{
+        position: relative;
+        left: 28px;
+        text-decoration-line: none;
+        z-index: 1;
+        font-size: 11px;
+        padding: 3px;
+        font-weight: bold;
+        background: red;
+        color: #fff;
+        bottom: 3px;
+        border-radius: 50%;
+
+    }
+    .new-msg::hover {
+        content: "";
+        width: 10px;
+    }
+    .msgnr {
+        width: 35px;
+        height: 35px;
+        margin-right: 8px;
+    }
+    @media(max-width:545px){
+        .msgnr {
+            display: none;
+        }
+        #my_profile {
+            display: flex;
+        }
+    }
+
+</style>
+<nav>
+    <div class="left">
+        <a href="{% url 'mainApp:index' %}"><div class="logo">
+            <img src="{% static 'images/facebook_logo.png' %}">
+        </div>
+        </a>
+        <div class="search_bar">
+            <form method="GET" action="{% url 'mainApp:search' %}">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Search" name="q"></input>
+            <input type="submit" style="display:none;">
+            </form>
+        </div>
+    </div>
+    <div class="centerr">
+        <a href="{% url 'mainApp:index' %}"><i class="fa-solid fa-house"></i></a>
+        <a href="{% url 'marketplace:marketplace' %}"><i class="fa-solid fa-store"></i></a>
+        <a href="{% url 'accounts:suggestions' %}"><i class="fa-solid fa-users"></i></a>
+        <a href="{% url 'posts:watch' %}"><i class="fa-solid fa-tv"></i></a>
+    </div>
+    <div class="right">
+        <a href="{% url 'posts:add_post' %}" style="color: black;"><i class="fa-solid fa-plus"></i></a>
+        <a href="{% url 'chat:chat_home' %}" style="text-decoration: none;color: black;">
+           <div class="msgnr">
+                <i class="fa-brands fa-facebook-messenger cnt"></i>
+                <span class="new-msg">{{count_new_msgs}}</span>
+           </div>
+        </a>
+        <a href="{% url 'notifications:notifications' %}" style="text-decoration: none;color: black;">
+            <div class="msgnr">
+                <i class="fa-solid fa-bell cnt"></i>
+                <span class="new-msg not">{{new_notifications}}</span>
+           </div>
+        </a>
+        <form method="POST">
+            {% csrf_token %}
+            <labeL for="theme"><i class="fa-solid fa-moon i"></i></labeL>
+            <input type="submit" id="theme" style="display: none;" name="theme">
+        </form>
+        <img src="{{my_profile.profile_img.url}}" id="my_profile">
+    </div>
+</nav>
+
+<script type="text/javascript">
+    document.getElementById('my_profile').addEventListener("click",function(){
+        if (document.getElementById("menu").style.display==='none'){
+            document.getElementById("menu").style.display="block";
+        } else {
+            document.getElementById("menu").style.display="none"
+        }
+    });
+</script>
+{% endblock %}

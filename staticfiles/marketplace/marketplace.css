@@ -1,0 +1,105 @@
+.main .left .url p{
+	font-size: 15px;
+	color: #919191;
+}
+.srch {
+	padding-top: 10px;
+}
+.srch i {
+	position: absolute;
+	z-index: 1;
+	top: 54px;
+	padding-left: 10px;
+	color: #919191;
+}
+.main .left {
+	background: #fff;
+	box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+}
+.market-search {
+	padding: 8px;
+	position: relative;
+	padding-left: 30px;
+	border-radius: 15px;
+	outline: none;
+	border: none;
+	background: rgba(100, 100, 100, 0.2);
+	width: 100%;
+	margin: 0 auto;
+}
+.filters {
+	display: flex;
+	justify-content: space-between;
+}
+.category {
+	display: flex;
+	padding: 10px;
+	padding-left: 0;
+	padding-right: 0;
+	border-radius: 5px;
+}
+.category:hover{
+	background: #e3e3e3;
+}
+
+.category:hover  button{
+	background: #e3e3e3;
+}
+.category p {
+	padding-top: 3px;
+	padding-left: 5px;
+}
+.category i {
+	font-size: 15px;
+	padding: 5px;
+	background: rgba(100, 100, 100, 0.2);;
+	border-radius: 50%;
+}
+.top {
+	background: #fff;
+	font-weight: bold;
+	padding: 10px;
+	border-radius: 10px;
+}
+.sells {
+	display: block;
+	margin-top: 30px;
+	margin: 0 auto;
+	text-align: center;
+	width: 100%;
+
+}
+.sells .sell img{
+	width: 196px;
+	height: 196px;
+	border-radius: 8px;
+}
+.sells .sell {
+	margin: 5px;
+	margin-top: 15px;
+	background:#fff;
+	border-radius: 8px;
+
+	display: inline-block;
+	width: fit-content;
+}
+.price {
+	padding-left:5px;
+	font-weight: bold;
+	font-size: 14px;
+	text-align: left;
+}
+.sell-name {
+	padding-left: 3px;
+	padding: 5px;
+	text-align: left;
+	font-size: 13px;
+}
+.left button {
+	border: none;
+	background: #fff;
+	width: 100%;
+/*	height: 100%;*/
+;
+	text-align: left;
+}

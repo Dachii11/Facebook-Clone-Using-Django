@@ -1,0 +1,39 @@
+{% for comment in post.comments.all %}
+                        <div class="commentt">
+                            <img src="{{comment.user.profile_img.url}}">
+                            <div class="com_text">
+                                 <a href="{% url 'accounts:profile' comment.user.id %}">{{comment.user}}</a>
+                                <p>{{comment.text}}</p>
+                            </div>
+                        </div>
+                        <div class="comment-btns">
+                            <form method="POST">
+                            {% csrf_token %}
+                            <p>
+                                {% if my_profile in comment.likes.all %}
+                                    <input type="submit" name="like" value="Liked" style="background: none; border: none; color: #4267B2;">
+                                {% else %}
+                                    <input type="submit" name="like" value="Like" style="background: none; border: none; color: #919191;">
+                                {% endif %}
+                                <input type="hidden" name="type_of_comment" value="{{comment.type_of_comment}}">
+                            </p>
+                            <input type="hidden" name="comment" value="{{comment.id}}">
+                            </form>
+                            <p><a href="{% url 'comments:reply_comment' comment.id %}">Reply</a></p>
+                            <p>{{comment.created|timesince}} ago</p>
+                       
+                            {% if comment.likes.all.count > 0 %}
+                                {% if comment.likes.all.count == 1 %}
+                                    <p>{{comment.likes.all.count}} like</p>
+                                {% else %}
+                                    <p>{{comment.likes.all.count}} likes</p>
+                                {% endif %}
+                            {% endif %}
+                         </div>
+                          {% if comment.reply.all.count > 0 %}
+                                <div class="reply">
+                                <i class="fa-solid fa-reply fa-rotate-180 reply-icon"></i>
+                                <p class="reply-count"><a href="{% url 'comments:reply_comment' comment.id %}" style="text-decoration: none; color: #919191;">{{comment.reply.all.count}} reply</a></p>
+                                </div>
+                            {% endif %}
+                    {% endfor %}

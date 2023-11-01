@@ -1,0 +1,91 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'mainApp/home_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/group.css' %}">
+<link rel="stylesheet" href="{% static 'mainApp/comment_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/group_rule.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/rule_rm.css' %}">
+<style>.dropdown{display: none} .items .item ul a {text-decoration: none;}
+    	.main {
+    		margin-top: 50px;
+    	} </style>
+
+{% if my_profile.theme %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+    <style>.rule-remove i {color: black;}</style>
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme.css' %}">
+    <style type="text/css">.create {background: rgb(23, 23, 23);}.rule-remove i {color: white;}
+    	.main .remove .s{
+    		background: rgb(23, 23, 23);
+    		color: #fff;
+    	}
+
+	</style>
+{% endif %}
+{% include 'menu.html' %}
+<div class="main">
+		{% include 'accounts/groups_left_side.html' %}
+
+<div class="right">
+	<div class="create">
+		<div><p class="group-rule">Group Rules</p></div>
+		{% if my_profile in group.admin.all %}
+		<div><a href="{% url 'accounts:rule-add' group.id %}" style="text-decoration: none;"><p class="group-create">Create</p></a></div>
+		{% endif %}
+	</div>
+	<div class="rules">
+		{% for rule in rules %}
+			<div class="rule" style="display: flex;justify-content: space-between;">
+				<div>
+					<p class="rule-title">{{rule.rule_title}}</p>
+					<p class="rule-body">{{rule.rule_body}}</p>
+				</div>
+				{% if my_profile in group.admin.all %}
+					<div class="rule-remove" style="padding:10px;"><i class="fa-solid fa-trash-can" id="{{rule.id}}"></i></div>
+				{% endif %}
+			</div>
+			<hr>
+		{% endfor %}
+	</div>
+</div>
+<div class="remove">
+	<div class="s">
+		<div class="top">
+			<p>Rule Remove</p>
+			<i class="fa-solid fa-xmark"></i>
+		</div>
+		<div class="msh">
+			<p>Are your sure you want to delete the rule?</p>
+		</div>
+		<div class="btns">
+			<form method="POST">
+				<button class="cancel">Cancel</button>
+				{% csrf_token %}
+				<button type="submit" name="remove_rule" class="rule-rm-btn">Delete</button>
+			</form>
+		</div>
+	</div>
+ </div>
+</div>
+
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+<script src="{% static 'js/emotion.js' %}"></script>
+<script src="{% static 'js/pageScroll.js' %}"></script>
+<script type="text/javascript">
+	trash = document.querySelectorAll(".rule-remove i");
+	for(let i=0; i<trash.length;i++){
+		trash[i].addEventListener("click",function(){;
+			document.querySelector(".rule-rm-btn").value=trash[i].id;
+			document.querySelector(".remove").style.display="flex";
+		})
+		document.querySelector(".remove .s .top i").addEventListener("click",function () {
+			document.querySelector(".remove").style.display="none";
+		})
+		document.querySelector(".cancel").addEventListener("click",function () {
+			document.querySelector(".remove").style.display="none";
+		})
+	}
+ </script>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/center.css' %}">
+<link rel="stylesheet" href="{% static 'accounts/groups_list.css' %}">
+<style type="text/css">
+    .name a {
+        text-decoration: none;
+        color: black;
+    }
+    .public-gp-icon {
+        margin-top: 20px;
+    }
+    .public-gp-icon p {
+        color: white;
+        background-color: #4267B2;
+        padding: 8px 13px;
+        border-radius: 3px;
+        font-size: 15px;
+        transition: 0.2s;
+    }
+    .public-gp-icon:hover {
+        opacity: 0.9;
+    }
+</style>
+{% include 'menu.html' %}
+<div class="main">
+{% include 'left_side.html' %}
+    <div class="center">
+        <a href="{% url 'accounts:friend_requests' %}" style="color: black; text-decoration: none;">
+        {% if requests.all.count > 0 %}
+            {{requests.all.count}} friend requests</a>
+        {% endif %}
+        {% for suggestion in suggestions %}
+            {% if suggestion != my_profile %}
+                <div class="groups">
+                    <div class="cover"><img src="{{suggestion.profile_img.url}}"></div>
+                    <div class="groups_detail">
+                        <p class="name"><a href="{% url 'accounts:profile' suggestion.id %}">{{suggestion.user.first_name}} {{suggestion.user.last_name}}</a></p>
+                        <div class="inf"><p style="font-size: 13px;opacity: 0.7;">{{suggestion.user.username}}</p><p class="info">
+                           
+                        </p></div>
+                    </div>
+                    <a href="{% url 'accounts:profile' suggestion.id %}" style="text-decoration: none;"><div class="public-gp-icon"><p>Profile</p></div></a>
+                </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+{% include 'right_side.html' %}
+</div>
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+{{my_profile.id|json_script:"json-username"}}
+<script src="{% static 'js/websocket.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,12 @@
+
+{% load static %}
+{% for post in posts %}
+    {% if post.post_type == 'groupPost' %}
+        {% include 'group_original_post.html' %}
+    {% elif post.post_type  == 'groupShared' %}
+        {% include 'group_shared_post.html' %}
+    {% endif %}
+{% endfor %}
+
+<script src="{% static 'js/emotion.js' %}"></script>
+

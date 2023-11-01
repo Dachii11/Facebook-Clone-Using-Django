@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/center.css' %}">
+<link rel="stylesheet" href="{% static 'accounts/groups_list.css' %}">
+<style type="text/css">
+    .name a {
+        text-decoration: none;
+        color: black;
+    }
+    .public-gp-icon {
+        margin-top: 15px;
+    }
+    .public-gp-icon button {
+        color: white;
+        background-color: #4267B2;
+        padding: 8px 13px;
+        border-radius: 3px;
+        font-size: 15px;
+        width: 85px;
+        transition: 0.2s;
+        text-align: center;
+        border: none;
+    }
+    .public-gp-icon:hover {
+        opacity: 0.9;
+    }
+</style>
+{% include 'menu.html' %}
+<div class="main">
+{% include 'left_side.html' %}
+    <div class="center">
+        <a href="{% url 'accounts:friend_requests' %}" style="color: black; text-decoration: none;">
+        {% for suggestion in requests %}
+            <div class="groups">
+                <div class="cover"><img src="{{suggestion.from_user.profile_img.url}}"></div>
+                <div class="groups_detail" style="width: 65%;">
+                    <p class="name" style="font-weight: 100;">
+                        <a href="{% url 'accounts:profile' suggestion.id %}" style="font-weight:bold;">{{suggestion.from_user.user}}</a> sent you a friend request</p>
+                    <div class="inf"><p class="info">15 mutual</p></div>
+                </div>
+                <form method="POST" action="">
+                    {% csrf_token %}
+                <div style="display: flex;">
+                <a href="{% url 'accounts:profile' suggestion.id %}" style="text-decoration: none; margin-right: 5px;"><div class="public-gp-icon"><button name="accept">Accept</button></div></a>
+                 <a href="{% url 'accounts:profile' suggestion.id %}" style="text-decoration: none;"><div class="public-gp-icon"><button name="reject" style="background: #f1f1f1;color: black;">Not now</button></div></a>
+                 </div>
+                 <input type="hidden" name="from_user" value="{{suggestion.from_user.user}}">
+                </form>
+            </div>
+    {% endfor %}
+    </div>
+{% include 'right_side.html' %}
+</div>
+{% endblock %}

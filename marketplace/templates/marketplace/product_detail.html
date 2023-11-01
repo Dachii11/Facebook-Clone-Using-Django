@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'mainApp/home.css' %}">
+<link rel="stylesheet" href="{% static 'marketplace/marketplace.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'marketplace/detail.css' %}">
+{% include 'menu.html' %}
+{% if my_profile.theme %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme_style.css' %}">
+{% endif %}
+<div class="main" style="margin-top: 50px;display: flex;">
+{% include 'marketplace/mixin.html' %}
+
+<div class="product">
+    <div class="seller">
+        <img src="{{product.seller.profile_img.url}}">
+        <div>
+            <p>{{product.seller.user}}</p>
+            <p><i class="fa-solid fa-location-dot"></i> {{product.seller.from_country}}</p>
+        </div>
+    </div>
+    <hr>
+    <div class="rs">
+        <div  class="img">
+            <img src="{{product.image.url}}">
+        </div>
+        <div class="info">
+            <h2>{{product.name}}</h2>
+            <p><i class="fa-solid fa-location-dot"></i> {{product.seller.from_country}} · <span>{{product.uploaded|timesince}} ago · {{product.total_views.all.count}} views</span></p>
+            <hr>
+            <div>
+                <p>{{product.description}}</p>
+            </div>
+            <div class="price">
+                <p>${{product.price}}</p>
+            </div>
+            <div class="btns">
+                <button class="offer">Make Offer</button>
+                <a href="{% url 'chat:chat' product.seller.id  %}"><button class="messg-seller">Message Seller</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+{{my_profile.id|json_script:"json-username"}}
+<script src="{% static 'js/websocket.js' %}"></script>
+{% endblock %}

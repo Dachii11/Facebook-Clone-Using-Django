@@ -1,0 +1,50 @@
+{% block content %}
+ {% if post.shared_post_comments.all|length > 3 %}
+                    {% for comment in post.shared_post_comments.all|slice:"3" %}
+                        {% if comment.post_id.id == post.id %}
+                        <div class="commentt">
+                            <img src="{{comment.user.profile_img.url}}">
+                            <div class="com_text">
+                                <a href="{% url 'accounts:profile' comment.user.id %}">{{comment.user}}</a>
+                                <p>{{comment.text}}</p>
+                            </div>
+                        </div>
+                        <div class="comment-btns">
+                            <p>Like</p>
+                            <p><a href="{% url 'comments:shared_reply_comment' comment.id %}">Reply</a></p>
+                            <p>{{comment.created|timesince}}</p>
+                        </div>
+                         {% if comment.shared_post_comment_reply.all.count > 0 %}
+                                <div class="reply">
+                                <i class="fa-solid fa-reply fa-rotate-180 reply-icon"></i>
+                                <p class="reply-count"><a href="{% url 'comments:shared_reply_comment' comment.id %}" style="text-decoration: none;color: #919191;">{{comment.shared_post_comment_reply.all.count}} reply</a></p>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    <div class="view-all-comm"><a href="#">View all comments</a></div>
+                {% else %}
+                    {% for comment in post.shared_post_comments.all %}
+                        {% if comment.post_id.id == post.id %}
+                        <div class="commentt">
+                            <img src="{{comment.user.profile_img.url}}">
+                            <div class="com_text">
+                                 <a href="{% url 'accounts:profile' comment.user.id %}">{{comment.user}}</a>
+                                <p>{{comment.text}}</p>
+                            </div>
+                        </div>
+                        <div class="comment-btns">
+                            <p>Like</p>
+                            <p><a href="#">Reply</a></p>
+                            <p>{{comment.created|timesince}} ago</p>
+                        </div>
+                         {% if comment.shared_post_comment_reply.all.count > 0 %}
+                                <div class="reply">
+                                <i class="fa-solid fa-reply fa-rotate-180 reply-icon"></i>
+                                <p class="reply-count"><a href="#" style="text-decoration: none;color: #919191;">{{comment.shared_post_comment_reply.all.count}} reply</a></p>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+{% include 'menu.html' %}
+<form method="POST" action="" style="margin-top: 80px;" enctype="multipart/form-data">
+	{% csrf_token %}
+	{{form}}
+	<input type="submit" value="Post">
+</form>
+{% endblock %}

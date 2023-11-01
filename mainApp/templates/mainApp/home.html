@@ -1,0 +1,373 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'mainApp/home_style.css' %}">
+<link rel="stylesheet" href="{% static 'mainApp/comment_style.css' %}">
+<link rel="stylesheet" href="{% static 'css/shared_post.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'mainApp/stories_style.css' %}">
+<style type="text/css">
+    .friends_name .friends_name {
+        text-decoration: none;
+        color: black;
+    }
+    .left a {
+        text-decoration: none;
+        color: black;
+    }
+    body {
+        background-color: #f5f5f5;
+    }
+    #myInput {
+  background-image: url('/css/searchicon.png'); /* Add a search icon to input */
+  background-position: 10px 12px; /* Position the search icon */
+  background-repeat: no-repeat; /* Do not repeat the icon image */
+  width: 80%; /* Full-width */
+  font-size: 16px; /* Increase font-size */
+  padding: 12px 20px 12px 40px; /* Add some padding */
+  border: 1px solid #ddd; /* Add a grey border */
+  margin-bottom: 12px; /* Add some space below the input */
+}
+
+#list-group {
+  /* Remove default list styling */
+  list-style-type: none;
+  position: absolute;
+  padding:0;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 50px;
+  margin-left: 55px;
+  display: none;
+  z-index: 1;
+  border-radius: 7px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+    background-color: white;
+}
+
+.list-group-item a {
+    color: black;
+    text-decoration: none;
+    font-size: 16px;
+    width: 100%;
+    font-weight: bold;
+    padding-left: 8px;
+}
+.list-group-item {
+    display: flex;
+    padding: 5px;
+}
+.list-group-item .item-text {
+    color: #919191;
+    font-size: 13px;
+    font-weight: 100;
+}
+.list-group-item .item-pic {
+    border-radius: 0;
+    border-radius:0;
+    border: 0.5px solid #f1f1f1;
+}
+.list-group-item:hover{
+    background-color: #4267B2;
+}
+.list-group-item:hover a {
+    color: white;
+}
+.list-group-item:hover .item-text {
+    color: white;
+}
+.list-group-item:hover .item-pic {
+    border: none;
+}
+.story .s {
+    position: absolute;
+    padding: 10px;
+}
+.top_box a {
+    color: black;
+}
+.story .s img {
+    width: 40px;
+    height: 40px;
+    border: 2px solid;
+    border-color: #4267B2;
+    background: #fff;
+    border-radius: 50%;
+}
+.story_upload {
+    text-align: center;
+}
+
+
+</style>
+{% include 'menu.html' %}
+{% if my_profile.theme %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+    <style type="text/css">.create-story {color: black;}</style>
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme_style.css' %}">
+    <style>.create-story {color: #fff;}</style>
+{% endif %}
+<div class="main" style="margin-top: 70px;display: flex;">
+    <!------------------ left --------------------->
+
+ <div class="left">
+        <a href="{% url 'accounts:profile' my_profile.id %}"><div class="img">
+        <img src="{{my_profile.profile_img.url}}">
+            <p>{{my_profile.user}}</p>
+        </div></a>
+        <a href="{% url 'accounts:friends' %}">
+            <div class="img">
+                <img src="{% static 'images/friends.png' %}">
+                <p>Friends</p>
+            </div>
+        </a>
+        <a href="{% url 'posts:saves' %}">
+            <div class="img">
+                <img src="{% static 'images/save.png' %}">
+                <p>Saved</p>
+            </div>
+        </a>
+        <a href="{% url 'accounts:groups' %}">
+        <div class="img">
+            <img src="{% static 'images/groups-icon.png' %}">
+            <p>Groups</p>
+        </div></a>
+        <a href="{% url 'posts:watch' %}">
+            <div class="img">
+                <img src="{% static 'images/watch.png' %}">
+                <p>Watch</p>
+            </div>
+        </a>
+        <hr>
+        <h2>Your shortcuts</h2>
+        {% for shortcut in shortcuts %}
+        <a href="{% url 'accounts:group' shortcut.group.id %}">
+            <div class="shortcuts">
+                <img src="{{shortcut.group.group_cover.url}}">
+                <p>{{shortcut.group.group_name}}</p>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+<!-- </div> -->
+    <!------------------ center --------------------->
+    <div class="center" style="">
+        <div class="stories-container">
+            <div class="content">
+                <div class="previous-btn">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="stories">
+                    <a href="{% url 'stories:add_story' %}">
+                    <div class="story" id="{{story.id}}" style="background: #fff;">
+                        <div style="height: 100%;"><img src="{{my_profile.profile_img.url}}" style="position: relative;"></div>
+                        <div style="position:absolute;text-align: center;background: #fff;width: 100%;bottom: 0;height: 35%;">
+                            <img src="{{my_profile.profile_img.url}}" style="width: 40px;height: 40px;border-radius: 50%;position:relative;top: -20px;border: 2px solid #4267B2;background: #fff;">
+                            <p style="bottom: 20px;text-align:center;width: 100%;font-weight: bold;position:absolute;" class="create-story">Create Story</p>
+                        </div>
+                    </div>
+                    </a>
+                    {% for story in stories %}
+                        {% if my_profile in story.views.all %}
+                            <style>.story .s img{border-color: rgba(0, 0, 0, 0.9);}</style>
+                        {% else %}
+                            <style>.story .s img {border-color: #4267B2;}</style>
+                        {% endif %}
+                        <div class="story" id="{{story.id}}">
+                            <div class="s">
+                                {% if my_profile in story.views.all %}
+                                <img src="{{story.user.profile_img.url}}" style="border-color: rgba(0, 0, 0, 0.8);">
+                                {% else %}
+                                   <img src="{{story.user.profile_img.url}}" style="border-color: #4267B2;">
+                                {% endif %}
+                            </div>
+                                {% if story.media_type_html == "image" %}
+                                    <img src="{{story.file.url}}">
+                                {% elif story.media_type_html == "video" %}
+                                    <video src="{{story.file.url}}"></video>
+                                {% endif %}
+                            <div class="author">{{story.user}}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="next-btn active">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+ 
+       
+         <div class="my_post">
+            <div class="post_top">
+                <form method="POST" action="" style="display: flex;" enctype="multipart/form-data">
+                    {% csrf_token %}
+                <img src="{{my_profile.profile_img.url}}">
+                <input type="text" name="post_text" id="search-input"  placeholder="What's on your mind, {{my_profile.user}}?" autocomplete="off">
+                <ul id="list-group">
+                    {% for account in tag_list|slice:"7" %}
+                        {% if account.user %}
+                        <li class="list-group-item">
+                            <img src="{{account.profile_img.url}}" class="item-pic" style="border-radius: 0;border: none;">
+                            <a href="{% url 'accounts:profile' account.id %}">{{account.user}}
+                            <p class="item-text">{{account.friends.all.count}} friends
+                                {% if account.bio %}
+                                 | {{account.bio|truncatechars:"25"}}
+                                {% endif %}
+                            </p>
+                            </a>
+                        </li>
+                        {% else %}
+                            <li class="list-group-item">
+                            <img src="{{account.group_cover.url}}" class="item-pic" style="border-radius: 0;border: none;">
+                            <a href="{% url 'accounts:group' account.id %}">{{account.group_name}}
+                            <p class="item-text">
+                                <i class="fa-solid fa-earth-americas"></i>
+                                {{account.members.all.count}} members
+                                | {{account.group_type}}
+                            </p>
+                            </a>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <hr>
+            <div class="post_bottom">
+                <div class="post_icon">
+                    <i class="fa-solid fa-images green"></i>
+                    <p><label for="img">Photo/Video</label></p>
+                    <input type="file" name="img" id="img" style="display:none;">
+                </div>
+                <div class="post_icon">
+                    <i class="fa-regular fa-face-grin yellow"></i>
+                    <a href="{% url 'mainApp:feelings' %}" style="text-decoration: none;color: black;"><p>Feeling/activity</p></a>
+                </div>
+                <input type="submit" class="sub-new-post">
+            </form>
+            </div>
+        </div>    
+        {% include 'posts.html' %}
+    </div>  
+
+ <div class="right" style="">
+        <div class="first_wrapper">
+            <div class="page">
+                <h2>Your Pages and profile</h2>
+            </div>
+            <div class="page_img">
+                <img src="{{my_profile.profile_img.url}}">
+                <p>{{my_profile.user}}</p>
+            </div>
+            {% for my_group in my_groups %}
+                <div class="page_img">
+                    <img src="{{my_group.group_cover.url}}">
+                    <p>{{my_group.group_name}}</p>
+                </div>
+            {% endfor %}
+            <div class="page_icon">
+                <i class="fa-regular fa-bell"></i>
+                <p class="home-not-disp">{{new_notifications}} New Notifications</p>
+            </div>
+        </div>
+        <hr>
+        <div class="third_wrapper">
+            <div class="contact_tag">
+                <h2>Contacts</h2>
+                <div class="contact_icon">
+                    <a href="{% url 'chat:chat_home' %}" style="color:black;"><i class="fa-brands fa-facebook-messenger"></i></a>
+                </div>
+            </div>
+            {% for account in accounts %}
+                <div class="contact">
+                    <img src="{{account.profile_img.url}}">
+                    <p>{{account.user}}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div> 
+</div>
+<div class="stories-full-view">
+    <div class="close-btn">
+        <i class="fa-solid fa-x"></i>
+    </div>
+    <div class="content">
+        <div class="previous-btn">
+            <i class="fa-solid fa-chevron-left"></i>
+        </div>
+        <div class="story">
+            <div class="author">Author</div>
+        </div>
+        <div class="next-btn">
+            <i class="fa-solid fa-chevron-right"></i>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+<script src="{% static 'js/pageScroll.js' %}"></script>
+<script src="{% static 'js/stories_scroll.js' %}"></script>
+<script src="{% static 'js/stories.js' %}"></script>
+
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+{{my_profile.id|json_script:"json-username"}}
+<script>
+    // const my_profile = JSON.parse(document.getElementById("json-username").textContent);
+    const chatSocket = new WebSocket('ws://'+window.location.host+"/ws/home/");
+    console.log(chatSocket);
+    const my_profile = JSON.parse(document.getElementById("json-username").textContent);
+
+    chatSocket.onclose = function(e){
+        
+    }
+    chatSocket.onmessage = function(e){
+        const data = JSON.parse(e.data);
+        if (data.new_notification){
+            if (data.new_notification>0){
+                document.querySelector(".new-msg").innerHTML=data.new_notification;
+                data.new_notification=0;
+            } 
+        } else if (data.new_notification_count>0){
+                document.querySelector(".not").innerHTML=data.new_notification_count;
+                document.querySelector(".home-not-disp").innerHTML=data.new_notification_count+" New Notifications";
+            }
+    }
+
+    setInterval(function(){
+        chatSocket.send(JSON.stringify({
+            "ask_for_new_message":"ask_for_new_message",
+            "my_profile":my_profile,
+        }));
+        return false;
+    },1000);
+</script>
+
+<script type="text/javascript">
+document.querySelector("#search-input");
+addEventListener("input",filterList);
+
+function filterList(){
+    const searchInput = document.querySelector("#search-input");
+    const filter = searchInput.value.toLowerCase();
+    const listItems = document.querySelectorAll(".list-group-item");
+    if (filter==0){
+        document.querySelector("#list-group").style.display = "none";
+    } else {
+        document.querySelector("#list-group").style.display = "block";
+        listItems.forEach((item)=>{
+            let text = item.textContent;
+            let inp = filter.split(" ").slice(-1)[0].substr(1,);
+            if (filter.split(" ").slice(-1)[0][0]=="@"){
+                if (text.toLowerCase().includes(inp.toLowerCase())){
+                    item.style.display = "";
+                } else {
+                    item.style.display = "none";
+                }
+            } else {
+                document.querySelector("#list-group").style.display = "none";
+            }
+        });
+    }
+}
+</script>
+{% endblock %}

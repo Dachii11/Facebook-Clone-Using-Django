@@ -1,0 +1,97 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'mainApp/home.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/group_style.css' %}">
+<link rel="stylesheet" href="{% static 'mainApp/comment_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/group_rule.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/rule_rm.css' %}">
+<style>.dropdown{display: none} .items .item ul a {text-decoration: none;}.rule-body {display: none;}.main .right {left: 0;width: 70%;padding-left: 15px;margin: 0 auto;margin-top: 50px;}.rules {width: 100%;}.create {width: 100%;}
+@media(max-width:1024px){
+	.main .right {width: 80%};
+}
+@media(max-width:850px){
+	.main .right {width: 90%};
+}
+@media(max-width:650px){
+	.main .right {width: 100%};
+}
+@media(max-width:425px){
+	.main .right {padding: 0;padding-left: 6px;};
+}
+.menu_settings {margin-top: 50px;}
+</style>
+
+{% if my_profile.theme %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+    <style>.rule-remove i {color: black;}</style>
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme.css' %}">
+    <style type="text/css">.create {background: rgb(23, 23, 23);}.rule-remove i {color: white;}
+    	.main .remove .s{
+    		background: rgb(23, 23, 23);
+    		color: #fff;
+    	}
+    	.down {
+    		color: #fff;
+    	}
+    	.rule-body {
+    		opacity: 0.9;
+    	}
+	</style>
+{% endif %}
+{% include 'menu.html' %}
+<div class="main">
+<div class="right">
+	<div class="create">
+		<div><p class="group-rule">{{center}}</p></div>
+	</div>
+	<div class="rules">
+		{% for report in reports %}
+			<div class="rule" style="display: flex;justify-content: space-between;width: 100%;" id="{{report.id}}">
+				<div style="width: 100%;">
+					<div style="display: flex;justify-content: space-between;">
+						<p class="rule-title" style="cursor: pointer;">{{report.title}}</p>
+						<i class="fa-solid fa-chevron-down down" id="i{{report.id}}" style="font-size: 13px;padding: 5px;"></i>
+					</div>
+					{% if report.report_text.all %}
+						{% for text in report.report_text.all %}
+							<p class="rule-body" id="a{{report.id}}">{{text.text}}</p>
+						{% endfor %}
+					{% else %}
+ 						{% for text in report.help_text.all %}
+							<p class="rule-body" id="a{{report.id}}">{{text.text}}</p>
+						{% endfor %}
+					{% endif %}
+				</div>
+			</div>
+			<hr>
+		{% endfor %}
+	</div>
+</div>
+
+<script type="text/javascript">
+	reports = document.querySelectorAll(".rule");
+	for(let i=0; i<reports.length;i++){
+		reports[i].addEventListener("click",function(){
+			result = document.querySelectorAll('[id=a'+reports[i].id+']')
+			if (document.getElementById("i"+reports[i].id).className==="fa-solid fa-chevron-down down"){
+				for (let j=0; j < result.length; j++){
+					result[j].style.display='flex';
+				}
+				i_icon = document.getElementById("i"+reports[i].id).className='fa-solid fa-chevron-up down';
+			} else {
+				for (let j=0; j < result.length; j++){
+					result[j].style.display='none';
+				}
+				i_icon = document.getElementById("i"+reports[i].id).className='fa-solid fa-chevron-down down';
+			}
+		})
+	}		
+</script>
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+{{my_profile.id|json_script:"json-username"}}
+<script src="{% static 'js/websocket.js' %}"></script>
+{% endblock %}

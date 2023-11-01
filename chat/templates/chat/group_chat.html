@@ -1,0 +1,109 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'chat/chat_style.css' %}">
+{% if my_profile.theme %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme.css' %}">
+{% endif %}
+<style type="text/css">
+    @media(max-width:1024px){
+        .main-block {
+            width: 100%;
+        }
+    }
+</style>
+{% include 'menu.html' %}
+<div class="main-block">
+    <header class="header" style="justify-content: space-between;">
+        <div style="display: flex;">
+            <img src="{{group.icon.url}}" style="border-radius: 50%;">
+            <p class="group-name">{{group.title}}</p>
+        </div>
+        <a href="{% url 'chat:settings' group.id %}" style="color: deepskyblue;"><i class="fa-solid fa-gear"></i></a>
+    </header>
+    <hr>
+    <div class="body">
+        <div class="messages">
+            {% for message in messages %}
+            {% if message.from_user == my_profile %}
+                <div class="my-message">
+                    <div>
+                        <p class="username" style="font-size: 14px;">{{message.from_user}}</p>
+                        <p class="text">{{message.message}}</p>
+                        <p class="date">{{message.date_send|date:'Y-m-d'}}</p>
+                    </div>
+                    <img src="{{message.from_user.profile_img.url}}">
+                </div>
+            {% else %}
+                <div class="message">
+                    <img src="{{message.from_user.profile_img.url}}">
+                    <div>
+                        <p class="username" style="font-size:14px;">{{message.from_user}}</p>
+
+                        <p class="text">{{message.message}}</p>
+                        <p class="date">{{message.date_send|date:'Y-m-d'}}</p>
+                    </div>
+                </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <hr>
+        <div class="send-message">
+        <form method="post">
+            <input type="text" name="" placeholder="Write a message..." id="my-input" class="msg">
+            <input type="hidden" name="sender" value="{{my_profile.id}}" class="sender">
+            <input type="image" src="{% static 'images/send.png' %}" class="img" id="submit" style="width: 40px;height: 40px;">
+        </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+{{group.id|json_script:"json-group-id"}}
+{{my_profile.id|json_script:"json-username"}}
+<script>
+    const chat = JSON.parse(document.getElementById("json-group-id").textContent);
+    const my_profile = JSON.parse(document.getElementById("json-username").textContent);
+    
+    const chatSocket = new WebSocket('ws://'+window.location.host+'/ws/chat/group/'+chat+'/');
+
+    chatSocket.onclose = function(e){
+        // console.log("WebSocket Closed!");
+    }
+    chatSocket.onmessage = function(e){
+        const data = JSON.parse(e.data);
+        console.log(data)
+            if (data.message){
+                if (parseInt(data.sender)===my_profile){
+                let html = "<div class='my-message'><div><p class='username' style='font-size: 14px;'>"+data.my_username+"</p><p class='text'>"+data.message+"</p><p class='date'>"+data.time+"</p></div><img src='"+data.my_profile_img+"'></div>"
+                document.querySelector(".messages").innerHTML+=html;
+                } else {
+                    let html = "<div class='message'><img src='"+data.my_profile_img+"'><div><p class='username' style='font-size: 14px;'>"+data.my_username+"</p><p class='text'>"+data.message+"</p><p class='date'>"+data.time+"</p></div></div>"
+                    document.querySelector(".messages").innerHTML+=html;
+
+                }
+                 let objDiv = document.querySelector('.messages');
+                objDiv.scrollTop = objDiv.scrollHeight;
+            } else {
+                alert("The message was empty!");
+            }
+
+    }
+    document.querySelector("#submit").onclick = function(e){
+        e.preventDefault();
+        const messageInputDom = document.querySelector("#my-input");
+        const message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+            'message':message,
+            'my_profile':my_profile,
+            'group_id':chat,
+            'sender':document.querySelector(".sender").value,
+        }));   
+        messageInputDom.value = '';
+        return false;
+    }
+</script> 
+{% endblock %}

@@ -1,0 +1,115 @@
+{% block content %}
+{% load static %}
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/login_style.css' %}">
+<style type="text/css">
+	.signinlink{
+		font-size: 14px;
+		color: #919191;
+	}
+	.signinlink a {
+		text-decoration: none;
+		color: #0B84ED;
+	}
+	p {
+/*		display: none;*/
+		font-size: 12px;
+	}
+	.help_text{
+		font-size: 12px;
+	}
+	#id_username,
+	#id_password1,
+	#id_email,
+	#id_password,
+	#id_password2 {
+		display: flex;
+		width: 90%;
+		margin: 0 auto;
+	}
+	select {
+		display: flex;
+    width: 90%;
+    margin: 0 auto;
+	}
+	.search_select_box select {
+
+	}
+	.genders {
+		display: flex;
+		justify-content: space-between;
+	}
+	.genders i {
+		font-size: 14px;
+	}
+	.genders label {
+		font-size: 14px;
+	}
+		#id_first_name,
+		#id_last_name {
+		display: flex;
+    	width: 90%;
+    	margin: 0 auto;
+        border: none;
+    	box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+    	outline: none;
+    	padding: 6px;
+		}
+</style>
+<nav>
+		<h1 class="nav-fb-icon">Facebook</h1>
+	</nav>
+<div class="main">
+	<div class="left-side">
+		<p>Facebook helps you connect and share with the people in your life</p>
+		<img src="{% static 'images/connection.png' %}">
+	</div>
+	<div class="right-side">
+		<div class="ddd">
+			<form method="post" action="">
+				{% csrf_token %}
+				{% if messages %}
+					{% for message in messages %}
+						<p style="color:red;">{{message}}</p>
+					{% endfor %}
+				{% endif %}
+				{{form.as_p}}
+				
+				<div class="genders">
+					<div>
+						<i class="fa-solid fa-mars"></i>
+						<input type="checkbox" name="gender" id="male" onclick="CheckOnlyOne(this.value);" class="d" value="male">
+						<label for="male" style="display: inline-block;">Male</label>
+					</div>
+					<div>
+						<i class="fa-solid fa-venus"></i>
+						<input type="checkbox" name="gender" id="female" onclick="CheckOnlyOne(this.value);" class="d" value="female">
+						<label for="female" style="display: inline-block;">Female</label>
+					</div>
+				</div>
+				<select name="country">
+					{% for country in countries %}
+						<option value="{{country}}">{{country}}</option>
+					{% endfor %}
+				</select>
+				
+				<input type="submit" name="Login" value="Sign Up" class="login">
+			</form>
+			<hr>
+			<p class="signinlink">Already have an account? <a href="{% url 'accounts:login' %}">Sign In<a></p>
+		</div>
+	</div>
+</div>
+<script>
+	function CheckOnlyOne(b){
+		let x = document.querySelectorAll(".d");
+		console.log(x);
+		for(let i=0; i<x.length;++i){
+			if(x[i].value!=b)x[i].checked=false;
+		}
+	}
+</script>
+{% endblock %}

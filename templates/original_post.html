@@ -1,0 +1,295 @@
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/reply_style.css' %}">
+{% if my_profile.theme %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme.css' %}">
+{% endif %}
+<style type="text/css">
+    .comm-likes-count {
+        float: right;
+        font-size: 12px;
+        background-color: #4267B2;
+        color: white;
+        padding: 3px;
+        border-radius: 50%;
+        padding-left: 5px;
+    }
+    .dropdown {
+        display: none;
+    }
+    .add-com {width:90%;}
+    @media(max-width:470px){
+        .center .friends_post .comment_wrapper .comment_search input{
+            width: 80%;
+        }
+    }
+</style>
+{% include 'menu.html' %}
+{% if my_profile.theme %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme.css' %}">
+    <style type="text/css">.aslfa{color: #fff;}</style>
+{% endif %}
+<div class="friends_post">
+            <div class="friend_post_top">
+                <div class="img_and_name">
+                    <img src="{{post.user.profile_img.url}}">
+                    <div class="friends_name">
+                        <p><a class="friends_name" href="{% url 'accounts:profile' post.user.id %}">{{post.user}}</a> <span style="font-weight:normal;">
+                        {% if post.tags.all.count > 0 %}
+                            is with</span>
+                            {% if post.tags.all.count == 1 %}
+                                {% for t in post.tags.all %}
+                                    {{t.user}}
+                                {% endfor %}
+
+                            {% elif post.tags.all.count >= 2 %}
+                                {{post.tags.first}} <span style="font-weight:normal;">and</span>
+                                {{post.tags.all.count|add:"-1"}}
+                                {% if post.tags.all.count|add:"-1" > 1 %}
+                                    others
+                                {% else %}
+                                    other
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                        {% if post.location %}
+                         <span style="font-weight:bold;">·</span> <span style="font-weight: normal;"><i class="fa-solid fa-location-dot location" style="color:darkred;font-size: 14px;"></i></span> <span style="font-weight: bold;">{{post.location}}</span>
+                        {% endif %}
+                        {% if post.feeling %}
+                            {% if post.location or post.tags.all %}
+                            <span style="font-weight:normal;">and feels</span> <span style="font-weight:bold;">{{post.feeling}}</span>
+                            {% else %}
+                             <span style="font-weight:normal;">· feels</span> <span style="font-weight:bold;">{{post.feeling}}</span>
+                            {% endif %}
+                        {% endif %}
+                        {% if post.user.user in my_profile.friends.all %}
+                            <span style="color: #919191;font-weight: bold;">·</span> <i class="fa-solid fa-user-group" style="font-size: 13px;color: #919191;"></i>
+                        {% endif %}
+                    </p>
+                        <p class="time">
+                             {% if post.status == "Public" %}
+                            <i class="fa-solid fa-earth-americas" style="font-size: 12px;"></i>
+                            {% else %}
+                            <i class="fa-solid fa-people-line" style="font-size:12px;"></i>
+                            {% endif %}
+                            | {{post.created_at|timesince}} ago<i class="fa-solid fa-user-group"></i></p>
+                    </div>
+                </div>
+                <div class="dropdown" id="original_post_{{post.id}}">
+                <ul>
+                    <li>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="post_type" value="{{post.post_type}}">
+                            <input type="hidden" name="post_id" value="{{post.id}}">
+                            <button type="submit">Save</button>
+                        </form>
+                    </li>
+                    <li><button type="text">Report</button></li>
+                    {% if my_profile == post.user %}
+                    <a href="{% url 'posts:delete_post' post.id %}"><li class="del"><button type="text">Delete</button></li></a>
+                    {% endif %}
+                </ul>
+                </div>
+                <div class="menu" id="original_post_{{post.id}}">
+                    <i class="fa-solid fa-ellipsis"></i>
+                </div>
+            </div>
+            <p class="post_caption">{{post.caption}}</p>
+            {% if post.media_type_html == "image" %}
+            <!-- style="object-fit: none; object-position: none;" -->
+            <img src="{{post.file.url}}" style="object-fit: cover;
+    object-position: center;">
+            {% elif post.media_type_html == "video" %}
+            <video controls><source src="{{post.file.url}}"></video>
+            {% endif %}
+            <div class="info">
+                <div class="emoji_img">
+                    {% if post.like_reaction.all.count > 0 %}
+                        <img src="{% static 'images/Like_icon.png' %}">
+                    {% endif %}
+                    {% if post.love_reaction.all.count > 0 %}
+                        <img src="{% static 'images/love_icon.png' %}">
+                    {% endif %}
+                    {% if post.haha_reaction.all.count > 0 %}
+                        <img src="{% static 'images/haha_icon.png' %}">
+                    {% endif %}
+                    {% if post.wow_reaction.all.count > 0 %}
+                        <img src="{% static 'images/wow_icon.png' %}">
+                    {% endif %}
+                     {% if post.sad_reaction.all.count > 0 %}
+                        <img src="{% static 'images/sad_icon.png' %}">
+                    {% endif %}
+                     {% if post.angry_reaction.all.count > 0 %}
+                        <img src="{% static 'images/Angry_icon.png' %}">
+                    {% endif %}
+                    {% if my_profile in post.likes.all %}
+                        {% if post.likes.all.count == 1 %}
+                            <p>you</p>
+                        {% else %}
+                            {% if post.likes.all.count == 2 %}
+                           <p>you and {{post.likes.all.count|add:"-1"}} other</p>
+                            {% else %}
+                            <p>you and {{post.likes.all.count|add:"-1"}} others</p>
+                            {% endif %}
+                        {% endif %}
+                    {% else %}
+                        {% if post.likes.all.count > 0%}
+                            <p>{{post.likes.all.count}}</p>
+                        {% endif %}
+                    {% endif %}
+                </div> 
+                <div class="comment">
+                    {% if post.comments.all.count > 0 %}
+                        <p>{{post.comments.all.count}} <a href="{% url 'posts:post_detail' post.id %}">Comments</a></p>
+                    {% endif %}
+                    {% if post.shares.all.count > 0 %}
+                        {% if post.shares.all.count == 1 %}
+                            <p>{{post.shares.all.count}} Share</p>
+                        {% else %}
+                            <p>{{post.shares.all.count}} Shares</p>
+                        {% endif %}
+                    {% endif %}
+                    {% if post.media_type_html == "video" %}
+                        <p>{{post.views.all.count}} views</p>
+                    {% endif %}
+                </div>
+                    <div class="container" id="org_{{post.id}}">
+                        <div class="content">
+                            <div class="emoji">
+                                <form method="POST" action="">
+                                    {% csrf_token %}
+                                    <div class="hello">
+                                        <input type="image" src="{% static 'images/like_gif.gif' %}" name="like">
+                                    </div>
+                                     <div class="hello">
+                                        <input type="image" src="{% static 'images/Love_gif.gif' %}" name="love">
+                                    </div>
+                                    <div class="hello">
+                                        <input type="image" src="{% static 'images/haha_gif.gif' %}" name="haha">
+                                    </div>
+                                     <div class="hello">
+                                        <input type="image" src="{% static 'images/wow_gif.gif' %}" name="wow">
+                                    </div>
+                                    <div class="hello">
+                                        <input type="image" src="{% static 'images/sad_gif.gif' %}" name="sad">
+                                    </div>
+                                    <div class="hello">
+                                        <input type="image" src="{% static 'images/angry_gif.gif' %}" name="angry">
+                                    </div> 
+                                    <input type="hidden" name="post" value="{{post}}">
+                                    <input type="hidden" name="post_like" value="{{post.id}}">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+       <hr>
+        <div class="like">
+            <div class="like_icon">
+                {% if my_profile in post.likes.all %}
+                    {% if my_profile in post.like_reaction.all %}
+                        <i class="fa-solid fa-thumbs-up active"></i>
+                        <p class="emoji_list like-text" id="org_{{post.id}}">Like</p>
+                    {% elif my_profile in post.love_reaction.all %}
+                        <img src="{% static 'images/love_icon.png' %}" style="border-radius: 22px;">
+                        <p class="emoji_list love-text" id="org_{{post.id}}">Love</p>
+                    {% elif my_profile in post.haha_reaction.all %}
+                        <img src="{% static 'images/haha_icon.png' %}">
+                        <p class="emoji_list haha-text" id="org_{{post.id}}">Haha</p>
+                    {% elif my_profile in post.wow_reaction.all %}
+                        <img src="{% static 'images/wow_icon.png' %}">
+                        <p class="emoji_list wow-text" id="org_{{post.id}}">Wow</p>
+                    {% elif my_profile in post.sad_reaction.all %}
+                        <img src="{% static 'images/sad_icon.png' %}">
+                        <p class="emoji_list sad-text" id="org_{{post.id}}">Sad</p>
+                    {% elif my_profile in post.angry_reaction.all %}
+                        <img src="{% static 'images/Angry_icon.png' %}" style="border-radius: 22px;">
+                        <p class="emoji_list angry-text" id="org_{{post.id}}">Angry</p>
+                    {% endif %}
+                {% else %}
+                    <i class="fa-solid fa-thumbs-up"></i>
+                    <p class="emoji_list" id="org_{{post.id}}">Like</p>
+                {% endif %}
+            </div>
+            <div class="like_icon">
+                <i class="fa-solid fa-message"></i>
+                <p><a href="{% url 'posts:post_detail' post.id %}">Comment</a></p>
+            </div>
+            <div class="like_icon">
+                <i class="fa-solid fa-share"></i>
+                <p><a href="{% url 'posts:share' post.id %}">Share</a></p>
+            </div>
+        </div>
+        <hr>
+        <div class="comment_wrapper">
+            <img src="{{my_profile.profile_img.url}}">
+            <div class="circle"></div>
+                <div class="comment_search">
+                    <form method="POST">
+                        {% csrf_token %}
+                       <input type="text" name="text" placeholder="Write a comment" class="add-com">
+                       <input type="hidden" name="post_id" value="{{post.id}}">
+                       <input type="hidden" name="type_of_post" value="{{post.post_type}}">
+                        <i class="fa-regular fa-face-smile" style="padding-top: 5px;"></i>
+                    </form>
+                </div>
+            </div>
+            <div class="comment_section">
+            {% if not allow_all_comments %}
+                {% if post.comments.all|length > 3 %}
+                    {% for comment in post.comments.all|slice:"3" %}
+                        <div class="commentt">
+                            <img src="{{comment.user.profile_img.url}}">
+                            <div class="com_text">
+                                <a href="{% url 'accounts:profile' comment.user.id %}">{{comment.user}}</a>
+                                <p>{{comment.text}}</p>
+                            </div>
+                        </div>
+                        <div class="comment-btns">
+                            <form method="POST">
+                            {% csrf_token %}
+                            <p>
+                                {% if my_profile in comment.likes.all %}
+                                    <input type="submit" name="like" value="Liked" style="background: none; border: none; color: #4267B2;">
+                                {% else %}
+                                    <input type="submit" name="like" value="Like" style="background: none; border: none; color: #919191;">
+                                {% endif %}
+                                <input type="hidden" name="type_of_comment" value="{{comment.type_of_comment}}">
+                            </p>
+                            <input type="hidden" name="comment" value="{{comment.id}}">
+                            </form>
+                            <p><a href="{% url 'comments:reply_comment' comment.id %}">Reply</a></p>
+                            <p>{{post.created_at|timesince}}</p>
+                                
+                            {% if comment.likes.all.count > 0 %}
+                                {% if comment.likes.all.count == 1 %}
+                                    <p>{{comment.likes.all.count}} like</p>
+                                {% else %}
+                                    <p>{{comment.likes.all.count}} likes</p>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        {% if comment.reply.all.count > 0 %}
+                            <div class="reply">
+                            <i class="fa-solid fa-reply fa-rotate-180 reply-icon"></i>
+                            <p class="reply-count"><a href="{% url 'comments:reply_comment' comment.id %}" style="text-decoration: none; color: #919191;">{{comment.reply.all.count}} reply</a></p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="view-all-comm"><a href="{% url 'posts:post_detail' post.id %}">View all comments</a></div>
+                {% else %}
+                    {% include 'comments/comments_mixin.html' %}
+                {% endif %}
+            {% else %}
+               {% include 'comments/comments_mixin.html' %}
+            {% endif %}
+            </div>
+        </div>
+
+
+{% endblock %}

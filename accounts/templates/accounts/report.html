@@ -1,0 +1,82 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'mainApp/home_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/group.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'mainApp/comment_style.css' %}"> -->
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/group_edit.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/report.css' %}">
+<style>.dropdown{display: none} .items .item ul a {text-decoration: none;}
+
+
+</style>
+
+{% if my_profile.theme %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+    <style>.rule-remove i {color: black;}</style>
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme.css' %}">
+    <style type="text/css">.create {background: rgb(23, 23, 23);}.rule-remove i {color: white;}
+    	.main .remove .s{
+    		background: rgb(23, 23, 23);
+    		color: #fff;
+    	}
+	</style>
+{% endif %}
+{% include 'menu.html' %}
+<div class="main">
+		{% include 'accounts/groups_left_side.html' %}
+
+<div class="right">
+	<div class="create">
+		<p class="report-title">Give feedback on this group</p>
+	</div>
+	<hr>
+	<form method="POST">
+		{% csrf_token %}
+	<div class="report">
+		<div class="top-title">
+			<i class="fa-solid fa-circle-exclamation"></i>
+			<p>Help us understand what's happening.</p>
+		</div>
+		<div class="reasons" id="reasons">
+			{{form.why}}
+		</div>
+
+		<div class="top-title">
+			<i class="fa-solid fa-circle-exclamation"></i>
+			<p>Help us understand the problem.</p>
+		</div>
+		<div class="reasons" id="reasons">
+			{{form.problem}}
+		</div>
+		<div class="textarea">
+			<textarea rows="10" placeholder="Do you want to say something about it?" name="text"></textarea>
+		</div>
+	</div>
+	<div class="bottom-help">
+		<hr>
+		<div>
+			<i class="fa-solid fa-circle-exclamation"></i>
+			<p>If someone is in immediate danger, call local emergency services. Don't wait.</p>
+		</div>
+		<hr>
+	</div>
+	<div class="send">
+		<input type="submit" value="Send">
+	</div>
+	</form>
+</div>
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+<script type="text/javascript">
+    $("#id_why option:first").remove()
+    // $("#id_problem option:first").remove()
+</script>
+
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+{{my_profile.id|json_script:"json-username"}}
+<script src="{% static 'js/websocket.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,60 @@
+.share_top_side  {
+	display: block;
+    /* align-items: center; */
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+.friend_post_top .img_and_name .friends_name span {
+	font-weight: 100;
+}
+.shared_post {
+/*	background-color: red;*/
+	width: 100%;
+	border: 1px solid rgba(150, 150, 150, 0.3);
+	border-radius: 15px;
+	padding: 15px;
+}
+.shared_post .post_top .img_and_name img {
+	height: 30px;
+	width: 30px;
+	border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.shared_post {
+	display: inline-block;
+    align-items: center;
+    justify-content: space-between;
+}
+.shared_post .post_top {
+	    margin-bottom: 15px;
+}
+.shared_post .post_top .img_and_name {
+	display: flex;
+	align-items: center;
+}
+.shared_post .post_top .img_and_name .friends_name .friends_name{
+	font-weight: bold;
+	font-size: 15px;
+}
+.shared_post .post_top .img_and_name .friends_name .time {
+	font-size: 14px;
+    color: #919191;
+    margin: 3px 0;
+}
+.shared_post .post_top .img_and_name .friends_name a{
+	text-decoration: none;
+	color: black;
+}
+.shared_post .post_top .img_and_name .friends_name .time i {
+	font-size: 10px;
+	padding-left: 5px;
+}
+.shared_post .post_bottom .post_caption {
+    font-size: 14px;
+    padding-bottom: 8px;
+    font-family: Helvetica;
+}

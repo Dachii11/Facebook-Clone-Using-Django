@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'chat/group_remove_member.css' %}">
+<div class="main">
+	{% for member in group_members %}
+			<div class="member">
+				<div class="m">
+					<img src="{{member.profile_img.url}}" style="background: #f1f1f1;">
+					<p style="padding-left: 5px;">{{member.user}}</p>
+				</div>
+				{% if my_profile == group.admin %}
+				<div><a href="{% url 'chat:rm_member' group.id member.id %}"><button>remove</button></a></div>
+				{% endif %}
+			</div>
+	{% endfor %}
+</div>
+
+{% endblock %}

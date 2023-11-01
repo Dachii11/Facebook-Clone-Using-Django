@@ -1,0 +1,187 @@
+body {
+    background-color: #f1f1f1;
+}
+.main-block {
+    margin: 0 auto;
+    background-color: white;
+    width: 60%;
+    margin-top: 60px;
+    border-radius: 8px;
+    padding: 0;
+
+}
+.main-block header p{
+    margin-top:10px;
+    font-weight: bold;
+}
+.main-block header {
+    display: flex;
+    padding: 5px;
+}
+.main-block header img{
+    width: 40px;
+    height: 40px;
+}
+.main-block .body .send-message {
+    padding: 8px;
+    display: flex;
+    text-align: center;
+}
+.main-block .body .send-message .img{
+    width: 25px;
+    height: 25px;
+    border-radius: 15px;
+    border: none;
+    background-color: #f1f1f1;
+    padding: 10px;
+
+}
+.main-block .body .send-message .msg {
+    padding: 10px;
+    width:95%;
+    border: none;
+    background-color: #f1f1f1;
+    border-radius: 15px;
+/*    position: absolute;*/
+}
+.main-block .body .send-message .msg:focus {
+    outline: none;
+}
+.main-block .body .send-message form {
+    width: 100%;
+    display: flex;
+}
+
+.main-block .body .messages {
+    margin-top: 10px;
+    height: 470px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+}
+.main-block hr{
+    width: 100%;
+    height: 1px;
+    border: 0;
+    background: #cccccc;
+    margin: 0 0;
+}
+.main-block .body .messages .message img,
+.main-block .body .messages .my-message img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+.main-block .body .messages .message,
+.main-block .body .messages .my-message {
+    display: flex;
+    padding: 10px;
+}
+.main-block .body .messages .message div p,
+.main-block .body .messages .my-message div p {
+    margin: 0;
+}
+.main-block .body .messages .message .username
+.main-block .body .messages .my-message .username {
+    font-size: 12px;
+    color: #919191;
+}
+.main-block .body .messages .message div,
+.main-block .body .messages .my-message div {
+    padding-left: 5px;-block}
+.main-block .body .messages .message div .text,
+.main-block .body .messages .my-message div .text{
+    padding: 8px;
+    border-radius: 15px;
+    font-family: Arial;
+    font-size: 14px;
+    text-align: center;
+    width: fit-content;
+    max-width: 500px;
+}
+.main-block .body .messages .my-message  {
+    margin-left: auto;
+/*    background-color: dodgerblue;*/
+
+}
+.main-block .body .messages .message div .text {
+    background-color: #f1f1f1;
+}
+.main-block .body .messages .my-message div .text {
+    background-color: #218aff;
+    color: white;
+    margin-left: auto;
+}
+.main-block .body .messages .my-message div .date,
+.main-block .body .messages .message div .date {
+    color: #919191;
+    font-size: 12px;
+}
+.main-block .body .messages .my-message .username {
+    width: fit-content;
+    margin-left: auto;
+}
+.main-block .body .messages .my-message div .date {
+    float: right;
+}
+@media(max-width:1024px){
+    .main-block {
+        -blockwidth: 100%;
+    }
+     .main-block .body .messages .message div .text,
+    .main-block .body .messages .my-message div .text{
+        max-width: 450px;
+    }
+}
+
+@media(max-width:768px){-block
+    .main-block {
+        width: 100%;
+    }
+     .main-block .body .messages .message div .text,
+    .main-block .body .messages .my-message div .text{
+        max-width: 400px;
+    }
+
+}
+
+@media(max-width:600px){
+    .main-block {
+        width: 100%;
+    }
+     .main-block .body .messages .message div .text,
+    .main-block .body .messages .my-message div .text{
+        max-width: 300px;
+    }
+
+}
+
+@media(max-width:520px){
+    .main-block {
+        width: 100%;
+    }
+     .main-block .body .messages .message div .text,
+    .main-block .body .messages .my-message div .text{
+        max-width: 250px;
+        font-size: 14px;
+    }
+}
+@media(max-width:400px){
+    .main-block {
+        width: 100%;
+    }
+     .main-block .body .messages .message div .text,
+    .main .body .messages .my-message div .text{
+        max-width: 200px;
+        font-size: 13px;
+    }
+    .main-block .body .messages .message .username   
+    .main-block .body .messages .my-message .username{
+        font-size: 10px;
+    }
+
+}
+.img {
+    height: 40px;
+    width: 40px;
+}

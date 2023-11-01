@@ -1,0 +1,334 @@
+.main,
+body{
+	background: rgb(18,18,18);
+}
+nav {
+	background: rgb(23, 23, 23);
+	border-bottom: 1px solid rgb(23, 23, 23);
+}
+nav .right i{
+	background: #242526;
+}
+nav i {
+	color: #fff;
+	background: rgb(23, 23, 23);
+}
+
+nav .left .search_bar i {
+	background: rgb(30, 30, 30);
+	border-radius: 25px;
+}
+nav .left .search_bar input {
+	color: #fff;
+}
+nav .right img {
+	border: none;
+}
+.main .left,
+.main .center,
+.main .right {
+	background: rgb(18, 18, 18);
+	border: 1px solid rgb(23,23,23);
+}
+.main .left p,
+.main .center p,
+.main .right p{
+	color: #fff;
+}
+.main .center .friends_post,
+.main .center .my_post {
+	background: rgb(23, 23, 23);
+}
+
+.main .center .friends_post .like .like_icon i,
+.main .center .friends_post .like .like_icon a {
+	color: #fff;
+	text-decoration: none;
+}:
+.main .center .friends_post .friend_post_top{
+	color: #fff;
+}
+.main .left hr,
+.main .right hr {
+	background: rgb(23, 23, 23);
+
+}
+
+.main .center .friends_post .friend_post_top .img_and_name .friends_name .time,
+.main .friends_name .friends_name,
+.main .group-name-s,
+.main .arr-group-name,
+.main .center .friends_post .friend_post_top .menu i,
+.main .dropdown ul li button,
+.main .center .friends_post .info .comment p,
+.main .center .friends_post .info .comment a,
+.main .center .friends_post .comment_section .commentt .com_text a {
+	color: #fff;
+}
+.main .center .friends_post .info .comment a {
+	text-decoration: none;
+}
+.main .right .third_wrapper .contact_tag .contact_icon i {
+	color: #919191;
+}
+.main .right .third_wrapper .contact_tag .contact_icon i:hover{
+  background: rgb(23, 23, 23);
+}
+
+.main .center .my_post .post_bottom .post_icon:hover {
+	background: rgb(26,26,26);
+}
+.main  .left .img:hover,
+.main .left .shortcuts:hover {
+	background: rgb(26, 26, 26);
+}
+
+.main .center .my_post .post_top input,
+.main .center .friends_post .comment_wrapper .comment_search {
+	background: rgb(26, 26, 26);
+	color: #fff;
+}
+.main .center .my_post .post_top input:hover,
+.main .center .friends_post .comment_wrapper .comment_search:hover,
+.main .container .content .emoji,
+nav .left .search_bar  {
+	background: rgb(30, 30, 30);
+}
+nav .left .search_bar{
+	color: #fff;
+}
+.main .center .friends_post hr,
+.main .center .my_post hr {
+	background: rgb(30, 30, 30);
+}
+
+.main .center .friends_post .comment_section .comment-btns p input,
+.main .center .friends_post .comment_section .comment-btns a{
+	color: #919191;
+	text-decoration: none;
+}
+.main .center .friends_post .info .emoji_img img{
+	background: #fff;
+	border-radius: 17px;
+}
+.main .container .content .emoji input  {
+	border-radius: 20px;
+}
+.friend_post_top .img_and_name .friends_name span {
+	color: #fff;
+}
+.main .shared_post .post_top .img_and_name .friends_name a{
+	color: #fff;
+}
+.l-cnt,
+.main-block {
+	background: rgb(23, 23, 23);
+}
+.center .my_post .post_bottom .post_icon:hover,
+.friend:hover {
+	background: rgb(30, 30, 30);
+}
+.center .friends_post .comment_section .commentt .com_text p,
+.shared_post .post_bottom .post_caption,
+.center .friends_post .post_caption {
+	color: #fff;
+}
+
+
+.header {
+	background: rgb(23,23,23);
+}
+.username,
+.group-name {
+	color: #fff;
+}
+.main-block .body .send-message .msg,
+.main-block .body .send-message .img {
+	background: rgb(30, 30, 30);
+	color: #fff;
+}
+.main-block hr {
+	background: rgb(30, 30, 30);
+}
+.main .center .friends_post .friend_post_top .menu:hover {
+	background: rgb(30, 30, 30);
+}
+.dropdown ul li:hover{
+	background: rgb(30, 30, 30);
+}
+
+
+
+
+.comment_search input {
+	background: rgb(26, 26, 26);
+}
+
+.center {
+	background: rgb(18, 18, 18);
+}
+
+.center .friends_post,
+.center .my_post {
+	background: rgb(23, 23, 23);
+}
+.center .friends_post .like .like_icon i,
+.center .friends_post .like .like_icon a {
+	color: #fff;
+	text-decoration: none;
+}:
+.center .friends_post .friend_post_top{
+	color: #fff;
+}
+.left hr,
+.right hr {
+	background: rgb(23, 23, 23);
+
+}
+
+.center .friends_post .friend_post_top .img_and_name .friends_name .time,
+.friends_name .friends_name,
+.group-name-s,
+.arr-group-name,
+.center .friends_post .friend_post_top .menu i,
+.dropdown ul li button,
+.center .friends_post .info .comment p,
+.center .friends_post .info .comment a,
+.center .friends_post .comment_section .commentt .com_text a {
+	color: #fff;
+}
+.center .friends_post .info .comment a {
+	text-decoration: none;
+}
+.right .third_wrapper .contact_tag .contact_icon i {
+	color: #919191;
+}
+.right .third_wrapper .contact_tag .contact_icon i:hover{
+  background: rgb(23, 23, 23);
+}
+
+.center .my_post .post_bottom .post_icon:hover {
+	background: rgb(26,26,26);
+}
+.left .img:hover,
+.left .shortcuts:hover {
+	background: rgb(26, 26, 26);
+}
+
+.center .my_post .post_top input,
+.center .friends_post .comment_wrapper .comment_search {
+	background: rgb(26, 26, 26);
+	color: #fff;
+}
+.center .my_post .post_top input:hover,
+.center .friends_post .comment_wrapper .comment_search:hover,
+.container .content .emoji,
+nav .left .search_bar  {
+	background: rgb(30, 30, 30);
+}
+nav .left .search_bar{
+	color:
+}
+.center .friends_post hr,
+.center .my_post hr {
+	background: rgb(30, 30, 30);
+}
+
+center .friends_post .comment_section .comment-btns p input,
+.center .friends_post .comment_section .comment-btns a{
+	color: #919191;
+	text-decoration: none;
+}
+.center .friends_post .info .emoji_img img{
+	background: #fff;
+	border-radius: 17px;
+}
+.container .content .emoji input  {
+	border-radius: 20px;
+}
+.friend_post_top .img_and_name .friends_name span {
+	color: #fff;
+}
+.shared_post .post_top .img_and_name .friends_name a{
+	color: #fff;
+}
+.l-cnt {
+	background: rgb(23, 23, 23);
+}
+.center .my_post .post_bottom .post_icon:hover{
+	background: rgb(30, 30, 30);
+}
+.center .my_post .post_bottom .post_icon {
+	color: #fff;
+}
+.emoji_lst {
+	color: #fff;
+}
+.center .friends_post .like .like_icon p{
+	color: #fff;
+}
+
+
+.types ul li {
+	background: rgb(23, 23, 23);
+}
+.groups {
+	background: rgb(23, 23, 23);
+}
+.name a {
+	color: #fff;
+}
+
+
+
+
+
+
+
+
+.top .top_bottom,
+.items {
+	background: rgb(23, 23, 23);
+}
+.about {
+	background: rgb(23, 23, 23);
+	color: #fff;
+}
+.items div input {
+	background: rgb(30, 30, 30);
+	color: #fff;
+}
+.group-title{
+	color: #fff;
+}
+.create .group-create{
+	color: skyblue;
+}
+.rules {
+	background: rgb(23, 23, 23);
+}
+
+.main .right hr {
+	background: rgb(30, 30, 30);
+}
+
+.add-friend .add-friend-block {
+	background: rgb(18, 18, 18);
+	color: #fff;
+}
+.add-friend .add-friend-block .close .iv-txt,
+.add-friend .add-friend-block .friend-list .friend p {
+	color: #fff;
+}
+.add-friend .add-friend-block .invite-text textarea,
+.add-friend-block .srch-invite input {
+	background: rgb(30, 30, 30);
+	color: #fff;
+}
+.not-text {
+	color: #fff;
+}
+.main .notifications .notification {
+	background: rgb(23, 23, 23);
+	color: #fff;
+}

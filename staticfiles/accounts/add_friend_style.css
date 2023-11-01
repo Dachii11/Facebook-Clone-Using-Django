@@ -1,0 +1,136 @@
+.right_side {
+	position: absolute;
+}
+.add-friend {
+	position: relative;
+	width: 55%;
+	height: 550px;
+	display: none;
+	margin: 0 auto;
+}
+.add-friend-block {
+	width: 100%;
+	height: 550px;
+	background: white;
+	margin: 0 auto;
+	margin-top: 50px;
+	box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+}
+.add-friend-block .close {
+	width: 100%;
+	display: flex;
+	box-shadow: 0 1px 8px rgba(0,0,0,0.3);
+	height: 23px;
+	justify-content: space-between;
+}
+
+.add-friend-block .close p{
+	font-size: 14px;
+	font-weight: bold;
+	color: red;
+	margin: 0;
+	cursor: pointer;
+	padding: 3px;
+}
+.add-friend-block .close .iv-txt {
+	color: black;
+}
+.add-friend-block .invite-text {
+	width: 100%;
+}
+.add-friend-block .invite-text textarea {
+	width: 100%;
+	resize: none;
+	padding: 5px;
+	border: none;
+/*	height: 35px;*/
+	outline: none;
+	border-top: 1px solid rgba(25, 25,25,0.1);
+	border-bottom: 1px solid rgba(25, 25,25,0.1);
+}
+
+.add-friend-block .invite-btns {
+	display: flex;
+	border-bottom: 1px solid rgba(25, 25, 25, 0.1);
+}
+.add-friend-block .invite-btns p {
+	margin: 0;
+	padding: 10px;
+	justify-content: space-between;
+	font-size: 13px;
+	font-family: Arial;
+}
+
+.add-friend-block .srch-invite {
+	padding: 10px;
+	display: flex;
+}
+.add-friend-block .srch-invite input {
+	padding: 3px;
+	width: 40%;
+	border: 1px solid;
+	outline: none;
+}
+.add-friend-block .srch-invite p {
+	color: #4267B2;
+	font-family: Arial;
+	font-size: 13px;
+	margin-top: 5px;
+	padding-left: 5px;
+}
+.add-friend-block .friend-list {
+	padding: 8px;
+}
+.add-friend-block .friend-list .friend {
+	display: flex;
+	justify-content: space-between;
+	padding: 5px;
+}
+.add-friend-block .friend-list .friend img {
+	border: 0.5px solid rgba(25, 25, 25, 0.5);
+}
+.add-friend-block .friend-list .friend p {
+	font-family: Arial;
+	padding: 6px;
+	font-size: 15px;
+	color: black;
+	font-weight: bold;
+}
+
+.add-friend-block .send-invite {
+	bottom: 0;
+	width: 100%;
+	padding: 10px;
+	position: absolute;
+}
+.add-friend-block .send-invite button {
+	float: right;
+	padding: 8px;
+	border: none;
+	background: #4267B2;
+	font-family: Arial;
+	font-size: 12px;
+	font-weight: bold;
+	border-radius: 5px;
+	color: #fff;
+	margin-top: 5px;
+}
+.add-friend-block .send-invite button:hover {
+	opacity: 0.9;
+}
+
+@media(max-width:700px){
+	.add-friend {
+		width: 70%;
+	}
+}
+@media(max-width:560px){
+	.add-friend {
+		width: 80%;
+	}
+}
+@media(max-width:400px){
+	.add-friend {
+		width: 90%;
+	}
+}

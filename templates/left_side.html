@@ -1,0 +1,57 @@
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/left_side.css' %}">
+<style>
+    .left a {
+        color: black;
+    }
+</style>
+{% if my_profile.theme %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme.css' %}">
+{% endif %}
+
+<div class="left">
+        <a href="{% url 'accounts:profile' my_profile.id %}">
+        <div class="img">
+        <img src="{{my_profile.profile_img.url}}">
+            <p style="font-size: 15px;font-weight: bold;">{{my_profile.user.first_name}} {{my_profile.user.last_name}}</p>
+        </div>
+        </a>
+        <a href="{% url 'accounts:friends' %}">
+            <div class="img">
+                <img src="{% static 'images/friends.png' %}">
+                <p>Friends</p>
+            </div>
+        </a>
+        <a href="{% url 'posts:saves' %}">
+        <div class="img">
+            <img src="{% static 'images/save.png' %}">
+            <p>Saved</p>
+        </div>
+        </a>
+        <a href="{% url 'accounts:groups' %}">
+            <div class="img">
+                <img src="{% static 'images/groups-icon.png' %}">
+                <p>Groups</p>
+            </div>
+        </a>
+        <a href="{% url 'posts:watch' %}">
+            <div class="img">
+            <img src="{% static 'images/watch.png' %}">
+            <p>Watch</p>
+        </div>
+        </a>
+        <hr>
+        <h2>Your shortcuts</h2>
+         {% for shortcut in shortcuts %}
+        <a href="{% url 'accounts:group' shortcut.group.id %}">
+            <div class="shortcuts">
+                <img src="{{shortcut.group.group_cover.url}}">
+                <p>{{shortcut.group.group_name}}</p>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+{% endblock %}

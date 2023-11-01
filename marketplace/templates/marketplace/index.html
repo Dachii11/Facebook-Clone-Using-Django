@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'mainApp/home_style.css' %}">
+<link rel="stylesheet" href="{% static 'marketplace/marketplace.css' %}">
+{% include 'menu.html' %}
+{% if my_profile.theme %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme_style.css' %}">
+{% endif %}
+<style type="text/css">
+    .friends_name .friends_name {
+        text-decoration: none;
+        color: black;
+    }
+    .left a {
+        text-decoration: none;
+        color: black;
+    }
+    body {
+        background-color: #f5f5f5;
+    }
+
+
+</style>
+
+<div class="main" style="margin-top: 50px;display: flex;">
+    <!------------------ left --------------------->
+
+{% include 'marketplace/mixin.html' %}
+<!-- </div> -->
+    <!------------------ center --------------------->
+    <div class="center" style="width: 100%;"> 
+        <div class="top">
+            {% if category %}
+                <p>{{category}}</p>
+            {% else %}
+                <p>All category</p>
+            {% endif %}
+        </div>
+        <div class="sells">
+            {% for sell in sells %}
+                <div class="sell">
+                    <a href="{% url 'marketplace:detail' sell.id %}" style="text-decoration: none;">
+                    <img src="{{sell.image.url}}">
+                    <p class="price" style="color: darkgreen;opacity: 0.7;">${{sell.price}}</p>
+                    <p class="sell-name" style="color:#919191;">{{sell.name|truncatechars:25}}</p>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+{{my_profile.id|json_script:"json-username"}}
+<script src="{% static 'js/websocket.js' %}"></script>
+{% endblock %}

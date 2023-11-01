@@ -1,0 +1,49 @@
+.main {
+	width: 70%;
+	margin: 0 auto;
+	margin-top: 70px;
+	background: #f1f1f1;
+	padding: 5px;
+	border-radius: 10px;
+}
+.member img{
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+}
+.member .m {
+	display:flex;
+}
+.member .m p {
+	margin-top: 7px;
+	font-size: 15px;
+}
+.member {
+	display: flex;
+	justify-content: space-between;
+	background: #fff;
+	margin: 5px;
+	padding: 5px;
+}
+.member button {
+	padding: 6px;
+	margin-top: 6px;
+	background: rgb(255, 0, 0,0.8);
+	border: none;
+	color: #fff;
+	border-radius: 5px;
+}
+.member button:hover {
+	opacity: 0.9;
+}
+
+@media(max-width:768px){
+	.main {
+		width: 80%;
+	}
+}
+@media(max-width:425px){
+	.main {
+		width: 100%;
+	}
+}

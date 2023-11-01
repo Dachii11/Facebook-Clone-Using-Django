@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+<form method="POST" enctype="multipart/form-data" style="margin-top: 100px;">
+	{% csrf_token %}
+	{{form.as_p}}
+	<input type="submit" name="send">
+	{% if messages %}
+		<ul>
+			{% for m in messages %}
+				<li>{{m}}</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+</form>
+{% endblock %}

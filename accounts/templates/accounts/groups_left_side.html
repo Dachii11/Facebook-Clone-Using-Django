@@ -1,0 +1,45 @@
+{% load static %}
+<div class="left">
+		<h2>Manage Group</h2>
+        <a href="{% url 'mainApp:index' %}"><div class="img">
+        <img src="{% static 'images/home-icon.png' %}" style="border-radius:50%;">
+            <p>Home</p>
+        </div></a>
+        <a href="{% url 'accounts:group' group.id %}"><div class="img">
+        <img src="{{group.group_cover.url}}" style="border-radius:50%;">
+            <p>Group</p>
+        </div></a>
+        <hr>
+        {% if my_profile in group.admin.all %}
+	        <h2>Admin tools</h2>
+	        <a href="{% url 'accounts:edit' group.id %}">
+	        <div class="img">
+	            <i class="fa-solid fa-pen-to-square"></i>
+	            <p>Edit Group</p>
+	        </div>
+	    	</a>
+	        {% if group.status == "private" %}
+		        <div class="img">
+		          	<i class="fa-solid fa-user-plus"></i>
+		            <p>Member Requests</p>
+		        </div>
+	        {% endif %}
+	        <div class="img">
+	        	<i class="fa-solid fa-circle-exclamation"></i>
+	        	<p>Reported Content</p>
+	        </div>
+	        <hr>
+        {% endif %}
+        <a href="{% url 'accounts:group_rules' group.id %}">
+        <div class="img">
+	        <i class="fa-solid fa-book"></i>
+	        <p>Group Rules</p>
+	    </div>
+	    </a>
+	    <a href="{% url 'accounts:report_group' group.id %}">
+	     <div class="img">
+	   		<i class="fa-sharp fa-solid fa-circle-question"></i>
+	   		<p>Report Group</p>
+	    </div>
+		</a>
+    </div>

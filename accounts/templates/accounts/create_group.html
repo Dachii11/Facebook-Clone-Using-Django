@@ -1,0 +1,60 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+{% include 'menu.html' %}
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/create_group.css' %}">
+<div class="main-create">
+	<div class="header"><p>Create New Group</p></div>
+	<div class="gt">
+		<p>Groups are great for getting things done and staying in touch with just the people you want. Share photos and videos, have conversations, make plans and more.</p>
+	</div>
+	<div class="in">
+		<form method="POST" action="" enctype="multipart/form-data">
+			{% csrf_token %}
+			<div>
+				<p class="tt">Name your group</p>
+				{{form.group_name}}
+			</div>
+			<div>
+				<p class="tt">Privacy</p>
+				{{form.privacy}}
+			</div>
+			<div>
+				<p class="tt">Visibility</p>
+				{{form.visibility}}
+			</div>
+			<div>
+				<p class="tt">Group Type</p>
+				{{form.group_type}}
+			</div>
+			<div>
+				<p class="tt">Description</p>
+				{{form.description}}
+			</div>
+			<div>
+				<p class="tt">Add Group Cover</p>
+				{{form.group_cover}}
+			</div>
+			<div class="sub-data">
+				<input type="submit" value="Create">
+			</div>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+	id_privacy = document.getElementById("id_privacy"); 
+	id_privacy.children[0].textContent="Select Privacy...";
+	id_privacy.children[0].setAttribute("disabled","disabled");
+
+	id_visibility = document.getElementById("id_visibility"); 
+	id_visibility.children[0].textContent="Choose Group Visibility...";
+	id_visibility.children[0].setAttribute("disabled","disabled");
+
+	id_group_type = document.getElementById("id_group_type"); 
+	id_group_type.children[0].textContent="Choose Group Type";
+	id_group_type.children[0].setAttribute("disabled","disabled");
+
+	id_description = document.getElementById("id_description");
+	id_description.setAttribute("placeholder","Say something about this group");
+</script>
+{% endblock %}

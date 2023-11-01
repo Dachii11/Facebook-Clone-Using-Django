@@ -1,0 +1,23 @@
+{% load static %}
+<style type="text/css">
+     .no-posts {
+        color: #919191;
+        text-align: center;
+    }
+</style>
+    {% for post in posts %}
+        {% if post.post_type == 'post' %}
+            {% include 'original_post.html' %}
+        {% elif post.post_type == "shared" %}
+            {% include 'shared_post.html' %}
+        {% elif post.post_type == "groupPost" %}
+            {% include 'group_original_post.html' %}
+        {% elif post.post_type == "groupShared" %}
+            {% include 'group_shared_post.html' %}
+        {% elif post.feeling %}
+            {% include 'feelings_post.html' %}
+        {% elif post.post_type == "sharedFeelingPost" %}
+            {% include 'shared_feeling_post.html' %}
+        {% endif %}
+    {% endfor %}
+<script src="{% static 'js/emotion.js' %}"></script>

@@ -1,0 +1,161 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'mainApp/home_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/group.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'mainApp/comment_style.css' %}"> -->
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/group_edit.css' %}">
+
+<style>.dropdown{display: none} .items .item ul a {text-decoration: none;}.main {
+    margin-top: 65px;
+}
+    .main .right_side{
+        width: 60%;
+        margin-left: 40%;
+    }
+    .right_side form {
+        width: 80%;
+    }
+    @media(max-width:1100px){
+        .main .right_side,
+        .main,
+        .right_side form {
+            width: 100%;
+            margin: 0 auto;
+            margin-top: 30px;
+        }
+    }
+</style>
+{% if my_profile.theme %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme.css' %}">
+    <style type="text/css">
+        .main .right_side .edit-row,
+        .main .right_side .costumize_group {
+            background: rgb(23, 23, 23);
+            color: #fff;
+        }
+        input,
+        textarea,
+        select {
+            background: rgb(30, 30, 30);
+            color: #fff;
+        }
+    </style>
+{% endif %}
+
+{% include 'menu.html' %}
+<div class="main">
+	{% include 'accounts/groups_left_side.html' %}
+    <div class="right_side">
+    <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+        <div class="edit-row">
+            <h2>Set up group</h2>
+            <div class="row-title" style="padding-bottom: 7px;">
+               <div class="div">
+                    <p>{{form.group_name.label}} and {{form.description.label}}</p>
+                    <i class="fa-solid fa-pen pen" id="1"></i>
+               </div>
+              <div class="input" id="nd">
+                    {{form.group_name}}
+                    {{form.description}}
+              </div>
+            </div>
+            <hr>
+            <div class="row-title">
+               <div class="div">
+                    <p>{{form.privacy.label}}</p>
+                    <i class="fa-solid fa-pen pen" id="2"></i>
+               </div> 
+                <span class="privacy">{{group.privacy}}</span> 
+                 <div class="input" id="pr">
+                    {{form.privacy}}
+              </div>    
+            </div>
+            <hr>
+            <div class="row-title">
+               <div class="div">
+                    <p>{{form.visibility.label}}</p>
+                    <i class="fa-solid fa-pen pen" id="3"></i>
+               </div> 
+                <span>{{group.visibility}}</span>  
+                <div class="input" id="vs">
+                    {{form.visibility}}
+                </div> 
+            </div>
+            <hr>
+             <div class="row-title">
+               <div class="div">
+                    <p>{{form.group_type.label}}</p>
+                    <i class="fa-solid fa-pen pen" id="4"></i>
+               </div> 
+                <span>{{group.group_type}}</span>
+                 <div class="input" id="gt">
+                    {{form.group_type}}
+                </div>     
+            </div>
+            <hr>
+            <div class="row-title">
+                <div class="div">
+                    <p>Group Cover</p>
+                    <i class="fa-solid fa-pen pen" id="5"></i>
+                </div>
+                <div class="input" id="gc">
+                    {{form.group_cover}}
+                </div>
+            </div>
+        </div>
+
+        <div class="costumize_group">
+            <div class="row-title">
+               <div class="div">
+                    <p>Web Address</p>
+               </div> 
+                <span>{{web_address}}</span>     
+            </div>
+            <hr>
+        </div>
+        <div class="submit">
+            <input class="save" type="submit" value="Save">
+            <a href="{{ request.META.HTTP_REFERER }}"><button>Cancel</button></a>
+        </div>
+        </form>
+    </div>
+</div>
+        
+</div>
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+<script type="text/javascript">
+    $("#id_privacy option:first").remove();
+    $("#id_visibility option:first").remove();
+    $("#id_group_type option:first").remove();
+    trash = document.querySelectorAll(".pen");
+    for(let i=0; i<trash.length;i++){
+        trash[i].addEventListener("click",function(){
+            // console.log(document.getElementById(trash[i].id).innerHTML);
+            if (document.getElementById(trash[i].id).innerHTML=="close"){
+                document.getElementById(trash[i].id).innerHTML='';
+                names=["nd","pr","vs","gt"];
+                for(let i=0; i < names.length; i++){
+                    document.getElementById(names[i]).style.display='none';
+                }
+
+            } else {
+                let obj = {
+                    "1":"nd",
+                    "2":"pr",
+                    "3":"vs",
+                    "4":"gt",
+                    "5":"gc",
+                }
+                document.getElementById(obj[trash[i].id]).style.display="block";
+                document.getElementById(trash[i].id).innerHTML="close";
+            }
+        })
+
+    }
+ </script>
+<script src="{% static 'js/pageScroll.js' %}"></script>
+{% endblock %}

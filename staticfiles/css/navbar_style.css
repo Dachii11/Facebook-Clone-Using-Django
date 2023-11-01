@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+nav {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #cccccc;
+    background: #fff;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+nav .left .logo img {
+    width: 40px;
+    height: 40px;
+    margin: 5px 0;
+    cursor: pointer;
+}
+nav .left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+}
+nav .left .search_bar{
+    width: 250px;
+    height: 40px;
+    background: #efefef;
+    border-radius: 30px;
+    padding: 0 10px;
+    margin-left: 10px;
+    position: relative;
+    left: 15px;
+}
+nav .left .search_bar i {
+    line-height: 40px;
+    font-size: 19px;
+    color: #919191;
+    margin-right: 5px;
+}
+nav .left .search_bar input {
+    background: transparent;
+    outline: none;
+    border: 0;
+    font-size: 14px;
+    width: 200px;
+}
+nav .centerr {
+    position: relative;
+    right: 45px;
+}
+nav .centerr i {
+    margin: 0 45px 0 45px;
+    font-size: 22px;
+}
+nav .centerr a {
+    color: black;
+}
+nav .centerr i:hover {
+    color: #45abff;
+    cursor: pointer;
+}
+nav .right {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+nav .right i {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #efefef;
+    line-height: 35px;
+    padding-left: 8px;
+    font-size: 18px;
+    margin-left: 8px;
+    cursor: pointer;
+}
+nav .right .i {
+    padding-left: 10px;
+}
+nav .right img {
+    width: 34px;
+    height: 34px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    border: 1px solid;
+    margin-left: 8px;
+    line-height: 45px;
+    cursor: pointer;
+}
+
+@media (max-width:1100px){
+    nav .centerr {
+        display: none;
+    }
+}
+@media (max-width:545px){
+    nav .right i,
+    nav .right img {
+        display: none;
+    }
+    nav .right .menu {
+        display: flex;
+    }
+    .msgnr {
+        display: none;
+    }
+}
+@media (max-width:380px){
+    nav .left .search_bar {
+        width: 200px;
+    }
+     nav .left .search_bar input {
+        width: 150px;
+     }
+}
+
+@media (max-width:325px){
+    nav .left .search_bar {
+        width: 150px;
+    }
+     nav .left .search_bar input {
+        width: 100px;
+     }
+}

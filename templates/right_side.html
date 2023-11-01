@@ -1,0 +1,47 @@
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/right_side.css' %}">
+{% if my_profile.theme %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme.css' %}">
+{% endif %}
+ <div class="right">
+        <div class="first_wrapper">
+            <div class="page">
+                <h2>Your Pages and profile</h2>
+            </div>
+            <div class="page_img">
+                <img src="{{my_profile.profile_img.url}}">
+                <p style="font-size: 15px;font-weight: bold;">{{my_profile.user.first_name}} {{my_profile.user.last_name}}</p>
+            </div>
+             {% for my_group in my_groups %}
+                <div class="page_img">
+                    <img src="{{my_group.group_cover.url}}">
+                    <p>{{my_group.group_name}}</p>
+                </div>
+            {% endfor %}
+            <div class="page_icon">
+                <i class="fa-regular fa-bell"></i>
+                <p>20 Notifications</p>
+            </div>
+        </div>
+        <hr>
+        <div class="third_wrapper">
+            <div class="contact_tag">
+                <h2>Contacts</h2>
+                <div class="contact_icon">
+                    <a href="{% url 'chat:chat_home' %}" style="color:black;">
+                        <i class="fa-brands fa-facebook-messenger"></i>
+                    </a>
+                </div>
+            </div>
+             {% for account in accounts %}
+                <div class="contact">
+                    <img src="{{account.profile_img.url}}">
+                    <p>{{account.user}}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

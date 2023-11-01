@@ -1,0 +1,82 @@
+/*.main {
+	position: relative;
+}*/
+
+.menu_settings {
+	position: absolute;
+	z-index: 1;
+	right: 20px;
+	width: 300px;
+	display: none;
+	font-family: Arial;
+	border-radius: 10px;
+
+/*	margin-top: 10px;*/
+}
+.menu_settings .sets {
+	width: 300px;
+	position: fixed;
+	margin-top: 25px;
+	background: #fff;
+	box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+/*	padding: 20px;
+	padding-left: 35px;
+	padding-right: 35px;*/
+	border-radius: 10px;
+}
+.menu_settings .profile img,
+.menu_settings .profile i {
+	width: 30px;
+/*	box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;*/
+	height: 30px;
+	border-radius: 50%;
+	border: 1px solid rgba(17, 17, 26, 0.1);
+}
+.menu_settings .profile i {
+	font-size: 25px;
+	color: #4267B2;
+	border: 25px;
+	text-align: center;
+}
+
+.menu_settings .sets a {
+	color: #000000;
+	text-decoration: none;
+}
+.menu_settings .profile:hover {
+	background: #e3e3e3;
+}
+.menu_settings .profile .tx {
+	font-size: 17px;
+	padding-top: 5px;
+	padding-left: 5px;
+}
+.menu_settings .profile {
+	display: flex;
+/*	width: 70%;*/
+/*	margin: 0 auto;*/
+	padding: 8px;
+	padding-left: 35px;
+}
+.menu_settings .sets hr {
+    width: 100%;
+    height: 1px;
+    border: 0;
+    background: #cccccc;
+/*    margin: 10px 0;*/
+}
+#list-items {
+	display: none;
+}
+ @media(max-width:545px){
+   .menu_settings,
+   .menu_settings .sets {
+   	width: 60%;
+   }
+}
+
+@media(max-width:920px){
+	#list-items {
+		display: flex;
+	} 
+}

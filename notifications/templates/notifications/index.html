@@ -1,0 +1,88 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'notifications/nots.css' %}">
+{% include 'menu.html' %}
+{% if my_profile.theme %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme.css' %}">
+    <style type="text/css">.aslfa{color: #fff;}
+.not-text {
+	color: #fff;
+}
+.main .notifications .notification {
+	background: rgb(23, 23, 23);
+	color: #fff;
+}</style>
+
+{% endif %}
+<div class="main">
+	<h1 class="not-text">Notifications</h1>
+	<div class="notifications">
+		{% for notification in notifications %}
+			{% if notification.post %}
+				<div class="notification">
+					<div class="ln">
+						<img src="{{notification.user.profile_img.url}}" class="user-pr-pic"></img>
+						<div class="dalk">
+							<p>{{notification.user}} add new post - "{{notification.post.caption}}"</p>
+							<p class="date">{{notification.date|timesince}} ago</p>
+						</div>
+					</div>
+					<div>
+						{% if not notification.post.file == "" %}
+							{% if notification.post.media_type_html == "image" %}
+					            <img src="{{notification.post.file.url}}" class="pppp">
+					        {% elif notification.post.media_type_html == "video" %}
+					            <video><source src="{{notification.post.file.url}}" class="pppp"></video>
+					        {% endif %}
+						{% endif %}
+					</div>
+				</div>
+			{% elif notification.post_comment %}
+				<div class="notification">
+					<div class="ln">
+						<img src="{{notification.user.profile_img.url}}" class="user-pr-pic"></img>
+						<div class="dalk">
+							<p>{{notification.user}} commented on {{notification.post_comment.post.user}}'s post - "{{notification.post_comment.text}}"</p>
+							<p class="date">{{notification.date|timesince}} ago</p>
+						</div>
+					</div>
+				</div>
+			{% elif notification.repylied_comment %}
+				<div class="notification">
+					<div class="ln">
+						<img src="{{notification.user.profile_img.url}}" class="user-pr-pic"></img>
+						<div class="dalk">
+							<p>{{notification.user}} replied on {{notification.comment.user}}'s comment - "{{notification.comment.text}}"</p>
+							<p class="date">{{notification.date|timesince}} ago</p>
+						</div>
+					</div>
+				</div>
+			{% elif notification.group_to_invite %}
+				<div class="notification">
+					<div class="ln">
+						<img src="{{notification.sender.profile_img.url}}" class="user-pr-pic"></img>
+						<div class="dalk">
+							<p>{{notification.sender}} invited you to "{{notification.group_to_invite.group_name}}"</p>
+							<p class="date">{{notification.date|timesince}} ago</p>
+							<div class="btns">
+								<form method="POST">
+									{% csrf_token %}
+									<button class="accept" name="accept" value="{{notification.group_to_invite.id}}">Accept</button>
+									<input type="hidden" name="ud" value="{{notification.receiver.id}}">
+									<a href="{% url 'accounts:group' notification.group_to_invite.id %}"><button class="view">View</button></a>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="pppp"><img src="{{notification.group_to_invite.group_cover.img}}"></div>
+				</div>
+			{% endif %}
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}

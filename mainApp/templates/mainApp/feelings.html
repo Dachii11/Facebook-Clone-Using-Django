@@ -1,0 +1,39 @@
+{% include 'layout.html' %}
+{% load static %}
+{% block content %}
+{% include 'menu.html' %}
+{% if my_profile.theme %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+    <style type="text/css">.create-story {color: black;}</style>
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme_style.css' %}">
+    <style>.create-story {color: #fff;}</style>
+{% endif %}
+<link rel="stylesheet" type="text/css" href="{% static 'posts/add_new_post.css' %}">
+{% include 'menu.html' %}
+<div class="main">
+	<div class="tit">
+		<p></p>
+		<p class="cr">Felling Status Post</p>
+		<a href="{{request.META.HTTP_REFERER}}"><p>X</p></a>
+	</div>
+	<hr>
+	<form method="POST" action="" enctype="multipart/form-data">
+	<div class="prf">
+		<img src="{{my_profile.profile_img.url}}">
+		<div class="inf">
+			<p class="usr">{{my_profile.user}}</p>
+			{{form.status}}
+		</div>
+	</div>
+	<div class="inp">
+		{% csrf_token %}
+		{{form.as_p}}
+	</form>
+	<input type="submit" value="Post" class="submit" style="margin-top: 10px;">
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+<script>
+    $("#id_feeling").append($("<option disabled selected>What you feel right now?</option>"));
+    document.getElementById("id_feeling").options[0].remove();
+</script>
+{% endblock %}

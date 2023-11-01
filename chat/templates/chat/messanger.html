@@ -1,0 +1,107 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'chat/messanger.css' %}">
+{% if my_profile.theme %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme.css' %}">
+{% endif %}
+<style type="text/css">
+	.friend {border-radius: 10px;margin: 2px;}
+</style>
+{% include 'menu.html' %}
+<div class="main-block">
+	<header>
+		<img src="{{my_profile.profile_img.url}}">
+		<div>
+		<p><a href="{% url 'chat:chat_home' %}" style="color:deepskyblue;text-decoration:none;">{{my_profile.user}}</a></p>
+			<p><a href="{% url 'chat:create' %}" style="text-decoration: none;color: deepskyblue;">create</a></p>
+		</div>
+	</header>
+	<div class="search-friends">
+		<form method="GET" action="{% url 'chat:search' %}">
+			<i class="fa-solid fa-magnifying-glass"></i>
+			<input type="text" placeholder="Search friends" name="q">
+		</form>
+	</div>
+	<div class="friends">
+	{% if chat_with %}
+		{% for chat in chat_with %}
+			{% if chat.admin %}
+				<div class="friend">
+					<img src="{{chat.icon.url}}">
+					<div>
+						<a href="{% url 'chat:group_chat' chat.id %}">{{chat.title}}</a>
+						{% if chat.group_messages.last.from_user == my_profile %}
+							<p><span style="font-weight: bold;">you:</span> {{chat.group_messages.last.message}}</p>
+						{% else %}
+							<p>{{chat.group_messages.last.message}}</p>
+						{% endif %}
+					</div>
+				</div>
+			{% else %}
+				{% if chat.user_1 == my_profile %}
+					{% if not chat.user_1_seen %}
+						<div class="friend" style="background: #f1f1f1;">
+							<img src="{{chat.user_2.profile_img.url}}">
+							<div>
+								<a href="{% url 'chat:detail' chat.user_2.id %}" style="font-weight:bold;">{{chat.user_2.user}}</a>
+							{% if chat.messages.last.from_user == my_profile %}
+								<p><span style="font-weight: bold;">you:</span> {{chat.messages.last.message}}</p>
+							{% else %}
+								<p>{{chat.messages.last.message}}</p>
+							{% endif %}
+							</div>
+						</div>
+					{% else %}
+						<div class="friend">
+							<img src="{{chat.user_2.profile_img.url}}">
+							<div>
+								<a href="{% url 'chat:detail' chat.user_2.id %}" style="font-weight:normal;">{{chat.user_2.user}}</a>
+							{% if chat.messages.last.from_user == my_profile %}
+								<p><span style="font-weight: bold;">you:</span> {{chat.messages.last.message}}</p>
+							{% else %}
+								<p>{{chat.messages.last.message}}</p>
+							{% endif %}
+							</div>
+						</div>					
+					{% endif %} 
+				{% else %}
+					{% if not chat.user_2_seen %}
+						<div class="friend" style="background:#f1f1f1;">
+							<img src="{{chat.user_1.profile_img.url}}">
+							<div>
+								<a href="{% url 'chat:detail' chat.user_1.id %}" style="font-weight:bold;">{{chat.user_1.user}}</a>
+							{% if chat.messages.last.from_user == my_profile %}
+								<p>you: {{chat.messages.last.message}}</p>
+							{% else %}
+								<p>{{chat.messages.last.message}}</p>
+							{% endif %}
+							</div>
+						</div>
+					{% else %}
+						<div class="friend">
+						<img src="{{chat.user_1.profile_img.url}}">
+						<div>
+							<a href="{% url 'chat:detail' chat.user_1.id %}" style="font-weight:normal;">{{chat.user_1.user}}</a>
+							{% if chat.messages.last.from_user == my_profile %}
+								<p>you: {{chat.messages.last.message}}</p>
+							{% else %}
+								<p>{{chat.messages.last.message}}</p>
+							{% endif %}
+						</div>
+					</div>
+					{% endif %}
+				{% endif %}
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+	</div>
+</div>
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+{{my_profile.id|json_script:"json-username"}}
+<script src="{% static 'js/websocket.js' %}"></script>
+{% endblock %}

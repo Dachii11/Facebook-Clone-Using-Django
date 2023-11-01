@@ -1,0 +1,117 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'mainApp/home.css' %}">
+<link rel="stylesheet" href="{% static 'mainApp/comment_style.css' %}">
+<link rel="stylesheet" href="{% static 'css/shared_post.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/center.css' %}">
+<link rel="stylesheet" href="{% static 'mainApp/comment_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/account_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/reply_style.css' %}">
+<style type="text/css">
+	.main .left_side {
+		width: 25%;
+	}
+	.friends_name .friends_name {
+        text-decoration: none;
+        color: black;
+    }
+    .comment a {
+        text-decoration: none;
+        color: #919191;
+    }
+    .like_icon a {
+        text-decoration: none;
+        color: black;
+    }
+</style>
+{% include 'menu.html' %}
+<div class="main"> 
+	{% include 'left_side.html' %}
+
+	</style>
+	<div class="center">
+	    <div class="friends_post">
+			<div class="comment_section">
+		        <div class="commentt">
+		            <img src="{{comment.user.profile_img.url}}">
+		            <div class="com_text">
+		                <a href="{% url 'accounts:profile' comment.user.id %}">{{comment.user}}</a>
+		                <p>{{comment.text}}</p>
+		            </div>
+		        </div>
+		        <div class="comment-btns">
+		            <form method="POST">
+                        {% csrf_token %}
+                        <p>
+                        {% if my_profile in comment.likes.all %}
+                            <input type="submit" name="like" value="Liked" style="background: none; border: none; color: #4267B2;">
+                       {% else %}
+                        <input type="submit" name="like" value="Like" style="background: none; border: none; color: #919191;">
+                        {% endif %}
+                         <input type="hidden" name="type_of_comment" value="{{comment.type_of_comment}}">
+                        </p>
+                       <input type="hidden" name="comment" value="{{comment.id}}">
+                    </form>
+		            <p>{{comment.created|timesince}} ago</p>
+                    {% if comment.likes.all.count > 0 %}
+                        {% if comment.likes.all.count == 1 %}
+                        <p>{{comment.likes.all.count}} like</p>
+                    {% else %}
+                      <p>{{comment.likes.all.count}} likes</p>
+                    {% endif %}
+                    {% endif %}
+		        </div>
+		        <div class="comment_search crs">
+		        	<img src="{{my_profile.profile_img.url}}" style="width:34px;height: 34px;border-radius: 50%;border-radius: 1px solid gray;">
+                    <form method="POST" action="">
+                       {% csrf_token %}
+                       <input type="text" name="text" placeholder="Write a comment" style="width: 95%;">
+                       <input type="hidden" name="comment_id" value="{{comment.id}}">
+                       <input type="hidden" name="type_of_comment" value="{{comment.type_of_comment}}">
+                    </form>
+                </div>
+		        {% for reply in comment.reply.all %}
+                        <div class="commentt reply">
+                            <img src="{{reply.user.profile_img.url}}">
+                                <div class="com_text">
+                                    <a href="{% url 'accounts:profile' comment.user.id %}">{{reply.user}}</a>
+                                    <p>{{reply.text}}</p>
+                                </div>
+                        </div>
+                        <div class="comment-btns" style="margin-left: 10%;">
+                            <form method="POST">
+                            	{% csrf_token %}
+                                <p>
+                                {% if my_profile in reply.likes.all %}
+                                    <input type="submit" name="reply_like" value="Liked" style="background: none; border: none; color: #4267B2;">
+                               {% else %}
+                                <input type="submit" name="reply_like" value="Like" style="background: none; border: none; color: #919191;">
+                                {% endif %}
+                               </p>
+                               <input type="hidden" name="comment" value="{{reply.id}}">
+                                 </form>
+                                <p>{{reply.created|timesince}} ago</p>
+                                {% if reply.likes.all.count > 0 %}
+                                    {% if reply.likes.all.count == 1 %}
+                                    <p>{{reply.likes.all.count}} like</p>
+                                {% else %}
+                                    <p>{{reply.likes.all.count}} likes</p>
+                                {% endif %}
+                                {% endif %}
+                        </div>
+                {% endfor %}
+		    </div>
+	    </div>
+	</div>
+	{% include 'right_side.html' %}
+</div>
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+<script src="{% static 'js/emotion.js' %}"></script>
+<script src="{% static 'js/pageScroll.js' %}"></script>
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+{{my_profile.id|json_script:"json-username"}}
+<script src="{% static 'js/websocket.js' %}"></script>
+{% endblock %}

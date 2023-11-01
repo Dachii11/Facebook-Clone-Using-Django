@@ -1,0 +1,115 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/settings.css' %}">
+{% if my_profile.theme %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme.css' %}">
+    <style type="text/css">h2 {color: #fff;}.tt p {color: #fff;}</style>
+{% endif %}
+<div class="container" style="margin-top: 80px;">
+	<div class="cont">
+		<!-- <h2>Members</h2> -->
+		{% if my_profile == group.admin %}
+		<a href="{% url 'chat:add_new_members' group.id %}" style="text-decoration: none;">
+			<div class="as">
+				<div class="ss">
+					<div>
+						<i class="fa-solid fa-user-plus"></i>
+					</div>
+					<div class="tt">
+						<p>Add New Members</p>
+					</div>
+				</div>
+				<div class="ri">
+					<i class="fa-solid fa-arrow-right"></i>
+				</div>
+			</div>
+		</a>
+		<hr>
+		<a href="{% url 'chat:group_remove_members' group.id %}" style="text-decoration: none;">
+			<div class="as">
+				<div class="ss">
+					<div>
+						<i class="fa-solid fa-user-minus"></i>
+					</div>
+					<div class="tt">
+						<p>Kick Out Members</p>
+					</div>
+				</div>
+				<div class="ri">
+					<i class="fa-solid fa-arrow-right"></i>
+				</div>
+			</div>
+		</a>
+		<hr>
+		{% endif %}
+		<a href="{% url 'chat:view_all_members' group.id %}" style="text-decoration: none;">
+			<div class="as">
+				<div class="ss">
+					<div>
+						<i class="fa-solid fa-user-group"></i>
+					</div>
+					<div class="tt">
+						<p>View All Members</p>
+					</div>
+				</div>
+				<div class="ri">
+					<i class="fa-solid fa-arrow-right"></i>
+				</div>
+			</div>
+		</a>
+		<hr>
+		<a href="{% url 'password_change' %}" style="text-decoration: none;">
+			<div class="as">
+				<div class="ss">
+					<div>
+						<i class="fa-solid fa-key"></i>
+					</div>
+					<div class="tt">
+						<p>View media and files</p>
+					</div>
+				</div>
+				<div class="ri">
+					<i class="fa-solid fa-arrow-right"></i>
+				</div>
+			</div>
+		</a>
+		<hr>
+		<a href="{% url 'password_change' %}" style="text-decoration: none;">
+			<div class="as">
+				<div class="ss">
+					<div>
+						<i class="fa-solid fa-key"></i>
+					</div>
+					<div class="tt">
+						<p>Search in conversation</p>
+					</div>
+				</div>
+				<div class="ri">
+					<i class="fa-solid fa-arrow-right"></i>
+				</div>
+			</div>
+		</a>
+		<hr>
+				<a href="{% url 'chat:leave_group' group.id %}" style="text-decoration: none;">
+			<div class="as">
+				<div class="ss">
+					<div>
+						<i class="fa-solid fa-right-from-bracket" style="color:darkred;"></i>
+					</div>
+					<div class="tt">
+						<p style="color:red;">Leave Group</p>
+					</div>
+				</div>
+				<div class="ri">
+					<i class="fa-solid fa-arrow-right"></i>
+				</div>
+			</div>
+		</a>
+	</div>
+	<hr>
+</div>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/center.css' %}">
+<link rel="stylesheet" href="{% static 'accounts/groups_list.css' %}">
+
+<style type="text/css">
+    .name a {
+        text-decoration: none;
+        color: black;
+    }
+</style>
+{% if my_profile.theme %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme.css' %}">
+{% endif %}
+{% include 'menu.html' %}
+<div class="main">
+{% include 'left_side.html' %}
+<div class="center">
+	<div class="my_post">
+        <div class="post_top">
+            <form method="POST" action="">
+                {% csrf_token %}
+            	<img src="{{my_profile.profile_img.url}}">
+            	<input type="text" name="searchGroup" placeholder="Find a Group">
+            	<input type="submit" class="sub-new-post">
+            </form>
+        </div>
+    </div>
+    <div class="types">
+    	<ul>
+    		<form method="POST" action="">
+    			{% csrf_token %}
+	    		<li><input type="submit" value="General" name="general"></li>
+	    		<li><input type="submit" value="Buy and Sell" name="BuyAndSell"></li>
+	    		<li><input type="submit" value="Gaming" name="gaming"></li>
+	    		<li><input type="submit" value="Job" name="job"></li>
+	    		<li><input type="submit" value="Parenting" name="parenting"></li>
+	    		<a href="{% url 'accounts:groups' %}"><li class="all">All</li></a>
+                <a href="{% url 'accounts:create_group' %}"><li style="color: #919191;">Create</li></a>
+    		</form>
+    	</ul>
+    </div>
+    {% if found %}
+    <div class="found">{{found}} group found</div>
+    {% endif %}
+    {% if groups.all.count == 0 %}
+        <div class="found">No groups found for "{{type}}"</div>
+    {% endif %}
+    <div class="found"></div>
+    {% for group in groups %}
+    	<div class="groups">
+    		<div class="cover"><img src="{{group.group_cover.url}}"></div>
+    		<div class="groups_detail">
+        			<p class="name"><a href="{% url 'accounts:group' group.id %}">{{group.group_name}}</a></p>
+                 <div class="inf">
+        			<p class="info">
+                        {% if group.privacy == "Public" %}
+                            <i class="fa-solid fa-earth-americas"></i>
+                        {% else %}
+                            <i class="fa-solid fa-lock"></i>
+                        {% endif %}
+                        {{group.status}}
+                         group &middot {{group.members.all.count}} members
+                         &middot {{group.posts.all.count}} posts
+                    </p>
+                </div>
+    		</div>
+    		<div class="public-gp-icon">
+                <img src="{% static 'images/groups-icon.png' %}">
+            </div>
+   		</div>
+
+    {% endfor %}
+</div>
+{% include 'right_side.html' %}
+</div>
+{% endblock %}

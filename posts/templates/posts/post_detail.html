@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'mainApp/home.css' %}">
+<link rel="stylesheet" href="{% static 'mainApp/comment_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/center.css' %}">
+<link rel="stylesheet" href="{% static 'mainApp/comment_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/account_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/reply_style.css' %}">
+<link rel="stylesheet" href="{% static 'css/shared_post.css' %}">
+<style type="text/css">
+	.main .left_side {
+		width: 25%;
+	}
+	.friends_name .friends_name {
+        text-decoration: none;
+        color: black;
+    }
+    .comment a,
+     .comment-btns a {
+        text-decoration: none;
+        color: #919191;
+    }
+    .like_icon a {
+        text-decoration: none;
+        color: black;
+    }
+     .dropdown {
+        display: none;
+    }
+</style>
+{% include 'menu.html' %}
+<div class="main"> 
+	{% include 'left_side.html' %}
+    <div class="center">
+        {% if post.post_type == 'post' %}
+            {% include 'original_post.html' %}
+        {% elif post.post_type == "shared" %}
+            {% include 'shared_post.html' %}
+        {% elif post.post_type == "groupPost" %}
+            {% include 'group_original_post.html' %}
+        {% elif post.post_type == "groupShared" %}
+            {% include 'group_shared_post.html' %}
+        {% elif post.feeling %}
+            {% include 'feelings_post.html' %}
+        {% elif post.post_type == "sharedFeelingPost" %}
+            {% include 'shared_feeling_post.html' %}
+        {% endif %}
+    </div>
+
+     {% include 'right_side.html' %}
+    <!------------------ right --------------------->
+ 
+</div>
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+<script src="{% static 'js/emotion.js' %}"></script>
+<script src="{% static 'js/pageScroll.js' %}"></script>
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+{{my_profile.id|json_script:"json-username"}}
+<script src="{% static 'js/websocket.js' %}"></script>
+{% endblock %}

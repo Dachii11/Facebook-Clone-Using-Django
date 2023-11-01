@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+
+<style type="text/css">.menu_settings {margin-top: 40px;}</style>
+{% include 'menu.html' %}
+<form method="POST">
+	{% csrf_token %}
+	{{form.rule_title}}
+	{{form.rule_body}}
+	<input type="submit" value="Add" name="rule-add">
+</form>
+{% endblock%}
+{% block javascript %}
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+{{my_profile.id|json_script:"json-username"}}
+<script src="{% static 'js/websocket.js' %}"></script>
+{% endblock %}
