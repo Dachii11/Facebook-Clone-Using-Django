@@ -27,7 +27,7 @@ It will be updated every day, make sure you have **MySQL** installed.
               }
      }
      ```
-## in Facebook-Clone-Using-Django/ dir Run command to migrate Database
+## in Facebook-Clone-Using-Django/ dir, Run command to migrate Database
      python manage.py migrate
      
 ## command for Create superuser
