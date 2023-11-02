@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-n_*ivmzj8ucx9rtol^x_6w1ral=d7yji5i%a)k$808cb@e_n+&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     
@@ -76,16 +76,16 @@ CHANNEL_LAYERS = {
     }
 }
 
-DATABASES = {
+ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'YOUR_DATABASE_NAME',
         'USER': 'MYSQL_USER',
-        'PASSWORD': 'MySQL password',    # remove this line of code if password is not required
+        'PASSWORD': 'MySQL password',     # if password is not required remove this line of code.
         'HOST': 'localhost',
         'PORT': '3306',
-    }
-}
+        }
+ }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -119,7 +119,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = os.path.join(BASE_DIR,'static'),
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 LOGIN_URL = 'accounts:login'
