@@ -79,9 +79,9 @@ CHANNEL_LAYERS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'fb_database',
-        'USER': 'root',
-        'PASSWORD': 'Enable_Secure_Cisco51;',
+        'NAME': 'YOUR_DATABASE_NAME',
+        'USER': 'MySQL_USER',
+        'PASSWORD': 'MySQL password',
         'HOST': 'localhost',
         'PORT': '3306',
     }

@@ -335,4 +335,6 @@ def ReportAndHelp(ch,user):
 	else:
 		rslt = ReportTitle.objects.all()
 		center = "Report Center"
-	return {"my_profile":user,"count_new_msgs":len(Message.objects.filter(to_user=user,seen=False)),"reports":rslt,"center":center}
+	return {"my_profile":user,"count_new_msgs":len(Message.objects.filter(to_user=user,seen=False)),
+			"new_notifications":new_notification_counter(user.id),
+			"reports":rslt,"center":center}

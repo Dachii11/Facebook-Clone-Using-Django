@@ -71,7 +71,7 @@
     const my_profile = JSON.parse(document.getElementById("json-username").textContent);
     const friend = JSON.parse(document.getElementById("json-friend-username").textContent);
 
-    const chatSocket = new WebSocket('ws://'+window.location.host+'/ws/chat/'+chat+'/');
+    const chatSocket = new WebSocket('wss://'+window.location.host+'/ws/chat/'+chat+'/');
 	       
     chatSocket.onmessage = function(e){
         const data = JSON.parse(e.data);
