@@ -1,5 +1,5 @@
-## Facebook Clonse build in Python with MySQL database
-MAKE SURE TO INSTALL IT IN VIRTUAL ENVIRONMENT.
+## Facebook Clone build in Python with MySQL database
+**MAKE SURE TO INSTALL IT IN VIRTUAL ENVIRONMENT.**
 The project is not complete and there will be bugs and unfinished pages.
 It will be updated every day, make sure you have **MySQL** installed.
 
@@ -20,14 +20,17 @@ It will be updated every day, make sure you have **MySQL** installed.
          'default': {
              'ENGINE': 'django.db.backends.mysql',
              'NAME': 'YOUR_DATABASE_NAME',
-             'USER': 'DATABASE_USER',
+             'USER': 'MYSQL_USER',
              'PASSWORD': 'MySQL password',     // if password is not required remove this line of code.
              'HOST': 'localhost',
              'PORT': '3306',
               }
      }
      ```
-## commands for Create superuser
+## in Facebook-Clone-Using-Django/ dir, Run command to migrate Database
+     python manage.py migrate
+     
+## command for Create superuser
      python manage.py createsuperuser
 
 ## Make sure you have created profile for superuser
@@ -36,9 +39,12 @@ It will be updated every day, make sure you have **MySQL** installed.
      >>> from django.contrib.auth.models import User
      >>> from accounts.models import Account
      >>> admin = User.objects.get(username='YOUR_SUPERUSER_USERNAME')
-     >>> Account.objects.create(user=admin,id_user=admin.id)
+     >>> Account.objects.create(user=admin,username=admin.username,id_user=admin.id)
+     >>> quit()
 
-## Run commands to migrate Database
-     python manage.py makemigrations
-     python manage.py migrate
 **admin** page link: **loa1KDl0KL_03kffj_jKA_SF0k_l1K03_31KL_KDA/**
+
+## Finally, run the server...
+     python manage.py runserver
+     
+![My Image](FB.png)
