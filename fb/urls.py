@@ -1,9 +1,11 @@
 from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
+from django.views.static import serve
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from accounts.views import activate
+from django.urls import re_path
 
 urlpatterns = [ 
     path('1KDl0KL_03kffj_jKA_SF0k_l1K03_31KL_KDA/', admin.site.urls),
@@ -27,6 +29,8 @@ urlpatterns = [
 
     # path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/',activate,name='activate'),
     path("activate/<uidb64>/<token>/",activate,name='activate'),
+
+    re_path(r"^media/(?P<path>.*)$",serve,{"document_root":settings.MEDIA_ROOT}),
 ]
-urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+# urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
