@@ -181,13 +181,18 @@
             {% if not allow_all_comments %}
                 {% if post.group_post_comment.all|length > 3 %}
                     {% for comment in post.group_post_comment.all|slice:"3" %}
-                        <div class="commentt">
-                            <img src="{{comment.user.profile_img.url}}">
-                            <div class="com_text">
-                                <a href="{% url 'accounts:profile' comment.user.id %}">{{comment.user}}</a>
-                                <p>{{comment.text}}</p>
+                        <div class="commentt" style="justify-content: space-between;">
+                                <div style="display: flex;">
+                                    <img src="{{comment.user.profile_img.url}}">
+                                    <div class="com_text">
+                                        <a href="{% url 'accounts:profile' comment.user.id %}">{{comment.user}}</a>
+                                        <p>{{comment.text}}</p>
+                                    </div>
+                                </div>
+                                <a href="{% url 'comments:report_comment' comment.id %}"><div>
+                                <i class="fa-solid fa-ellipsis-vertical" style="padding:8px;color: black;" id="{{comment.id}}"></i>
+                                </div></a>
                             </div>
-                        </div>
                         <div class="comment-btns">
                               <form method="POST">
                             {% csrf_token %}
@@ -221,13 +226,18 @@
                     <div class="view-all-comm"><a href="{% url 'posts:group_post_detail' post.id %}">View all comments</a></div>
                 {% else %}
                     {% for comment in post.group_post_comment.all %}
-                        <div class="commentt">
-                            <img src="{{comment.user.profile_img.url}}">
-                            <div class="com_text">
-                                 <a href="{% url 'accounts:profile' comment.user.id %}">{{comment.user}}</a>
-                                <p>{{comment.text}}</p>
+                        <div class="commentt" style="justify-content: space-between;">
+                                <div style="display: flex;">
+                                    <img src="{{comment.user.profile_img.url}}">
+                                    <div class="com_text">
+                                        <a href="{% url 'accounts:profile' comment.user.id %}">{{comment.user}}</a>
+                                        <p>{{comment.text}}</p>
+                                    </div>
+                                </div>
+                                <a href="{% url 'comments:report_comment' comment.id %}"><div>
+                                <i class="fa-solid fa-ellipsis-vertical" style="padding:8px;color: black;" id="{{comment.id}}"></i>
+                                </div></a>
                             </div>
-                        </div>
                         <div class="comment-btns">
                               <form method="POST">
                             {% csrf_token %}

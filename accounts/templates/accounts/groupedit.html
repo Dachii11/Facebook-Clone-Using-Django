@@ -53,6 +53,7 @@
             {% csrf_token %}
         <div class="edit-row">
             <h2>Set up group</h2>
+            
             <div class="row-title" style="padding-bottom: 7px;">
                <div class="div">
                     <p>{{form.group_name.label}} and {{form.description.label}}</p>
@@ -63,6 +64,7 @@
                     {{form.description}}
               </div>
             </div>
+            
             <hr>
             <div class="row-title">
                <div class="div">
@@ -74,6 +76,7 @@
                     {{form.privacy}}
               </div>    
             </div>
+
             <hr>
             <div class="row-title">
                <div class="div">
@@ -85,6 +88,7 @@
                     {{form.visibility}}
                 </div> 
             </div>
+
             <hr>
              <div class="row-title">
                <div class="div">
@@ -96,6 +100,7 @@
                     {{form.group_type}}
                 </div>     
             </div>
+
             <hr>
             <div class="row-title">
                 <div class="div">
@@ -104,6 +109,7 @@
                 </div>
                 <div class="input" id="gc">
                     {{form.group_cover}}
+                    <button style="color:red;padding: 7px;border: none; background: #f1f1f1;font-weight: bold;" type="submit" name="rci">Delete Cover Image</button>
                 </div>
             </div>
         </div>
@@ -137,7 +143,7 @@
             // console.log(document.getElementById(trash[i].id).innerHTML);
             if (document.getElementById(trash[i].id).innerHTML=="close"){
                 document.getElementById(trash[i].id).innerHTML='';
-                names=["nd","pr","vs","gt"];
+                names=["nd","pr","vs","gt","gc"];
                 for(let i=0; i < names.length; i++){
                     document.getElementById(names[i]).style.display='none';
                 }

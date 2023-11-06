@@ -53,3 +53,24 @@ class CommentReply(models.Model):
 
 	def __str__(self):
 		return self.text[:50]
+
+class CommentReport(models.Model):
+	comment = models.ForeignKey(Comment,on_delete=models.CASCADE)
+	reasons = (
+			("Nudity","Nudity"),
+			("Violence","Violence"),
+			("Harassment","Harassment"),
+			("Suicide or Self-injury","Suicide or Self-injury"),
+			("Spam","Spam"),
+			("Unauthorized Sales","Unauthorized Sales"),
+			("Hate Speech","Hate Speech"),
+			("Terrorism","Terrorism"),
+			("Something Else","Something Else"),
+		)
+	text = models.TextField(max_length=1500,null=True)
+	reason = models.CharField(max_length=50,choices=reasons,default="Nudity")
+	user_who_reports = models.ForeignKey(Account,on_delete=models.CASCADE)
+	date = models.DateTimeField(default=timezone.now)
+
+	def __str__(self):
+		return f"{self.user_who_reports.username} reported {self.comment.user.username}'s Comment."

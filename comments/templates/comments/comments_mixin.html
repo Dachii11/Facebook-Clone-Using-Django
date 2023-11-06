@@ -1,10 +1,15 @@
 {% for comment in post.comments.all %}
-                        <div class="commentt">
-                            <img src="{{comment.user.profile_img.url}}">
+                        <div class="commentt" style="justify-content: space-between;">
+                            <div style="display: flex;">
+                                <img src="{{comment.user.profile_img.url}}">
                             <div class="com_text">
                                  <a href="{% url 'accounts:profile' comment.user.id %}">{{comment.user}}</a>
-                                <p>{{comment.text}}</p>
+                                <p style="color: black;">{{comment.text}}</p>
                             </div>
+                            </div>
+                            <a href="{% url 'comments:report_comment' comment.id %}"><div>
+                               <i class="fa-solid fa-ellipsis-vertical" style="padding:8px;color: black;" id="{{comment.id}}"></i>
+                            </div></a>
                         </div>
                         <div class="comment-btns">
                             <form method="POST">

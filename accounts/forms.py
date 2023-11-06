@@ -99,3 +99,9 @@ class EditProfile(forms.ModelForm):
     class Meta:
         model = Account
         fields = ["gender","profile_img","cover_img","bio","from_country"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for fieldname in self.fields:
+            self.fields[fieldname].label = ""
+            self.fields[fieldname].help_text=None

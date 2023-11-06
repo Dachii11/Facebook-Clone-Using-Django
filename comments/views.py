@@ -1,14 +1,17 @@
 from django.shortcuts import render,redirect
 from django.views.generic.base import View
 from django.views.generic.detail import SingleObjectMixin,DetailView
-from comments.models import Comment,CommentReply
+from comments.models import Comment,CommentReply,CommentReport
 from accounts.views import ProfileAccountMixin
 from accounts.models import Account
 from mainApp.views import PostMixins
 from notifications.models import ReplyCommentNotifications
+from django.views.generic.edit import CreateView
 from notifications.views import CreateReplyCommentNotification
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from posts.views import AccountMixin
+from django.urls import reverse_lazy
 
 @method_decorator(login_required,name='dispatch')
 class ReplyComment(ProfileAccountMixin,SingleObjectMixin,View):
@@ -42,3 +45,22 @@ class ReplyComment(ProfileAccountMixin,SingleObjectMixin,View):
 		
 		return redirect(request.META["HTTP_REFERER"])
 
+
+class ReportComment(CreateView):
+	template_name = "comments/report_comment.html"
+	model = CommentReport
+	fields = ("reason","text")
+
+	def get_context_data(self,*args,**kwargs):
+		context = super(ReportComment,self).get_context_data(**kwargs)
+		context["my_profile"] = Account.objects.get(user=self.request.user)
+		return context
+
+	def form_valid(self,form):
+		form.instance.comment = Comment.objects.get(id=self.request.get_full_path().split("/")[3])
+		form.instance.user_who_reports = Account.objects.get(user=self.request.user)
+		form.save()
+		return super(ReportComment,self).form_valid(form)
+
+	def get_success_url(self, **kwargs):
+		return reverse_lazy("mainApp:index")

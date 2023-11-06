@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+	<div style="margin-top: 60px;">
+		<form method="POST">
+			{% csrf_token %}
+			<i class="fa-solid fa-circle-exclamation"></i>
+			You can report the comment after selecting a problem.
+			{{form.reason}}
+			{{form.text}}
+			<hr>
+				<p>If someone is in immediate danger, call local emergency services. Don't wait.</p>
+			<hr>
+			<button type="submit">Send</button>
+		</form>
+	</div>
+{% endblock %}

@@ -44,8 +44,10 @@ class RemoveFile:
 		try:
 			f = str(self.file).replace('/','\\').split('\\')[-1]
 			parent_folders = "\\".join(str(Path(str(self.file)).parent.absolute()).split("\\")[1:])
-			path = "\\".join(str(Path(str(f)).parent.absolute()).split("\\"))+f"\\{parent_folders}\\{f}"
-			os.remove(path)
+			print(parent_folders)
+			if parent_folders!="media":
+				path = "\\".join(str(Path(str(f)).parent.absolute()).split("\\"))+f"\\{parent_folders}\\{f}"
+				os.remove(path)
 		except FileNotFoundError:
 			return
 			
@@ -375,11 +377,6 @@ class Suggestions(ListView):
 		context["mutuals"] = self.mutual_friends
 		return context
 
-	# def get_queryset(self):
-	# 	me = Account.objects.get(user=User.objects.get(username=self.request.user))
-	# 	suggestions = [acc for acc in Account.objects.all() if User.objects.get(username=acc.user) not in me.friends.all() and acc != me]
-	# 	return suggestions
-
 	def post(self,request,*args,**kwargs):
 		user = Account.objects.get(user=request.user)
 		if "theme" in request.POST:
@@ -510,7 +507,6 @@ class EditGroup(ProfileAccountMixin,FormView):
 	def get(self,request,*args,**kwargs):
 		user = Account.objects.get(user=self.request.user)
 		group=Group.objects.get(id=self.request.get_full_path().split('/')[3])
-		print(group.group_cover==None)
 		web_address = f"{request.META['HTTP_HOST']}{'/'.join(request.get_full_path().split('/')[:-2])}/"
 		if permission(user,group):
 			return HttpResponse("Permission denied!")
@@ -531,12 +527,18 @@ class EditGroup(ProfileAccountMixin,FormView):
 				user.theme=True
 			user.save()
 		else:
-			group = Group.objects.get(id=kwargs.get("pk")) 
-			group_icon = group.group_cover.url
-			remove = RemoveFile(group_icon)
-			remove.remove_file()
-			form = GroupEditForm(request.POST,request.FILES or None,instance=Group.objects.get(id=kwargs.get("pk")))
-			form.save()
+			DEFAULT = "default_cover.png"
+			group = Group.objects.get(id=kwargs.get("pk"))
+			if "rci" in request.POST:
+				group.group_cover.delete()
+				group.group_cover = DEFAULT
+				group.save()
+			else:
+				group_icon = group.group_cover.url
+				remove = RemoveFile(group_icon)
+				remove.remove_file()
+				form = GroupEditForm(request.POST,request.FILES or None,instance=Group.objects.get(id=kwargs.get("pk")))
+				form.save()
 		return redirect(request.META["HTTP_REFERER"])
 
 @method_decorator(login_required,name='dispatch')

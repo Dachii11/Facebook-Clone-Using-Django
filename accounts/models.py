@@ -9,7 +9,6 @@ from chat.models import PrivateChat
 from django.contrib.auth.base_user import BaseUserManager
 from django import template
 
-#class CustomUserManager()
 class Account(models.Model):
 	genders = (("male","male"),("female","female"))
 	user = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -22,8 +21,6 @@ class Account(models.Model):
 	bio = models.TextField(max_length=500,blank=True)
 	from_country = models.CharField(max_length=50)
 	theme = models.BooleanField(default=True)
-
-	# objects = CustomUserManager()
 
 	who_can_see_my_posts_choices = (
 			("Public","Public"),

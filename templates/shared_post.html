@@ -231,12 +231,17 @@
             <div class="comment_section">
                     {% if post.shared_post_comments.all|length > 3 %}
                         {% for comment in post.shared_post_comments.all|slice:"3" %}
-                            <div class="commentt">
-                                <img src="{{comment.user.profile_img.url}}">
-                                <div class="com_text">
-                                    <a href="{% url 'accounts:profile' comment.user.id %}">{{comment.user}}</a>
-                                    <p>{{comment.text}}</p>
+                            <div class="commentt" style="justify-content: space-between;">
+                                <div style="display: flex;">
+                                    <img src="{{comment.user.profile_img.url}}">
+                                    <div class="com_text">
+                                        <a href="{% url 'accounts:profile' comment.user.id %}">{{comment.user}}</a>
+                                        <p>{{comment.text}}</p>
+                                    </div>
                                 </div>
+                                <a href="{% url 'comments:report_comment' comment.id %}"><div>
+                                <i class="fa-solid fa-ellipsis-vertical" style="padding:8px;color: black;" id="{{comment.id}}"></i>
+                                </div></a>
                             </div>
                             <div class="comment-btns">
                                   <form method="POST">
@@ -271,12 +276,17 @@
                         <div class="view-all-comm"><a href="#">View all comments</a></div>
                     {% else %}
                         {% for comment in post.shared_post_comments.all %}
-                            <div class="commentt">
-                                <img src="{{comment.user.profile_img.url}}">
-                                <div class="com_text">
-                                     <a href="{% url 'accounts:profile' comment.user.id %}">{{comment.user}}</a>
-                                    <p>{{comment.text}}</p>
+                           <div class="commentt" style="justify-content: space-between;">
+                                <div style="display: flex;">
+                                    <img src="{{comment.user.profile_img.url}}">
+                                    <div class="com_text">
+                                        <a href="{% url 'accounts:profile' comment.user.id %}">{{comment.user}}</a>
+                                        <p>{{comment.text}}</p>
+                                    </div>
                                 </div>
+                                <a href="{% url 'comments:report_comment' comment.id %}"><div>
+                                <i class="fa-solid fa-ellipsis-vertical" style="padding:8px;color: black;" id="{{comment.id}}"></i>
+                                </div></a>
                             </div>
                             <div class="comment-btns">
                             <form method="POST">
