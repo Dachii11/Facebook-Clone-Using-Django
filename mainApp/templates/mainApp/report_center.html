@@ -47,26 +47,92 @@
 		<div><p class="group-rule" style="font-size:20px;">{{center}}</p></div>
 	</div>
 	<div class="rules">
-		{% for report in reports %}
-			<div class="rule" style="display: flex;justify-content: space-between;width: 100%;" id="{{report.id}}">
+			<div class="rule" style="display: flex;width: 100%;" id="0">
 				<div style="width: 100%;">
-					<div style="display: flex;justify-content: space-between;">
-						<p class="rule-title" style="cursor: pointer;">{{report.title}}</p>
-						<i class="fa-solid fa-chevron-down down" id="i{{report.id}}" style="font-size: 13px;padding: 5px;"></i>
+					<div style="display: flex;justify-content: space-between; justify-content: space-between;">
+						<p class="rule-title" style="cursor: pointer;">Change or reset your Facebook password</p>
+						<i class="fa-solid fa-chevron-down down" id="i0" style="font-size: 13px;padding: 5px;"></i>
 					</div>
-					{% if report.report_text.all %}
-						{% for text in report.report_text.all %}
-							<p class="rule-body" id="a{{report.id}}">{{text.text}}</p>
-						{% endfor %}
-					{% else %}
- 						{% for text in report.help_text.all %}
-							<p class="rule-body" id="a{{report.id}}">{{text.text}}</p>
-						{% endfor %}
-					{% endif %}
+					<!-- <p class="rule-body" id="a0">as</p> -->
+					<div class="rule-body" id="a0" font-size: 15px;padding-left: 20px;">
+						<span style="font-weight: bold;font-size: 16px;">Change your password</span>
+						<p style="padding-top: 10px;">To change your password on Facebook if you're already logged in:</p>
+
+						<p>1. Tap your profile picture in the top right of Facebook.</p>
+						<p>2. Tap <span style="font-weight:bold;">Settings</span>.</p>
+						<p>3. Tap <span style="font-weight:bold;">Change Password</span>.</p>
+						<p style="padding-top:5px;">If you're logged in but have forgotten your password, tap <span style="font-weight:bold;">Forgotten password?</span> and reset it. Bea in mind that you'll need access to the email associated with your account.</p>
+					</div>
 				</div>
 			</div>
 			<hr>
-		{% endfor %}
+
+			<div class="rule" style="display: flex;width: 100%;" id="1">
+				<div style="width: 100%;">
+					<div style="display: flex;justify-content: space-between; justify-content: space-between;">
+						<p class="rule-title" style="cursor: pointer;">Make a strong Facebook password</p>
+						<i class="fa-solid fa-chevron-down down" id="i1" style="font-size: 13px;padding: 5px;"></i>
+					</div>
+					<div class="rule-body" id="a1" style="font-size: 15px;padding-left: 20px;">
+						<p>When you create a new password, remember:</p>
+						<p style="padding-top:8px;"><span style="font-weight:bolder;">·</span> Your password should be easy for you to remember but difficult for others to guess.</p>
+						<p><span style="font-weight:bolder;">·</span> Your Facebook password should be different to the passwords you use to log in to other accounts, such as your email or bank acocunt.</p>
+						<p><span style="font-weight:bolder;">·</span> Longer passwords are usually more secure.</p>
+						<p><span style="font-weight:bolder;">·</span> Your password should not be your email addres, phone number, or date of birth.</p>
+						<p><span style="font-weight:bolder;">·</span> Avoid using common words, such as <span style="font-weight:bold">"password"</span></p>
+						<p><span style="font-weight:bolder;">·</span> Use a password manager. There are many different applications that can store your passwords securely.</p>
+						<p><span style="font-weight:bolder;">·</span> Don't share your passwords with anyone, online or in person. If you do, change them as soon as possible.</p>
+					</div>
+				</div>
+			</div>
+			<hr>
+
+			<div class="rule" style="display: flex;width: 100%;" id="2">
+				<div style="width: 100%;">
+					<div style="display: flex;justify-content: space-between; justify-content: space-between;">
+						<p class="rule-title" style="cursor: pointer;">Report innapropriate or abusive things on Facebook (e.g. nudity, hate speech, threats)</p>
+						<i class="fa-solid fa-chevron-down down" id="i2" style="font-size: 13px;padding: 5px;"></i>
+					</div>
+					<div class="rule-body" id="a2" style="font-size: 15px;padding-left: 20px;">
+						<p>We're sorry that you're having a bad experience on Facebook, and we want to help.</p>
+						<p style="padding-top:5px;">If you want to report something that goes against our Community Standards (e.g. nudity, hate speech, violence):</p>
+						<div style="padding: 10px;">
+							<p>1 Go to the content that you want to report.</p>
+							<p>2 Use the <span style="font-weight: bold;">report</span> link to report it to us.</p>
+						</div>
+						<p style="padding-top:5px;">Remember that you should contact local law enforcement if you ever feel threatened by something you see on Facebook.</p>
+						<p>We take things down from Facebook If they go against our <span style="font-weight: bold">Community Standards</span>. If we don't take down something that you reported, you can still use yours settings and preferences tools to <span style="font-weight:bold;">control your experience on Facebook</span>.</p>
+					</div>
+				</div>
+			</div>
+			<hr>
+
+
+			<div class="rule" style="display: flex;width: 100%;" id="3">
+				<div style="width: 100%;">
+					<div style="display: flex;justify-content: space-between; justify-content: space-between;">
+						<p class="rule-title" style="cursor: pointer;">How to report a Facebook account or Group that's pretending to be me or someone else</p>
+						<i class="fa-solid fa-chevron-down down" id="i3" style="font-size: 13px;padding: 5px;"></i>
+					</div>
+					<div class="rule-body" id="a3" style="font-size: 15px;padding-left: 20px;">
+						<p>Profiles and Groups that impersonate other people go against our Community Standards and aren't allowed on Facebook.</p>
+						<p>If you see a profile or Group that's pretending to be you, someone you know or a public figure (e.g. celebrity, politician), we encourage you to let us know. You can report potentially impersonating profiles or Groups.</p>
+						<p style="padding-top:5px;font-weight: bold;font-size: 16px;">Report a profile</p>
+						<div style="padding: 10px;">
+							<p>1 Go to the impersonating profile.</p>
+								<p style="padding:10px;padding-left: 20px;">If you can't find it, try searching for the name used on the profile or asking your friends if they can send a link to it.</p>
+							<p>2 Tap *** top right corner of cover photo and select <span style="font-weight:bold;">Report Profile</span>.</p>
+							<p>3 Follow the on-screen instructions.</p>
+						</div>
+						<p style="padding-top:5px;font-weight: bold;font-size: 16px;">Report a Group</p>
+						<p>1 Go to the impersonating Group.</p>
+						<p>2 Tap *** top right corner of cover photo and select <span style="font-weight:bold;">Report a Group</span></p>
+						<p>3 Select <span style="font-weight:bold;">Scams and fake Groups</span>.</p>
+						<p>4 Tap <span style="font-weight:bold;">Next</span>.</p>
+					</div>
+				</div>
+			</div>
+			<hr>
 	</div>
 </div>
 
@@ -75,9 +141,10 @@
 	for(let i=0; i<reports.length;i++){
 		reports[i].addEventListener("click",function(){
 			result = document.querySelectorAll('[id=a'+reports[i].id+']')
+			console.log(result);
 			if (document.getElementById("i"+reports[i].id).className==="fa-solid fa-chevron-down down"){
 				for (let j=0; j < result.length; j++){
-					result[j].style.display='flex';
+					result[j].style.display='block';
 				}
 				i_icon = document.getElementById("i"+reports[i].id).className='fa-solid fa-chevron-up down';
 			} else {

@@ -3,26 +3,11 @@ from django.utils import timezone
 from accounts.models import Account
 from posts.models import feelings_list
 
-class HelpTitle(models.Model):
-	title = models.CharField(max_length=800,null=True)
-	created = models.DateTimeField(default=timezone.now)
-
-	def __str__(self):
-		return self.title[:50]
-
-class HelpText(models.Model):
-	title = models.ForeignKey(HelpTitle,on_delete=models.CASCADE,related_name="help_text")
-	text = models.TextField(max_length=3000)
-
-	def __str__(self):
-		return self.text[:50]
-
 class Feelings(models.Model):
 	user = models.ForeignKey(Account,on_delete=models.CASCADE,null=True)
 	feeling = models.CharField(max_length=35,null=True,choices=feelings_list)
 	c = (("feeling_post","feeling_post"),)
 	post_type = models.CharField(max_length=15,choices=c,null=True,default="feeling_post")
-	# views = models.ManyToManyField(Account,blank=True,related_name='ShareFeelingView')
 
 	likes = models.ManyToManyField(Account,related_name='feelings_likes',blank=True)
 	like_reaction = models.ManyToManyField(Account,blank=True,related_name="feelings_like_reaction")

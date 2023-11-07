@@ -1,15 +1,21 @@
 {% extends 'layout.html' %}
 {% load static %}
 {% block content %}
-	<div style="margin-top: 60px;">
+<link rel="stylesheet" type="text/css" href="{% static 'comments/comment_report.css' %}">
+	<div style="margin-top: 60px;" class="main">
 		<form method="POST">
 			{% csrf_token %}
-			<i class="fa-solid fa-circle-exclamation"></i>
-			You can report the comment after selecting a problem.
-			{{form.reason}}
-			{{form.text}}
+			<div class="ii">
+				<i class="fa-solid fa-circle-exclamation ic"></i>
+				<p>You can report the comment after selecting a problem.</p>
+			</div>
 			<hr>
-				<p>If someone is in immediate danger, call local emergency services. Don't wait.</p>
+			<div class="inps">
+				{{form.reason}}
+				{{form.text}}
+			</div>
+			<hr>
+				<p class="th">If someone is in immediate danger, call local emergency services. Don't wait.</p>
 			<hr>
 			<button type="submit">Send</button>
 		</form>

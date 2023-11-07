@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.views.generic.list import ListView
 from django.views.generic.base import View
 from posts.models import Post,SharePost,SavedPosts
-from accounts.models import GroupPost,GroupSharePost,Account,FriendRequest,Group,GroupVisitors,ReportTitle,ReportText
+from accounts.models import GroupPost,GroupSharePost,Account,FriendRequest,Group,GroupVisitors
 from django.contrib.auth.models import User
 from chat.models import Message
 from django.contrib.auth.decorators import login_required
@@ -10,7 +10,7 @@ from django.utils.decorators import method_decorator
 from comments.models import Comment,CommentReply
 from operator import attrgetter
 from django.db.models import Q
-from .models import HelpTitle,Feelings,ShareFeelingsPosts
+from .models import Feelings,ShareFeelingsPosts
 from chat.models import PrivateChat
 from notifications.models import PostNotifications
 from notifications.views import *
@@ -297,7 +297,10 @@ class Report(View):
 @method_decorator(login_required,name='dispatch')
 class Help(View):
 	def get(self,request,*args,**kwargs):
-		return render(request,"mainApp/report_center.html",ReportAndHelp("help",Account.objects.get(id=self.request.user.id)))
+		user = Account.objects.get(user=request.user)
+		return render(request,"mainApp/report_center.html",{"my_profile":user,
+			"count_new_msgs":len(Message.objects.filter(to_user=user,seen=False)),
+			"new_notifications":new_notification_counter(user.id)})
 
 @method_decorator(login_required,name='dispatch')
 class FeelingsStatus(FormView):
@@ -326,15 +329,3 @@ class FeelingsStatus(FormView):
 class Home(PostMixins,PageMixin,ListView):	
 	model = Post	
 	template_name = 'mainApp/home.html'
-
-@method_decorator(login_required,name='dispatch')
-def ReportAndHelp(ch,user):
-	if ch=="help":
-		rslt = HelpTitle.objects.all()
-		center = "Help Center"
-	else:
-		rslt = ReportTitle.objects.all()
-		center = "Report Center"
-	return {"my_profile":user,"count_new_msgs":len(Message.objects.filter(to_user=user,seen=False)),
-			"new_notifications":new_notification_counter(user.id),
-			"reports":rslt,"center":center}

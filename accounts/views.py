@@ -9,7 +9,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from .token import account_activation_token
-from .models import Account,Group,GroupPost,GroupSharePost,FriendRequest,GroupVisitors,GroupRules,ReportTitle,Report
+from .models import Account,Group,GroupPost,GroupSharePost,FriendRequest,GroupVisitors,GroupRules,Report
 from chat.models import Message
 from mainApp.views import PageMixin,Home,PostMixins
 from django.urls import reverse_lazy

@@ -6,8 +6,6 @@ admin.site.register(FriendRequest)
 admin.site.register(GroupVisitors)
 admin.site.register(GroupPost)
 admin.site.register(GroupRules)
-admin.site.register(ReportTitle)
-admin.site.register(ReportText)
 admin.site.register(Report)
 
 @admin.register(Account)

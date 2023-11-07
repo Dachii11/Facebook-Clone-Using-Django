@@ -147,21 +147,6 @@ class GroupSharePost(models.Model):
 	angry_reaction = models.ManyToManyField(Account,blank=True,related_name='group_shared_post_angry_reaction')
 
 
-class ReportTitle(models.Model):
-	title = models.CharField(max_length=800,null=True)
-	created = models.DateTimeField(default=timezone.now)
-
-	def __str__(self):
-		return self.title[:50]
-
-class ReportText(models.Model):
-	title = models.ForeignKey(ReportTitle,on_delete=models.CASCADE,related_name="report_text")
-	text = models.TextField(max_length=3000)
-
-	def __str__(self):
-		return self.text[:50]
-
-
 class Report(models.Model):
 
 	what_happening = (("Hate speech","Hate speech"),("Nudity or sexual content","Nudity or sexual content"),("Violence","Violence"),("Harassment","Harassment"),
