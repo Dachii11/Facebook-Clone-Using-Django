@@ -1,7 +1,7 @@
 ## Facebook Clone build in Python with MySQL database
 **MAKE SURE TO INSTALL IT IN VIRTUAL ENVIRONMENT.**
 The project is not complete and there will be bugs and unfinished pages.
-It will be update every day, make sure you have **MySQL** installed.
+It will be updated every day, make sure you have **MySQL** installed.
 
 # SETUP GUIDE
      git clone https://github.com/Dachii11/Facebook-Clone-Using-Django.git
