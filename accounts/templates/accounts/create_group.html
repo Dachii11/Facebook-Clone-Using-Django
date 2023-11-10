@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 {% include 'menu.html' %}
-<link rel="stylesheet" type="text/css" href="{% static 'accounts/create_group.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/group_create.css' %}">
 <div class="main-create">
 	<div class="header"><p>Create New Group</p></div>
 	<div class="gt">
@@ -26,6 +26,10 @@
 			<div>
 				<p class="tt">Group Type</p>
 				{{form.group_type}}
+			</div>
+			<div>
+				<p class="tt">Who Can Post</p>
+				{{form.who_can_post}}
 			</div>
 			<div>
 				<p class="tt">Description</p>

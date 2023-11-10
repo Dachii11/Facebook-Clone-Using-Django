@@ -54,7 +54,8 @@ body {
 .main-create .in #id_privacy,
 .main-create .in #id_visibility,
 .main-create .in #id_group_type,
-.main-create .in #id_description{
+.main-create .in #id_description,
+.main-create .in #id_who_can_post{
 	width: 100%;
 	padding: 5px;
 	outline: none;

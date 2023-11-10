@@ -97,14 +97,13 @@
     				<a href="{% url 'accounts:about' group.id %}"><li>About</li></a>
     				<a href="{% url 'accounts:group' group.id %}"><li>Discussion</li></a>
     				<a href="{% url 'accounts:members' group.id %}"><li>Members</li></a>
+    				{% if can_post %}
     				<a href="{% url 'accounts:add_group_post' group.group_name %}" style="text-decoration: none;"><li>Post</li></a>
+    				{% endif %}
     			</ul>
     			</div>
 
     		</div>
-    	<!-- 	<div class="srch-div">
-    				<input type="text" name="" placeholder="Search...">
-    		</div> -->
     		</div>
     	</div>
     	<div class="bottom">
@@ -113,8 +112,13 @@
 			        	<h3>About</h3>
 			        	<div class="description"><p>{{group.description}}</p></div>
 			        	<div>
-			        		<i class="fa-solid fa-earth-americas"></i><p class="tit"></p>
-			        		<p class="about-text">Anyone can see who's in the group and what they post</p>
+			        		{% if group.privacy == "Public" %}
+		                        <i class="fa-solid fa-earth-americas"></i><p class="tit">{{group.privacy}}</p>
+		                        <p class="about-text">Anyone can see who's in the group and what they post.</p>
+		                    {% else %}
+		                        <i class="fa-solid fa-lock"></i><p class="tit">{{group.privacy}}</p>
+		                        <p class="about-text">Only members can see who's in the group and what they post.</p>
+		                    {% endif %}
 			        	</div>
 			        	<div>
 			        		<i class="fa-solid fa-eye"></i><p class="tit">Visible</p>
@@ -126,6 +130,7 @@
 			   		</div>
 
 			    <div class="center">
+			    	{% if can_post %}
 			    	<div class="my_post" style="height: 120px;">
 			            <div class="post_top">
 			                <form method="POST" action="">
@@ -148,15 +153,16 @@
 			                </div>
 			            </div>
 			        </div>
-
+			        {% endif %}
 		   				{% include 'group_posts.html' %}
+			        
 			    </div>
 			    	<div class="about" style="width: 40%;height: min(300px, 500px);">
 			        	<h3>About</h3>
 			        	<div class="description"><p>{{group.description|truncatewords:50}}</p></div>
 			        	<div>
 			        		<!-- <i class="fa-solid fa-earth-americas"></i><p class="tit">{{group.status}}</p> -->
-		                    {% if group.status == "public" %}
+		                    {% if group.privacy == "Public" %}
 		                        <i class="fa-solid fa-earth-americas"></i><p class="tit">{{group.privacy}}</p>
 		                        <p class="about-text">Anyone can see who's in the group and what they post.</p>
 		                    {% else %}

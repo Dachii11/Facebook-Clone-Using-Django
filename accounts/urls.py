@@ -32,6 +32,7 @@ urlpatterns = [
 
 	path("settings/",views.Settings.as_view(),name="settings"),
 	path("edit/",views.EditProfile.as_view(),name="edit_profile"),
+	path("delete-group/<str:pk>/",views.DeleteGroup.as_view(),name="delete_group"),
 
 	path("settings/who_can_see_my_posts/",views.WhoCanSeeMyPosts.as_view(),name='who_can_see_my_posts'),
 	path("settings/who_can_see_friends_list/",views.WhoCanSeeMyFriendList.as_view(),name='who_can_see_my_friends_list'),

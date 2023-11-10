@@ -102,7 +102,7 @@
 		<!-- <input type='hidden' name='from_user' value="{{my_profile.user}}"> -->
 		<!-- <input type="hidden" name='to_user' value="{{account.user}}"> -->
     <input type='hidden' name='from_user' value="{{my_profile.id}}">
-    <input type="hidden" name='to_user' value="{{account.user.id}}">
+    <input type="hidden" name='to_user' value="{{account.id}}">
     {% if my_profile.user == account.user %}
       <a href="{% url 'accounts:edit_profile' %}"><div id="edit-profile">Edit</div></a>
     {% elif my_profile.user in account.friends.all %}

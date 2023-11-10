@@ -47,7 +47,7 @@ class LoginForm(forms.ModelForm):
 class GroupCreateForm(forms.ModelForm):
     class Meta:
         model = Group
-        fields = ["group_name","privacy","visibility","group_type","description","group_cover"]
+        fields = ["group_name","privacy","visibility","group_type","who_can_post","description","group_cover"]
 
 class GroupPostForm(forms.ModelForm):
     class Meta:
@@ -62,7 +62,7 @@ class RuleAddForm(forms.ModelForm):
 class GroupEditForm(forms.ModelForm):
     class Meta:
         model = Group
-        fields = ["visibility","privacy","group_name","description","group_type","group_cover"]
+        fields = ["visibility","privacy","group_name","description","group_type","who_can_post","group_cover"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -80,6 +80,8 @@ class GroupEditForm(forms.ModelForm):
                 self.fields[fieldname].widget.attrs['placeholder'] = "Description..."
             elif fieldname == 'group_type':
                 self.fields[fieldname].label = "Group type"
+            elif fieldname == 'who_can_post':
+                self.fields[fieldname].label = "Who Can Post"
 
 
             else:

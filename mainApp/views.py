@@ -122,12 +122,13 @@ class PostMixins(object):
 		elif "add_friend" in request.POST:
 			excepted_html_form_names = ["from_user","to_user","add_friend"]
 			is_secure = self.check_html_forms_for_friend_request_system(request.POST,excepted_html_form_names,kwargs.get("pk"))
+			print(is_secure)
 			if is_secure==False:
 				return redirect(request.META["HTTP_REFERER"])
 			self.make_friend_request(request.POST["from_user"],request.POST["to_user"])
 		elif "rm-request" in request.POST:
 			excepted_html_form_names = ["from_user","to_user","rm-request"]
-			is_ecure = self.check_html_forms_for_friend_request_system(request.POST,excepted_html_form_names,kwargs.get("pk"))
+			is_secure = self.check_html_forms_for_friend_request_system(request.POST,excepted_html_form_names,kwargs.get("pk"))
 			if is_secure==False:
 				return redirect(request.META["HTTP_REFERER"])
 			self.remove_friend_request(request.POST["from_user"],request.POST["to_user"])
@@ -181,7 +182,6 @@ class PostMixins(object):
 		f.save()
 
 	def check_html_forms_for_friend_request_system(self,reqs,excepted_data,displayed_user_id):
-		print(self.get_user_acc(reqs['from_user']))
 		if self.get_user_acc(reqs['from_user'])!=self.current_user() or self.get_user_acc(reqs['to_user'])!=self.get_user_acc(self.kwargs.get("pk")):
 			return False
 		return True
@@ -212,7 +212,6 @@ class PageMixin(object):
 			if SharePost.objects.filter(user=i).exists():
 				self.add_posts(SharePost.objects.filter(user=i),p)
 			if GroupPost.objects.filter(user=i).exists():
-				print(True)
 				self.add_posts(GroupPost.objects.filter(user=i),p,True)
 			if Feelings.objects.filter(user=i).exists():
 				self.add_posts(Feelings.objects.filter(user=i),p)

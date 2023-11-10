@@ -90,7 +90,7 @@
             </div>
 
             <hr>
-             <div class="row-title">
+            <div class="row-title">
                <div class="div">
                     <p>{{form.group_type.label}}</p>
                     <i class="fa-solid fa-pen pen" id="4"></i>
@@ -100,20 +100,32 @@
                     {{form.group_type}}
                 </div>     
             </div>
+            <hr>
+            <div class="row-title">
+               <div class="div">
+                    <p>{{form.who_can_post.label}}</p>
+                    <i class="fa-solid fa-pen pen" id="5"></i>
+               </div> 
+                <span>{{group.who_can_post}}</span>
+                 <div class="input" id="hp">
+                    {{form.who_can_post}}
+                </div>     
+            </div>
 
             <hr>
             <div class="row-title">
                 <div class="div">
                     <p>Group Cover</p>
-                    <i class="fa-solid fa-pen pen" id="5"></i>
+                    <i class="fa-solid fa-pen pen" id="6"></i>
                 </div>
                 <div class="input" id="gc">
                     {{form.group_cover}}
                     <button style="color:red;padding: 7px;border: none; background: #f1f1f1;font-weight: bold;" type="submit" name="rci">Delete Cover Image</button>
                 </div>
             </div>
+            <hr>
+            <a href="{% url 'accounts:delete_group' group.id %}" style="text-decoration: none;"><p style="color: red;padding: 10px;">Delete The Group</p></a>
         </div>
-
         <div class="costumize_group">
             <div class="row-title">
                <div class="div">
@@ -143,7 +155,7 @@
             // console.log(document.getElementById(trash[i].id).innerHTML);
             if (document.getElementById(trash[i].id).innerHTML=="close"){
                 document.getElementById(trash[i].id).innerHTML='';
-                names=["nd","pr","vs","gt","gc"];
+                names=["nd","pr","vs","gt","gc","hp"];
                 for(let i=0; i < names.length; i++){
                     document.getElementById(names[i]).style.display='none';
                 }
@@ -154,7 +166,8 @@
                     "2":"pr",
                     "3":"vs",
                     "4":"gt",
-                    "5":"gc",
+                    "5":"hp",
+                    "6":"gc",
                 }
                 document.getElementById(obj[trash[i].id]).style.display="block";
                 document.getElementById(trash[i].id).innerHTML="close";

@@ -68,6 +68,8 @@ class Group(models.Model):
 	description = models.TextField(max_length=1000,null=True,blank=True)
 	
 	group_type = models.TextField(max_length=15,choices=types,null=True)
+	who_can_post_list = (("Only Admins","Only Admins"),("Everyone","Everyone"))
+	who_can_post = models.CharField(max_length=15,choices=who_can_post_list,default="Everyone")
 
 	created = models.DateTimeField(default=timezone.now)
 

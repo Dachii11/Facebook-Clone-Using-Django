@@ -44,7 +44,7 @@ class ShareFeelingsPosts(models.Model):
 
 
 class Logs(models.Model):
-	user_logged_in = models.ForeignKey(Account,on_delete=models.SET_NULL,null=True)
+	account_logged_in = models.ForeignKey(Account,on_delete=models.SET_NULL,null=True)
 	ip_address = models.CharField(max_length=80,null=True)
 	user_agent = models.CharField(max_length=500,null=True)
 	city = models.CharField(max_length=100,null=True)

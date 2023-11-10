@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.views.generic.base import View
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView,SingleObjectMixin
-from django.views.generic.edit import DeleteView,FormView,UpdateView
+from django.views.generic.edit import DeleteView,FormView,UpdateView,CreateView
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
@@ -111,6 +111,7 @@ class ProfileMixin(object):
 		else:
 			context["friend_request_permission"] = False
 		context["my_profile"] = Account.objects.get(user=User.objects.get(username=self.request.user))
+		context["account"] = user 
 		context["my_groups"] = Group.objects.filter(admin=context["my_profile"])
 		context["count_new_msgs"] = len(Message.objects.filter(to_user=context["my_profile"],seen=False))
 		context["new_notifications"] = new_notification_counter(context["my_profile"].id)
@@ -175,6 +176,8 @@ class GroupDetail(PostMixins,SingleObjectMixin,View):
 		context["posts"] = GroupPost.objects.filter(group=group)
 		context["count_new_msgs"] = len(Message.objects.filter(to_user=context["my_profile"],seen=False))
 		context["new_notifications"] = new_notification_counter(context["my_profile"].id)
+		if group.who_can_post == 'Everyone' or (group.who_can_post=='Only Admins' and context["my_profile"] in group.admin.all()):
+			context["can_post"] = True
 		return context
 
 class SignIn(View):
@@ -350,7 +353,7 @@ class CreateGroup(ProfileAccountMixin,FormView):
 
 	def form_valid(self,form):
 		form.save()
-		form.instance.admin.add(Account.objects.get(user=User.objects.get(username=self.request.user)))
+		form.instance.admin.add(Account.objects.get(user=self.request.user))
 		return super(CreateGroup,self).form_valid(form)
 
 	def get_success_url(self):
@@ -410,6 +413,13 @@ class CreateGroupPost(ProfileAccountMixin,FormView):
 	model = GroupPost
 	form_class = GroupPostForm
 	template_name = "accounts/create_group_post.html"
+
+	def get(self,*args,**kwargs):
+		group = Group.objects.get(group_name=self.request.get_full_path().split("/")[3])
+		mp = Account.objects.get(user=self.request.user)
+		if mp not in group.admin.all():
+			return HttpResponse("Permission denied!")
+		return render(self.request,self.template_name,{"form":self.form_class,"my_profile":mp})
 
 	def form_valid(self,form):
 		form.instance.post_type = "groupPost"
@@ -540,6 +550,23 @@ class EditGroup(ProfileAccountMixin,FormView):
 				form = GroupEditForm(request.POST,request.FILES or None,instance=Group.objects.get(id=kwargs.get("pk")))
 				form.save()
 		return redirect(request.META["HTTP_REFERER"])
+
+class DeleteGroup(ProfileAccountMixin,DeleteView):
+	model = Group
+	template_name = "accounts/group_delete.html"
+
+	def get(self,request,*args,**kwargs):
+		group = Group.objects.get(id=kwargs.get("pk"))
+		pr = Account.objects.get(user=request.user)
+		if pr not in group.admin.all():
+			return HttpResponse("Permission denied")
+		return render(request,self.template_name,{"my_profile":pr})
+
+	def form_valid(self,form):
+		return super(DeleteGroup,self).form_valid(form)
+
+	def get_success_url(self):
+		return reverse_lazy("mainApp:index")
 
 @method_decorator(login_required,name='dispatch')
 class ReportGroup(FormView):
