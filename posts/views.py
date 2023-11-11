@@ -257,8 +257,8 @@ class AddPost(AccountMixin,CreateView):
 		form.instance.user = self.creator()
 		form.instance.post_type = "post"
 		if form.cleaned_data["file"]:
-			if form.cleaned_data["file"].size> 5242880:
-				messages.error(self.request,"File is too large. Maximum 5MB")
+			if form.cleaned_data["file"].size> 20971520:
+				messages.error(self.request,"File is too large. Maximum 20MB")
 				return redirect(self.request.META["HTTP_REFERER"])
 		form.save()
 		return super(AddPost,self).form_valid(form)
