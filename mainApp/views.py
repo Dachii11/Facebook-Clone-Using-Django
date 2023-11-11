@@ -122,7 +122,6 @@ class PostMixins(object):
 		elif "add_friend" in request.POST:
 			excepted_html_form_names = ["from_user","to_user","add_friend"]
 			is_secure = self.check_html_forms_for_friend_request_system(request.POST,excepted_html_form_names,kwargs.get("pk"))
-			print(is_secure)
 			if is_secure==False:
 				return redirect(request.META["HTTP_REFERER"])
 			self.make_friend_request(request.POST["from_user"],request.POST["to_user"])
@@ -160,7 +159,8 @@ class PostMixins(object):
 
 	def make_friend_request(self,from_user,to_user):
 		f,t = self.get_from_to_users(from_user,to_user)	
-		FriendRequest.objects.create(from_user=f,to_user=t).save()
+		if not FriendRequest.objects.filter((Q(from_user=f) & Q(to_user=t)) | (Q(from_user=t) & Q(to_user=f))).exists():
+			FriendRequest.objects.create(from_user=f,to_user=t).save()
 
 	def remove_friend_request(self,from_user,to_user):
 		f,t = self.get_from_to_users(from_user,to_user)
