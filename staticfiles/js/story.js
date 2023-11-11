@@ -26,23 +26,25 @@ closeBtn.addEventListener("click",()=>{
 	removeImgVid();
 })
 const updateFullView = ()=>{
-	removeImgVid();    
-	let node;
-	chatSocket.send(JSON.stringify({
-            "story_id":AllStories[currentActive].id,
-            "my_profile":my_profile,
-        }));
-	AllStories[currentActive].childNodes[1].childNodes[1].style.borderColor = 'rgba(0,0,0,0.8)';
-	if (AllStories[currentActive].children[1].nodeName=="VIDEO") {
-		node = document.createElement("video");
-		node.setAttribute("autoplay","autoplay");
-	} else {
-	 	node = document.createElement("img");
-	 }
-	node.src = AllStories[currentActive].children[1].currentSrc;
-	storyAuthorFull.innerHTML = AllStories[currentActive].children[2].innerHTML;
-	storyImageFull.appendChild(node);
-	
+	if (currentActive>=1){
+		removeImgVid();    
+		let node;
+		console.log(currentActive);
+		chatSocket.send(JSON.stringify({
+	            "story_id":AllStories[currentActive].id,
+	            "my_profile":my_profile,
+	        }));
+		AllStories[currentActive].childNodes[1].childNodes[1].style.borderColor = 'rgba(0,0,0,0.8)';
+		if (AllStories[currentActive].children[1].nodeName=="VIDEO") {
+			node = document.createElement("video");
+			node.setAttribute("autoplay","autoplay");
+		} else {
+		 	node = document.createElement("img");
+		 }
+		node.src = AllStories[currentActive].children[1].currentSrc;
+		storyAuthorFull.innerHTML = AllStories[currentActive].children[2].innerHTML;
+		storyImageFull.appendChild(node);
+	}
 }
 nextBtnFull.addEventListener("click",()=>{
 	if(currentActive>=AllStories.length-1) return;

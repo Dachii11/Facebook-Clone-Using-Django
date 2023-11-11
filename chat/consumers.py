@@ -195,8 +195,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
 	@sync_to_async
 	def message_save(self,room,sender,receiver,message):
 		room = PrivateChat.objects.get(id=room)
-		from_user = Account.objects.get(user=User.objects.get(id=sender))
-		to_user = Account.objects.get(user=User.objects.get(id=receiver))
+		# from_user = Account.objects.get(user=User.objects.get(id=sender))
+		from_user = Account.objects.get(id=sender)
+		# to_user = Account.objects.get(user=User.objects.get(id=receiver))
+		to_user = Account.objects.get(id=receiver)
 		msg = Message.objects.create(room=room,from_user=from_user,to_user=to_user,message=message)
 		if room.user_1==from_user and room.user_2==from_user:
 			room.user_1_seen=True
@@ -214,7 +216,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 	@sync_to_async
 	def group_msg_save(self,group,sender,message):
 		group = ChatRoomGroup.objects.get(id=group)
-		sender = Account.objects.get(user=User.objects.get(id=sender))
+		sender = Account.objects.get(id=sender)
 		if sender in group.members.all():
 			print(True)
 			GroupMessage.objects.create(room=group,from_user=sender,message=message).save()

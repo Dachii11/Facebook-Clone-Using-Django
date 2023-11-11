@@ -305,7 +305,7 @@
 <script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
 <script src="{% static 'js/pageScroll.js' %}"></script>
 <script src="{% static 'js/stories_scroll.js' %}"></script>
-<script src="{% static 'js/stories.js' %}"></script>
+<script src="{% static 'js/story.js' %}"></script>
 
 {% endblock %}
 {% block javascript %}
@@ -313,7 +313,7 @@
 {{my_profile.id|json_script:"json-username"}}
 <script>
     // const my_profile = JSON.parse(document.getElementById("json-username").textContent);
-    const chatSocket = new WebSocket('ws://'+window.location.host+"/ws/home/");
+    const chatSocket = new WebSocket('wss://'+window.location.host+"/ws/home/");
     console.log(chatSocket);
     const my_profile = JSON.parse(document.getElementById("json-username").textContent);
 

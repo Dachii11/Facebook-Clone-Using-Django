@@ -68,7 +68,7 @@
     const chat = JSON.parse(document.getElementById("json-group-id").textContent);
     const my_profile = JSON.parse(document.getElementById("json-username").textContent);
     
-    const chatSocket = new WebSocket('ws://'+window.location.host+'/ws/chat/group/'+chat+'/');
+    const chatSocket = new WebSocket('wss://'+window.location.host+'/ws/chat/group/'+chat+'/');
 
     chatSocket.onclose = function(e){
         // console.log("WebSocket Closed!");

@@ -195,11 +195,11 @@ class SignIn(View):
 			acc = Account.objects.get(user=user)
 			try:
 				data = get_location(request)
-				log=Logs.objects.create(user_logged_in=acc,ip_address=data["ip"],user_agent=data["user_agent"],city=data["city"],country=data["country"])
+				log=Logs.objects.create(account_logged_in=acc,ip_address=data["ip"],user_agent=data["user_agent"],city=data["city"],country=data["country"])
 				log.save()
 				print(log.ip_address)
-				print(Logs.objects.filter(user_logged_in_id=user.id).first().ip_address)
-				if log.ip_address!=Logs.objects.filter(user_logged_in_id=user.id).first().ip_address:
+				print(Logs.objects.filter(account_logged_in_id=user.id).first().ip_address)
+				if log.ip_address!=Logs.objects.filter(account_logged_in_id=user.id).first().ip_address:
 					current_site = get_current_site(self.request)
 					mail_subject = "New Loggin to your account."
 					message = render_to_string("accounts/confirm_account.html",{
@@ -212,7 +212,7 @@ class SignIn(View):
 					#email = EmailMessage(mail_subject,message,to=[TO_EMAIL])
 					#email.send()
 			except TypeError:
-				print("Cant get data from get_location.")
+				print("Site is probably on localhost and can't get data from User IP.")
 			finally:
 				login(request,user)
 				return redirect("mainApp:index")

@@ -1,7 +1,7 @@
 const my_profile = JSON.parse(document.getElementById("json-username").textContent);    
-const chatSocket = new WebSocket('ws://'+window.location.host+"/ws/accounts/profile/"+my_profile+'/');
+const chatSocket = new WebSocket('wss://'+window.location.host+"/ws/accounts/profile/"+my_profile+'/');
 
-console.log("hello");
+console.log("h");
 
 chatSocket.onclose = function(e){
     console.log("WebSocket Closed!");
