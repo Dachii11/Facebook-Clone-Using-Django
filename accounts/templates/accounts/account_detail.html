@@ -99,8 +99,7 @@
      
 	  <form method="POST" action="">
 		{% csrf_token %}
-		<!-- <input type='hidden' name='from_user' value="{{my_profile.user}}"> -->
-		<!-- <input type="hidden" name='to_user' value="{{account.user}}"> -->
+		
     <input type='hidden' name='from_user' value="{{my_profile.id}}">
     <input type="hidden" name='to_user' value="{{account.id}}">
     {% if my_profile.user == account.user %}

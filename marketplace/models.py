@@ -27,7 +27,7 @@ class Sell(models.Model):
 	price = models.FloatField(default=0.0,null=True)
 	description = models.TextField(max_length=1000,null=True,blank=True)
 	uploaded = models.DateTimeField(auto_now_add=True)
-	total_views = models.ManyToManyField(Account,related_name="total_views")
+	total_views = models.ManyToManyField(Account,related_name="total_views",blank=True)
 
 	def __str__(self):
 		return self.name[:50]

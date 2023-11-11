@@ -3,6 +3,16 @@
 {% block content %}
 {% include 'menu.html' %}
 <link rel="stylesheet" type="text/css" href="{% static 'accounts/group_create.css' %}">
+{% if my_profile.theme %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+{% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme.css' %}">
+    <style>.main-create{background: rgb(23, 23, 23);color: #fff;}
+	.main-create input,
+	.main-create option,
+	.main-create textarea,
+	.main-create select{background:rgb(30, 30, 30);color: #fff;}</style>
+{% endif %}
 <div class="main-create">
 	<div class="header"><p>Create New Group</p></div>
 	<div class="gt">
