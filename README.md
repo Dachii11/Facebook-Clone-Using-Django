@@ -11,7 +11,7 @@ It will be updated every day, make sure you have **MySQL** installed.
 ## In your fb/settings.py add your email.
      ```
      EMAIL_HOST_USER = 'your_email_address'
-     EMAIL_HOST_PASSWORD = 'your_password'
+     EMAIL_HOST_PASSWORD = 'your_password'     # (gmail requires 16 digit app password)
      ```
 
 ## Create MySQL database and add it to your fb/settings.py
