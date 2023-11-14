@@ -79,11 +79,8 @@ class ProfileMixin(object):
 		me = Account.objects.get(user=User.objects.get(id=self.request.user.id))
 	
 		account_visibility = user.who_can_see_my_posts
-		if  (user==me) or account_visibility=="Public" or (account_visibility=="Friends" and user.user in me.friends.all()) or (account_visibility=="Only me" and user==me):
-			if(user==me):
-				post_data=Post.objects.filter(user=user)
-			else:
-				post_data=Post.objects.filter(Q(user=user) & Q(status="Public")|Q(status="Friends"))
+		if  (user==me) or account_visibility=="Public" or (account_visibility=="Friends" and me.user in user.friends.all()) or (account_visibility=="Only me" and user==me):
+			post_data=Post.objects.filter(user=user)
 			posts.extend(list(post_data))
 			posts.extend(list(SharePost.objects.filter(user=user)))
 			posts.extend(list(GroupSharePost.objects.filter(user=user)))
@@ -91,9 +88,8 @@ class ProfileMixin(object):
 			posts.extend(list(ShareFeelingsPosts.objects.filter(user=user)))
 			posts.sort(key=attrgetter("created_at"))
 			context["posts"] = reversed(posts)
-			p=Post.objects.filter(user=user)
-			context["images"] = [image_post for i,image_post in enumerate(p,start=1) if image_post.file != "" and i<=2]
-			more_images=[i for i in p if i.file!=""]
+			context["images"] = [image_post for i,image_post in enumerate(post_data,start=1) if (image_post.file != "" and image_post.media_type_html()=="image") and i<=2]
+			more_images=[i for i in post_data if i.file!=""]
 			if len(more_images)>6:
 				context["more_images_count"]=len(more_images)-2
 			try:

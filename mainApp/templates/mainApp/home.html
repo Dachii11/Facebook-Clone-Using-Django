@@ -98,6 +98,7 @@
 }
 
 
+
 </style>
 {% include 'menu.html' %}
 {% if my_profile.theme %}
@@ -107,7 +108,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme.css' %}">
     <style>.create-story {color: #fff;}</style>
 {% endif %}
-<div class="main" style="margin-top: 70px;display: flex;">
+<div class="main" style="display: flex;margin-top: 70px;">
     <!------------------ left --------------------->
 
  <div class="left">
@@ -342,32 +343,5 @@
     },1000);
 </script>
 
-<script type="text/javascript">
-document.querySelector("#search-input");
-addEventListener("input",filterList);
-
-function filterList(){
-    const searchInput = document.querySelector("#search-input");
-    const filter = searchInput.value.toLowerCase();
-    const listItems = document.querySelectorAll(".list-group-item");
-    if (filter==0){
-        document.querySelector("#list-group").style.display = "none";
-    } else {
-        document.querySelector("#list-group").style.display = "block";
-        listItems.forEach((item)=>{
-            let text = item.textContent;
-            let inp = filter.split(" ").slice(-1)[0].substr(1,);
-            if (filter.split(" ").slice(-1)[0][0]=="@"){
-                if (text.toLowerCase().includes(inp.toLowerCase())){
-                    item.style.display = "";
-                } else {
-                    item.style.display = "none";
-                }
-            } else {
-                document.querySelector("#list-group").style.display = "none";
-            }
-        });
-    }
-}
-</script>
+<script src="{% static 'js/search.js' %}"></script>
 {% endblock %}
