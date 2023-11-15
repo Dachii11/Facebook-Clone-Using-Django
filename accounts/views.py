@@ -172,8 +172,14 @@ class GroupDetail(PostMixins,SingleObjectMixin,View):
 		context["posts"] = GroupPost.objects.filter(group=group)
 		context["count_new_msgs"] = len(Message.objects.filter(to_user=context["my_profile"],seen=False))
 		context["new_notifications"] = new_notification_counter(context["my_profile"].id)
-		if group.who_can_post == 'Everyone' or (group.who_can_post=='Only Admins' and context["my_profile"] in group.admin.all()):
-			context["can_post"] = True
+		not_member_private_group = group.privacy == "Private" and context["my_profile"] not in group.members.all()
+		if not_member_private_group:
+			context["can_post"] = False
+		elif not not_member_private_group:
+			if group.who_can_post == 'Everyone' or (group.who_can_post=='Only Admins' and context["my_profile"] in group.admin.all()):
+				context["can_post"] = True
+			else:
+				context["can_post"] = False
 		return context
 
 class SignIn(View):
@@ -205,8 +211,8 @@ class SignIn(View):
 							"token":account_activation_token.make_token(user),
 						})
 					TO_EMAIL = user.email
-					#email = EmailMessage(mail_subject,message,to=[TO_EMAIL])
-					#email.send()
+					email = EmailMessage(mail_subject,message,to=[TO_EMAIL])
+					email.send()
 			except TypeError:
 				print("Site is probably on localhost and can't get data from User IP.")
 			finally:
@@ -350,6 +356,7 @@ class CreateGroup(ProfileAccountMixin,FormView):
 	def form_valid(self,form):
 		form.save()
 		form.instance.admin.add(Account.objects.get(user=self.request.user))
+		form.instance.members.add(Account.objects.get(user=self.request.user))
 		return super(CreateGroup,self).form_valid(form)
 
 	def get_success_url(self):
@@ -411,7 +418,7 @@ class CreateGroupPost(ProfileAccountMixin,FormView):
 	template_name = "accounts/create_group_post.html"
 
 	def get(self,*args,**kwargs):
-		group = Group.objects.get(group_name=self.request.get_full_path().split("/")[3])
+		group = Group.objects.get(id=self.request.get_full_path().split("/")[3])
 		mp = Account.objects.get(user=self.request.user)
 		if mp not in group.admin.all():
 			return HttpResponse("Permission denied!")
@@ -420,7 +427,7 @@ class CreateGroupPost(ProfileAccountMixin,FormView):
 	def form_valid(self,form):
 		form.instance.post_type = "groupPost"
 		form.instance.user = Account.objects.get(user=User.objects.get(username=self.request.user))
-		form.instance.group = Group.objects.get(group_name=self.request.get_full_path().split('/')[3]) 
+		form.instance.group = Group.objects.get(id=self.request.get_full_path().split('/')[3]) 
 		form.save()
 		return super(CreateGroupPost,self).form_valid(form)
 
@@ -446,7 +453,10 @@ class GroupAbout(ThemeMixin,SingleObjectMixin,View):
 	def get(self,request,*args,**kwargs):
 		g = Group.objects.get(id=self.request.get_full_path().split('/')[3])
 		my_profile = Account.objects.get(user=request.user)
-		return render(request,"accounts/group_about.html",{"group":g,"my_profile":my_profile,"count_new_msgs":len(Message.objects.filter(to_user=my_profile,seen=False))})
+		data = {"group":g,"my_profile":my_profile,"count_new_msgs":len(Message.objects.filter(to_user=my_profile,seen=False))}
+		if g.who_can_post == 'Everyone' or (g.who_can_post=='Only Admins' and my_profile in g.admin.all()):
+			data.update({"can_post":True})
+		return render(request,"accounts/group_about.html",data)
 
 class GroupMembers(ThemeMixin,SingleObjectMixin,View):
 	model = Group
@@ -455,8 +465,10 @@ class GroupMembers(ThemeMixin,SingleObjectMixin,View):
 		my_profile = Account.objects.get(user=User.objects.get(username=self.request.user))
 		members = g.members.all()
 		my_profile = Account.objects.get(user=request.user)
-		return render(request,"accounts/group_members.html",
-			{"group":g,"my_profile":my_profile,"members":members,"count_new_msgs":len(Message.objects.filter(to_user=my_profile,seen=False))})
+		data = {"group":g,"my_profile":my_profile,"members":members,"count_new_msgs":len(Message.objects.filter(to_user=my_profile,seen=False))}
+		if g.who_can_post == 'Everyone' or (g.who_can_post=='Only Admins' and my_profile in g.admin.all()):
+			data.update({"can_post":True})
+		return render(request,"accounts/group_members.html",data)
 
 @method_decorator(login_required,name='dispatch')
 class GroupRule(SingleObjectMixin,View):

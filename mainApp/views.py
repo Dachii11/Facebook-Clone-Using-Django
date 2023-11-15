@@ -102,7 +102,7 @@ class PostMixins(object):
 					post.love_reaction.add(user)
 				elif emotion == 'haha':
 					post.haha_reaction.add(user)
-				elif emotloveion == 'wow':
+				elif emotion == 'wow':
 					post.wow_reaction.add(user)
 				elif emotion == 'sad':
 					post.sad_reaction.add(user)
@@ -265,7 +265,8 @@ class Search(ListView):
 
 	def get(self,request,*args,**kwargs):
 		query = self.request.GET.get('q')
-		users = Account.objects.filter(Q(username__icontains=query))
+		u = User.objects.filter(Q(username__icontains=query)|Q(first_name__icontains=query)|Q(last_name__icontains=query))
+		users = [Account.objects.get(user=i) for i in u]
 		groups = Group.objects.filter(Q(group_name__icontains=query))
 		len_of_users = len(users)
 		len_of_groups = len(groups)

@@ -96,9 +96,28 @@
 .story_upload {
     text-align: center;
 }
+.stories-full-view .next-btn {
+    z-index: 2;
+}
+.stories-full-view .story img {
+    object-position: center;
+}
+@media(max-width:350px){
+    .stories-full-view .next-btn {
+        right: 6%;
+    }
+}
+@media(max-width:340px){
+    .stories-full-view .next-btn {
+        right: 10%;
+    }
+}
 
-
-
+@media(max-width:325px){
+    .stories-full-view .next-btn {
+        right: 15%;
+    }
+}
 </style>
 {% include 'menu.html' %}
 {% if my_profile.theme %}
@@ -191,9 +210,9 @@
                         </div>
                     {% endfor %}
                 </div>
-                <div class="next-btn active">
+                <!-- <div class="next-btn active">
                     <i class="fa-solid fa-chevron-right"></i>
-                </div>
+                </div> -->
             </div>
         </div>
  

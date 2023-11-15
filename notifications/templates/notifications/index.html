@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'notifications/nots.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'notifications/notifications.css' %}">
 {% include 'menu.html' %}
 {% if my_profile.theme %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
@@ -37,7 +37,7 @@
 							{% if notification.post.media_type_html == "image" %}
 					            <img src="{{notification.post.file.url}}" class="pppp">
 					        {% elif notification.post.media_type_html == "video" %}
-					            <video><source src="{{notification.post.file.url}}" class="pppp"></video>
+					            <video class="pppp"><source src="{{notification.post.file.url}}"></video>
 					        {% endif %}
 						{% endif %}
 					</div>
