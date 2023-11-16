@@ -42,7 +42,7 @@ It will be updated every day, make sure you have **MySQL** installed.
      >>> Account.objects.create(user=admin,username=admin.username,id_user=admin.id)
      >>> quit()
 
-**admin** page link: **loa1KDl0KL_03kffj_jKA_SF0k_l1K03_31KL_KDA/**
+**admin** page link: **1KDl0KL_03kffj_jKA_SF0k_l1K03_31KL_KDA/**
 
 ## Finally, run the server...
      python manage.py runserver
