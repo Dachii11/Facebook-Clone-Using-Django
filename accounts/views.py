@@ -173,6 +173,9 @@ class GroupDetail(PostMixins,SingleObjectMixin,View):
 		context["count_new_msgs"] = len(Message.objects.filter(to_user=context["my_profile"],seen=False))
 		context["new_notifications"] = new_notification_counter(context["my_profile"].id)
 		not_member_private_group = group.privacy == "Private" and context["my_profile"] not in group.members.all()
+		context["me_in_group"] = False
+		if context["my_profile"] in group.members.all():
+			context["me_in_group"] = True
 		if not_member_private_group:
 			context["can_post"] = False
 		elif not not_member_private_group:
@@ -684,7 +687,7 @@ def permission(user,group):
 def get_location(reqs):
 	ip_address,user_agent = get_ip(reqs)
 	try:
-		response = requests.get(f"https://ipapi.co/{ip_address}/json").json()
+		response = requests.get(f"https://ipapi.co/{ip_address}/json/").json()
 		location_data = {
 			"ip":ip_address,
 			"user_agent":user_agent,

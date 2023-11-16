@@ -1,8 +1,9 @@
 .main {
-	width: 700px;
+	width: 70%;
 	margin: 0 auto;
 	margin-top: 70px;
 }
+
 .main .notifications .notification .ln {
 	display: flex;
 }
@@ -41,4 +42,14 @@
 	width: 40px;
 	height: 40px;
 	border-radius: 50%;
+}
+@media(max-width:768px){
+	.main {
+		width: 85%;
+	}
+}
+@media(max-width:425px){
+	.main {
+		width: 100%;
+	}
 }

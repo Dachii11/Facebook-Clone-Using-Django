@@ -43,7 +43,7 @@
 					<p class="rule-body">{{rule.rule_body}}</p>
 				</div>
 				{% if my_profile in group.admin.all %}
-					<div class="rule-remove" style="padding:10px;"><i class="fa-solid fa-trash-can" id="{{rule.id}}"></i></div>
+					<div class="rule-remove" style="padding:10px;"><i class="fa-solid fa-trash-can i" id="{{rule.id}}"></i></div>
 				{% endif %}
 			</div>
 			<hr>
@@ -73,19 +73,5 @@
 <script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
 <script src="{% static 'js/emotion.js' %}"></script>
 <script src="{% static 'js/pageScroll.js' %}"></script>
-<script type="text/javascript">
-	trash = document.querySelectorAll(".rule-remove i");
-	for(let i=0; i<trash.length;i++){
-		trash[i].addEventListener("click",function(){;
-			document.querySelector(".rule-rm-btn").value=trash[i].id;
-			document.querySelector(".remove").style.display="flex";
-		})
-		document.querySelector(".remove .s .top i").addEventListener("click",function () {
-			document.querySelector(".remove").style.display="none";
-		})
-		document.querySelector(".cancel").addEventListener("click",function () {
-			document.querySelector(".remove").style.display="none";
-		})
-	}
- </script>
+<script src="{% static 'js/sr_remove.js' %}"></script>
 {% endblock %}

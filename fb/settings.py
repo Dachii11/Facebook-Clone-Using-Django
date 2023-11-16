@@ -15,7 +15,7 @@ if DEBUG:
     
 ALLOWED_HOSTS = ["*"]
 
-CSRF_TRUSTED_ORIGINS = ["https://f2b1-2a0d-5600-d-3000-00-b6c5.ngrok-free.app"]
+CSRF_TRUSTED_ORIGINS = []
 # Application definition
 
 INSTALLED_APPS = [

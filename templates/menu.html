@@ -1,4 +1,24 @@
 {% load static %}
+<style type="text/css">
+	.cnt {
+        position: absolute;
+        text-decoration: none;
+    }
+    .new-msgg{
+        position: relative;
+        left: 20px;
+        text-decoration-line: none;
+        z-index: 1;
+        font-size: 11px;
+        padding: 3px;
+        font-weight: bold;
+        background: red;
+        color: #fff;
+        bottom: 3px;
+        border-radius: 50%;
+
+    }
+</style>
 <div class="menu_settings" id="menu" style="display: none;z-index: 3;">
 	<div class="sets" style="z-index: 10; overflow: hidden;height: 47vh; overflow-y: scroll;">
 		<div>
@@ -8,13 +28,33 @@
 				<p class="tx">my profile</p>
 			</div>
 		</a>
-		<hr>
+	   <hr>
 		<a href="{% url 'accounts:friends' %}">
 			<div class="profile" id="list-items">
 				<img src="{% static 'images/friends.png' %}">
 				<p class="tx">Friends</p>
 			</div>
 		</a>
+		<hr>
+		<a href="{% url 'chat:chat_home' %}">
+			<div class="profile" id="list-items">
+				<div class="msgn">
+                	<i class="fa-brands fa-facebook-messenger cnt"></i>
+                	<span class="new-msgg">{{count_new_msgs}}</span>
+           		</div>
+				<p class="tx" style="padding-left: 23px;">Chat</p>
+			</div>
+		</a>
+		<hr>
+		 <a href="{% url 'notifications:notifications' %}">
+            <div class="profile" id="list-items">
+               <div class="msgn">
+               		<i class="fa-solid fa-bell cnt"></i>
+                	<span class="new-msgg not">{{new_notifications}}</span>
+               </div>
+               <p class="tx" style="padding-left: 23px;">Notifications</p>
+           </div>
+        </a>
 		<hr>
 		<a href="{% url 'accounts:suggestions' %}">
 			<div class="profile" id="list-items">
@@ -37,13 +77,7 @@
 			</div>
 		</a>
 		<hr>
-		<a href="{% url 'chat:chat_home' %}">
-			<div class="profile" id="list-items">
-				<i class="fa-brands fa-facebook-messenger"></i>
-				<p class="tx">Chat</p>
-			</div>
-		</a>
-		<hr>
+        <hr>
 		<a href="{% url 'accounts:groups' %}">
 			<div class="profile">
 				<img src="{% static 'images/groups-icon.png' %}">

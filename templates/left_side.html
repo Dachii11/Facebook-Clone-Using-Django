@@ -16,7 +16,7 @@
         <a href="{% url 'accounts:profile' my_profile.id %}">
         <div class="img">
         <img src="{{my_profile.profile_img.url}}">
-            <p style="font-size: 15px;font-weight: bold;">{{my_profile.user.first_name}} {{my_profile.user.last_name}}</p>
+            <p style="font-size: 15px;font-weight: bold;">{{my_profile.user}}</p>
         </div>
         </a>
         <a href="{% url 'accounts:friends' %}">

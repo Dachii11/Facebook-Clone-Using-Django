@@ -137,6 +137,14 @@ class PostMixins(object):
 			if is_secure==False:
 				return redirect(request.META["HTTP_REFERER"])
 			self.remove_friend(request.POST["from_user"],request.POST["to_user"])
+		elif "join" in request.POST:
+			g = Group.objects.get(id=request.POST["g"])
+			g.members.add(user)
+			g.save()
+		elif "lvg" in request.POST:
+			g = Group.objects.get(id=request.POST["g"])
+			g.members.remove(user)
+			g.save()
 
 		elif "theme" in request.POST:
 			if user.theme==True:

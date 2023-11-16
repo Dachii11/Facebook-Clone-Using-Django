@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{% static 'mainApp/home_style.css' %}">
 <link rel="stylesheet" href="{% static 'mainApp/comment_style.css' %}">
 <link rel="stylesheet" href="{% static 'css/shared_post.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'mainApp/stories_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'mainApp/stories.css' %}">
 <style type="text/css">
     .friends_name .friends_name {
         text-decoration: none;
@@ -96,12 +96,7 @@
 .story_upload {
     text-align: center;
 }
-.stories-full-view .next-btn {
-    z-index: 2;
-}
-.stories-full-view .story img {
-    object-position: center;
-}
+
 @media(max-width:350px){
     .stories-full-view .next-btn {
         right: 6%;
@@ -109,13 +104,13 @@
 }
 @media(max-width:340px){
     .stories-full-view .next-btn {
-        right: 10%;
+        right: 8%;
     }
 }
 
 @media(max-width:325px){
     .stories-full-view .next-btn {
-        right: 15%;
+        right: 10%;
     }
 }
 </style>
@@ -188,11 +183,11 @@
                     </div>
                     </a>
                     {% for story in stories %}
-                        {% if my_profile in story.views.all %}
+                       <!--  {% if my_profile in story.views.all %}
                             <style>.story .s img{border-color: rgba(0, 0, 0, 0.9);}</style>
                         {% else %}
                             <style>.story .s img {border-color: #4267B2;}</style>
-                        {% endif %}
+                        {% endif %} -->
                         <div class="story" id="{{story.id}}">
                             <div class="s">
                                 {% if my_profile in story.views.all %}
@@ -210,9 +205,9 @@
                         </div>
                     {% endfor %}
                 </div>
-                <!-- <div class="next-btn active">
+                <div class="next-btn active">
                     <i class="fa-solid fa-chevron-right"></i>
-                </div> -->
+                </div>
             </div>
         </div>
  
@@ -345,6 +340,7 @@
         if (data.new_notification){
             if (data.new_notification>0){
                 document.querySelector(".new-msg").innerHTML=data.new_notification;
+                document.querySelector(".new-msgg").innerHTML=data.new_notification;
                 data.new_notification=0;
             } 
         } else if (data.new_notification_count>0){

@@ -113,6 +113,8 @@
 .stories-full-view .story img,
 .stories-full-view .story video {
 	height: 100%;
+	width: 100%;
+	max-width: 400px;
 	aspect-ratio: 10/16;
 	object-fit: cover;
 	border-radius: 16px;
@@ -129,3 +131,4 @@
 	padding: 4px 32px;
 	border-radius: 8px;
 }
+
