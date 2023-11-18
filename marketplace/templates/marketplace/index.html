@@ -14,7 +14,7 @@
     .top {background: rgb(30, 30, 30);}</style>
 {% endif %}
 <style type="text/css">
-    .main .center {width: 70%;}
+    .main .center {width: 70%; margin-left: 25%;padding: 20px 20px 0 20px;}
     .friends_name .friends_name {
         text-decoration: none;
         color: black;
@@ -46,13 +46,14 @@
 {% include 'marketplace/mixin.html' %}
 <!-- </div> -->
     <!------------------ center --------------------->
-    <div class="center" style="height: 100vh;margin-left: 25%;"> 
-        <div class="top">
+    <div class="center" style=""> 
+        <div class="top" style="display: flex;justify-content: space-between;">
             {% if category %}
                 <p>{{category}}</p>
             {% else %}
                 <p>All category</p>
             {% endif %}
+            <a href="{% url 'marketplace:add_product' %}" style="text-decoration:none;color: black;"><p>Add</p></a>
         </div>
         <div class="sells">
             {% for sell in sells %}

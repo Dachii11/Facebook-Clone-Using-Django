@@ -231,7 +231,6 @@ class PageMixin(object):
 				for j in Story.objects.filter(user=i):
 					stories.append(j)
 		posts.extend(p)
-		#posts.extend([group for group in [i for i in GroupPost.objects.all() if i.user in friends] if group.group.visibility != "hidden"])
 		posts.sort(key=attrgetter("created_at"))
 		context["posts"] = reversed(posts)
 		friends.pop(friends.index(context["my_profile"]))

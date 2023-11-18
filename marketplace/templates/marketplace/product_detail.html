@@ -1,10 +1,10 @@
 {% extends 'layout.html' %}
 {% load static %}
 {% block content %}
-<link rel="stylesheet" href="{% static 'mainApp/home.css' %}">
+<link rel="stylesheet" href="{% static 'mainApp/home_style.css' %}">
 <link rel="stylesheet" href="{% static 'marketplace/marketplace.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'marketplace/detail.css' %}">
-{% include 'menu.html' %}
+{% include 'menu.html' %}b
 {% if my_profile.theme %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
 {% else %}
@@ -38,7 +38,7 @@
             </div>
             <div class="btns">
                 <button class="offer">Make Offer</button>
-                <a href="{% url 'chat:chat' product.seller.id  %}"><button class="messg-seller">Message Seller</button></a>
+                <a href="{% url 'chat:detail' product.seller.id  %}"><button class="messg-seller">Message Seller</button></a>
             </div>
         </div>
     </div>

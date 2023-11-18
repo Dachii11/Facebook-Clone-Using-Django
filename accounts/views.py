@@ -15,7 +15,6 @@ from mainApp.views import PageMixin,Home,PostMixins
 from django.urls import reverse_lazy
 from django.contrib.sites.shortcuts import get_current_site
 from .forms import UserRegisterForm,GroupCreateForm,GroupPostForm,RuleAddForm,GroupEditForm,GroupReportForm,EditProfile,LoginForm
-from django.views.generic.edit import CreateView
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -168,7 +167,7 @@ class GroupDetail(PostMixins,SingleObjectMixin,View):
 		context["my_profile"] = Account.objects.get(user=User.objects.get(username=self.request.user))
 		group = Group.objects.get(id=self.request.get_full_path().split('/')[3])
 		context["members"] = group.members.all()
-		context["friends"] = [Account.objects.get(user=acc) for acc in list(context["my_profile"].friends.all())]
+		context["friends"] = [Account.objects.get(user=acc) for acc in list(context["my_profile"].friends.all()) if acc not in group.members.all()]
 		context["posts"] = GroupPost.objects.filter(group=group)
 		context["count_new_msgs"] = len(Message.objects.filter(to_user=context["my_profile"],seen=False))
 		context["new_notifications"] = new_notification_counter(context["my_profile"].id)
@@ -194,7 +193,7 @@ class SignIn(View):
 
 	def post(self,request,*args,**kwargs):
 		form = LoginForm(request.POST)
-		# print(f"{request.POST['username']}\n{request.POST['password']}")
+		print(f"{request.POST['username']}\n{request.POST['password']}")
 		user = authenticate(username=request.POST['username'],password=request.POST['password'])
 		if user is not None:
 			acc = Account.objects.get(user=user)
@@ -202,8 +201,6 @@ class SignIn(View):
 				data = get_location(request)
 				log=Logs.objects.create(account_logged_in=acc,ip_address=data["ip"],user_agent=data["user_agent"],city=data["city"],country=data["country"])
 				log.save()
-				print(log.ip_address)
-				print(Logs.objects.filter(account_logged_in_id=user.id).first().ip_address)
 				if log.ip_address!=Logs.objects.filter(account_logged_in_id=user.id).first().ip_address:
 					current_site = get_current_site(self.request)
 					mail_subject = "New Loggin to your account."

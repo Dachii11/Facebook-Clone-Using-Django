@@ -4,11 +4,14 @@ from .models import Sell
 from accounts.models import Account
 from django.contrib.auth.models import User
 from django.views.generic.detail import SingleObjectMixin,DetailView
+from django.views.generic.edit import FormView,CreateView
 from notifications.views import new_notification_counter
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic.base import View
+from django.urls import reverse_lazy
 from django.db.models import F,Q
+from .forms import AddProductForm
 from chat.models import Message
 
 class MarketplaceMixin(object):
@@ -99,7 +102,21 @@ class ProductDetail(MarketplaceMixin,DetailView):
 			product.total_views.add(user)
 		return render(request,self.template_name,{"product":product,"my_profile":user})
 
+class AddProduct(FormView):
+	model = Sell
+	form_class = AddProductForm
+	template_name = "marketplace/addproduct.html"
 
+	def form_valid(self,form):
+		print(True)
+		form.instance.seller = Account.objects.get(user=self.request.user)
+		form.save()
+		return super(AddProduct,self).form_valid(form)
+
+	def get_success_url(self):
+		return reverse_lazy("marketplace:marketplace")
+			
+	 
 def get_notifications_data(account):
 	l = len(Message.objects.filter(to_user=account,seen=False))
 	count = new_notification_counter(account.id)
