@@ -15,7 +15,7 @@ if DEBUG:
     
 ALLOWED_HOSTS = ["*"]
 
-CSRF_TRUSTED_ORIGINS = [""]
+CSRF_TRUSTED_ORIGINS = []
 # Application definition
 
 INSTALLED_APPS = [
@@ -81,7 +81,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'YOUR_DATABASE_NAME',
-        'USER': 'MYSQL_USER',
+        'USER': 'root',
         'PASSWORD': 'MySQL password', 
         'HOST': 'localhost',
         'PORT': '3306',

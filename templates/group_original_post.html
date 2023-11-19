@@ -23,9 +23,11 @@
 <div class="friends_post">
             <div class="friend_post_top">
                 <div class="img_and_name">
-                    <img src="{{post.user.profile_img.url}}">
+                    <img src="{{post.group.group_cover.url}}">
                     <div class="friends_name">
-                        <a class="friends_name" href="{% url 'accounts:profile' post.user.id %}">{{post.user}}</a> <span class="arr-group-name">|</span> <span class="group-name"><a href="{% url 'accounts:group' post.group.id %}" class="group-name-s" style="text-decoration:none;">{{post.group.group_name}}</a></span>
+                        {% if post.group.display_post_author_username_on_post %}
+                        <a class="friends_name" href="{% url 'accounts:profile' post.user.id %}">{{post.user}}</a> |
+                        {% endif %} <span class="arr-group-name"></span> <span class="group-name"><a href="{% url 'accounts:group' post.group.id %}" class="group-name-s" style="text-decoration:none;">{{post.group.group_name}}</a></span>
                         <p class="time">{{post.created_at|timesince}} ago<i class="fa-solid fa-user-group"></i></p>
                     </div>
                 </div>

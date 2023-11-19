@@ -111,12 +111,23 @@
                     {{form.who_can_post}}
                 </div>     
             </div>
+            <hr>
+             <div class="row-title">
+               <div class="div">
+                    <p>{{form.display_post_author_username_on_post.label}}</p>
+                    <i class="fa-solid fa-pen pen" id="6"></i>
+               </div> 
+                <span>{{group.display_post_author_username_on_post}}</span>
+                 <div class="input" id="da">
+                    {{form.display_post_author_username_on_post}}
+                </div>     
+            </div>
 
             <hr>
             <div class="row-title">
                 <div class="div">
                     <p>Group Cover</p>
-                    <i class="fa-solid fa-pen pen" id="6"></i>
+                    <i class="fa-solid fa-pen pen" id="7"></i>
                 </div>
                 <div class="input" id="gc">
                     {{form.group_cover}}
@@ -167,7 +178,8 @@
                     "3":"vs",
                     "4":"gt",
                     "5":"hp",
-                    "6":"gc",
+                    "6":"da",
+                    "7":"gc",
                 }
                 document.getElementById(obj[trash[i].id]).style.display="block";
                 document.getElementById(trash[i].id).innerHTML="close";

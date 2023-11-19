@@ -58,7 +58,7 @@ class Group(models.Model):
 	statuses = (("Public","Public"),("Private","Private"))
 	visible = (("Visible","Visible"),("Hidden","Hidden"))
 	types = (("General","General"),("Buy and Sell","Buy and Sell"),("Gaming","Gaming"),
-			 ("Job","Job"),("Parenting","Parenting"))
+			 ("Job","Job"),("Parenting","Parenting"),("News","News"))
 	privacy = models.CharField(max_length=7,choices=statuses,null=True)
 	admin = models.ManyToManyField(Account)
 	visibility = models.CharField(max_length=7,choices=visible,null=True)
@@ -70,6 +70,7 @@ class Group(models.Model):
 	group_type = models.TextField(max_length=15,choices=types,null=True)
 	who_can_post_list = (("Only Admins","Only Admins"),("Everyone","Everyone"))
 	who_can_post = models.CharField(max_length=15,choices=who_can_post_list,default="Everyone")
+	display_post_author_username_on_post = models.BooleanField(default=False)
 
 	created = models.DateTimeField(default=timezone.now)
 

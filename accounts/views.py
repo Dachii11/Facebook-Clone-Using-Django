@@ -545,16 +545,17 @@ class EditGroup(ProfileAccountMixin,FormView):
 				user.theme=True
 			user.save()
 		else:
+			print(request.POST)
 			DEFAULT = "default_cover.png"
 			group = Group.objects.get(id=kwargs.get("pk"))
 			if "rci" in request.POST:
 				group.group_cover.delete()
 				group.group_cover = DEFAULT
-				group.save()
-			else:
 				group_icon = group.group_cover.url
 				remove = RemoveFile(group_icon)
 				remove.remove_file()
+				group.save()
+			else:
 				form = GroupEditForm(request.POST,request.FILES or None,instance=Group.objects.get(id=kwargs.get("pk")))
 				form.save()
 		return redirect(request.META["HTTP_REFERER"])

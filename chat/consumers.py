@@ -211,6 +211,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 				room.user_2_seen=True
 				room.user_1_seen=False
 		msg.save()
+		room.last_contact = msg.date_send
 		room.save()
 
 	@sync_to_async
@@ -219,7 +220,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
 		sender = Account.objects.get(id=sender)
 		if sender in group.members.all():
 			print(True)
-			GroupMessage.objects.create(room=group,from_user=sender,message=message).save()
+			s=GroupMessage.objects.create(room=group,from_user=sender,message=message)
+			s.save()
+			group.last_contact = s.date_send
+			group.save()
 
 	def get_unseen_msg_counts(self,receiver):
 		count = 0

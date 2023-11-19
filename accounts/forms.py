@@ -62,7 +62,7 @@ class RuleAddForm(forms.ModelForm):
 class GroupEditForm(forms.ModelForm):
     class Meta:
         model = Group
-        fields = ["visibility","privacy","group_name","description","group_type","who_can_post","group_cover"]
+        fields = ["visibility","privacy","group_name","description","group_type","who_can_post","display_post_author_username_on_post","group_cover"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -82,6 +82,8 @@ class GroupEditForm(forms.ModelForm):
                 self.fields[fieldname].label = "Group type"
             elif fieldname == 'who_can_post':
                 self.fields[fieldname].label = "Who Can Post"
+            elif fieldname == "display_post_author_username_on_post":
+                self.fields[fieldname].label = "Display post author username on post"
 
 
             else:

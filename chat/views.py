@@ -40,21 +40,12 @@ class ChatHome(ThemeMixin,ListView):
 				seen_chat.append(i)
 		chat = []
 		f=not_seen_chat+seen_chat
-		last_group_msgs = []
-		for i in groups:
-			last_group_msgs.append(GroupMessage.objects.filter(room=i).last())
-		for i in f:
-			last_group_msgs.append(Message.objects.filter(room=i).last())
-		final_result = []
-		last_group_msgs.sort(key=attrgetter("date_send"))
-		last_group_msgs.reverse()
-		for i in range(len(last_group_msgs)):
-			try:
-				s = last_group_msgs[i].to_user	
-				final_result.append(PrivateChat.objects.get(id=last_group_msgs[i].room.id))
-			except AttributeError:
-				final_result.append(ChatRoomGroup.objects.get(id=last_group_msgs[i].room.id))
-		context["chat_with"]= final_result
+		print(f)
+		f+=groups
+		f.sort(key=attrgetter("last_contact"))
+		f.reverse()
+
+		context["chat_with"]= f
 		context["count_new_msgs"] = len(Message.objects.filter(to_user=context["my_profile"],seen=False))
 		context["new_notifications"] = new_notification_counter(context["my_profile"].id)
 		return context

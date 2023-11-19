@@ -1,11 +1,13 @@
 from django.db import models
 import accounts.models
+from django.utils import timezone
 
 class PrivateChat(models.Model):
     user_1 = models.ForeignKey("accounts.Account",on_delete=models.CASCADE,related_name='user_1')
     user_2 = models.ForeignKey("accounts.Account",on_delete=models.CASCADE,related_name='user_2')
     user_1_seen = models.BooleanField(default=False)
     user_2_seen = models.BooleanField(default=False)
+    last_contact = models.DateTimeField(default=timezone.now)
     
     def __str__(self):
         return f"{self.user_1} - {self.user_2} conversation"
@@ -26,6 +28,7 @@ class ChatRoomGroup(models.Model):
 	members = models.ManyToManyField("accounts.Account",related_name='memsbers')
 	title = models.CharField(max_length=40)
 	icon = models.ImageField(upload_to="group_chat_covers",default="default_cover.png")
+	last_contact = models.DateTimeField(default=timezone.now)
 	created = models.DateTimeField(auto_now_add=True)
 
 class GroupMessage(models.Model):
@@ -35,4 +38,4 @@ class GroupMessage(models.Model):
 	date_send = models.DateTimeField(auto_now_add=True)
 
 	def __str__(self):
-	 	return f"{self.from_user} io {self.room.title}: {self.message[:50]}"
+	 	return f"{self.from_user} in {self.room.title}: {self.message[:50]}"
