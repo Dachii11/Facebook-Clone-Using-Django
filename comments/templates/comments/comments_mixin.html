@@ -29,9 +29,9 @@
                        
                             {% if comment.likes.all.count > 0 %}
                                 {% if comment.likes.all.count == 1 %}
-                                    <p>{{comment.likes.all.count}} like</p>
+                                    <p>{{comment.get_formated_replies_count}}{{comment.glsp}} like</p>
                                 {% else %}
-                                    <p>{{comment.likes.all.count}} likes</p>
+                                    <p>{{comment.get_formated_replies_count}}{{comment.glsp}} likes</p>
                                 {% endif %}
                             {% endif %}
                          </div>

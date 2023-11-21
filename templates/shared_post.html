@@ -135,15 +135,11 @@
                         {% if post.likes.all.count == 1 %}
                             <p>you</p>
                         {% else %}
-                            {% if post.likes.all.count == 2 %}
-                           <p>you and {{post.likes.all.count|add:"-1"}} other</p>
-                            {% else %}
-                            <p>you and {{post.likes.all.count|add:"-1"}} others</p>
-                            {% endif %}
+                           <p style="margin-top: 3px;">{{post.mcu}}</p>
                         {% endif %}
                     {% else %}
                         {% if post.likes.all.count > 0%}
-                            <p>{{post.likes.all.count}}</p>
+                            <p style="color:#919191;margin-top: 3px;">{{post.hf}}{{post.glf}}</p>
                         {% endif %}
                     {% endif %}
                 </div> 
@@ -263,9 +259,9 @@
                                 <p>{{comment.created|timesince}}</p>
                                  {% if comment.likes.all.count > 0 %}
                                     {% if comment.likes.all.count == 1 %}
-                                        <p>{{comment.likes.all.count}} like</p>
+                                        <p>{{comment.get_formated_replies_count}}{{comment.glsp}} like</p>
                                     {% else %}
-                                        <p>{{comment.likes.all.count}} likes</p>
+                                        <p>{{comment.get_formated_replies_count}}{{comment.glsp}} likes</p>
                                     {% endif %}
                                 {% endif %}
                             </div>
@@ -308,9 +304,9 @@
                                 <p>{{comment.created|timesince}} ago</p>
                             {% if comment.likes.all.count > 0 %}
                                 {% if comment.likes.all.count == 1 %}
-                                    <p>{{comment.likes.all.count}} like</p>
+                                    <p>{{comment.get_formated_replies_count}}{{comment.glsp}} like</p>
                                 {% else %}
-                                    <p>{{comment.likes.all.count}} likes</p>
+                                    <p>{{comment.get_formated_replies_count}}{{comment.glsp}} likes</p>
                                 {% endif %}
                             {% endif %}
                              </div>

@@ -54,7 +54,9 @@
     	<div class="groups">
     		<div class="cover"><img src="{{group.group_cover.url}}"></div>
     		<div class="groups_detail">
-        			<p class="name"><a href="{% url 'accounts:group' group.id %}">{{group.group_name}}</a></p>
+               <p class="name"><a href="{% url 'accounts:group' group.id %}">{{group.group_name}}</a>
+                    {% if group.blue_tick %}<i class="fa-solid fa-circle-check" style="color:#1778F2;background: #fff;font-size: 16px;padding-left: 5px;"></i>{% endif %}
+                </p>         
                  <div class="inf">
         			<p class="info">
                         {% if group.privacy == "Public" %}

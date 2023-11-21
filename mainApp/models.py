@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from accounts.models import Account
 from posts.models import feelings_list
+from mainApp.number_format import human_format,get_letter_for_number_format
 
 class Feelings(models.Model):
 	user = models.ForeignKey(Account,on_delete=models.CASCADE,null=True)
@@ -22,6 +23,31 @@ class Feelings(models.Model):
 	def __str__(self):
 		return f"{self.user} feels {self.feeling} today."
 
+	def hf(self):
+		c = len(self.likes.all())
+		return human_format(c)[0]
+
+	def mcu(self):
+		num = float('{:.3g}'.format(len(self.likes.all())-1))
+		magnitude = 0
+		while abs(num)>=1000:
+				magnitude += 1
+				num /= 1000.0
+		return '{}{}'.format('{:f}'.format(num).rstrip('0').rstrip('.'),['','K','M','B','T'][magnitude])
+
+	def glsp(self):
+		return get_letter_for_number_format(human_format(self.count_shares(self))[1])
+
+	def count_shares(self,post):
+		return len(ShareFeelingsPosts.objects.filter(referer_post=post))
+	
+	def get_formated_shares(self):
+		return human_format(self.count_shares(self))[0]
+
+	def glf(self):
+		return get_letter_for_number_format(human_format(len(self.likes.all()))[1])
+
+
 class ShareFeelingsPosts(models.Model):
 	type_of_post = (("sharedFeelingPost","sharedFeelingPost"),)
 	post_type = models.TextField(choices=type_of_post,null=True)
@@ -39,6 +65,21 @@ class ShareFeelingsPosts(models.Model):
 	sad_reaction = models.ManyToManyField(Account,blank=True,related_name='shared_feeling_post_sad_reaction')
 	angry_reaction = models.ManyToManyField(Account,blank=True,related_name='shared_feeling_angry_reaction')
 
+	def mcu(self):
+		num = float('{:.3g}'.format(len(self.likes.all())-1))
+		magnitude = 0
+		while abs(num)>=1000:
+				magnitude += 1
+				num /= 1000.0
+		return '{}{}'.format('{:f}'.format(num).rstrip('0').rstrip('.'),['','K','M','B','T'][magnitude])
+
+	def glf(self):
+		return get_letter_for_number_format(human_format(len(self.likes.all()))[1])
+
+	def hf(self):
+		c = len(self.likes.all())
+		return human_format(c)[0]
+		
 	def __str__(self):
 		return f"Shared: {self.id}"
 

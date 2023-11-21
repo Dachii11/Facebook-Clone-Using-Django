@@ -164,7 +164,7 @@
         <a href="{% url 'accounts:group' shortcut.group.id %}">
             <div class="shortcuts">
                 <img src="{{shortcut.group.group_cover.url}}">
-                <p>{{shortcut.group.group_name}}</p>
+                <p>{{shortcut.group.group_name}}{% if shortcut.group.blue_tick %}<i class="fa-solid fa-circle-check" style="color:#1778F2;background: #fff;font-size: 16px;padding-left: 5px;"></i>{% endif %}</p>
             </div>
         </a>
         {% endfor %}
@@ -272,7 +272,7 @@
  <div class="right" style="">
         <div class="first_wrapper">
             <div class="page">
-                <h2>Your Pages and profile</h2>
+                <h2>Your Profile and Groups</h2>
             </div>
             <div class="page_img">
                 <img src="{{my_profile.profile_img.url}}">
@@ -281,7 +281,7 @@
             {% for my_group in my_groups %}
                 <div class="page_img">
                     <img src="{{my_group.group_cover.url}}">
-                    <p>{{my_group.group_name}}</p>
+                    <p>{{my_group.group_name}}{% if my_group.blue_tick %}<i class="fa-solid fa-circle-check" style="color:#1778F2;background: #fff;font-size: 16px;padding-left: 5px;"></i>{% endif %}</p></p>
                 </div>
             {% endfor %}
             <div class="page_icon">

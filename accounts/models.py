@@ -8,6 +8,7 @@ from mimetypes import guess_type
 from chat.models import PrivateChat
 from django.contrib.auth.base_user import BaseUserManager
 from django import template
+from mainApp.number_format import human_format,get_letter_for_number_format
 
 class Account(models.Model):
 	genders = (("male","male"),("female","female"))
@@ -41,7 +42,7 @@ class Account(models.Model):
 	who_can_see_my_email_address = models.CharField(max_length=10,choices=who_can_see_my_friends_list_choices,default="Everyone",null=True)
 	who_can_see_my_friends_list = models.CharField(max_length=10,choices=who_can_see_my_friends_list_choices,default="Everyone",null=True)
 	who_can_send_me_friend_request = models.CharField(max_length=20,choices=whoc_can_send_me_friend_request_choices,default="Everyone",null=True)
-	
+
 	def __str__(self):
 		return self.user.username
 
@@ -72,6 +73,7 @@ class Group(models.Model):
 	who_can_post = models.CharField(max_length=15,choices=who_can_post_list,default="Everyone")
 	display_post_author_username_on_post = models.BooleanField(default=False)
 
+	blue_tick = models.BooleanField(default=False)
 	created = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
@@ -79,8 +81,6 @@ class Group(models.Model):
 
 	class Meta:
 		ordering = ['-created']
-
-	
 
 class GroupRules(models.Model):
 	group = models.ForeignKey(Group,on_delete=models.CASCADE)
@@ -129,6 +129,31 @@ class GroupPost(models.Model):
 		        return "video"
 		else:
 			return "none"
+
+	def hf(self):
+		c = len(self.likes.all())
+		return human_format(c)[0]
+
+	def glf(self):
+		return get_letter_for_number_format(human_format(len(self.likes.all()))[1])
+
+	def mcu(self):
+		num = float('{:.3g}'.format(len(self.likes.all())-1))
+		magnitude = 0
+		while abs(num)>=1000:
+				magnitude += 1
+				num /= 1000.0
+		return '{}{}'.format('{:f}'.format(num).rstrip('0').rstrip('.'),['','K','M','B','T'][magnitude])
+
+	def glsp(self):
+		return get_letter_for_number_format(human_format(self.count_shares(self))[1])
+
+	def count_shares(self,post):
+		return len(GroupSharePost.objects.filter(referer_post=post))
+	
+	def get_formated_shares(self):
+		return human_format(self.count_shares(self))[0]
+
 	def __str__(self):
 		return f"Group Post: {self.id}"
 
@@ -149,6 +174,20 @@ class GroupSharePost(models.Model):
 	sad_reaction = models.ManyToManyField(Account,blank=True,related_name='group_shared_post_sad_reaction')
 	angry_reaction = models.ManyToManyField(Account,blank=True,related_name='group_shared_post_angry_reaction')
 
+	def hf(self):
+		c = len(self.likes.all())
+		return human_format(c)[0]
+
+	def glf(self):
+		return get_letter_for_number_format(human_format(len(self.likes.all()))[1])
+
+	def mcu(self):
+		num = float('{:.3g}'.format(len(self.likes.all())-1))
+		magnitude = 0
+		while abs(num)>=1000:
+				magnitude += 1
+				num /= 1000.0
+		return '{}{}'.format('{:f}'.format(num).rstrip('0').rstrip('.'),['','K','M','B','T'][magnitude])
 
 class Report(models.Model):
 

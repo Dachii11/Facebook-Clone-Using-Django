@@ -285,7 +285,7 @@ def activate(request,uidb64,token):
 		return HttpResponse("Activation link is invalid!")
 
 @method_decorator(login_required,name='dispatch')
-class Groups(ProfileAccountMixin,ListView):
+class Groups(ListView):
 	model = Group
 	template_name = "accounts/groups.html"
 	context_object_name = "groups"
@@ -337,14 +337,18 @@ class Groups(ProfileAccountMixin,ListView):
 	def get_context_data(self,*args,**kwargs):
 		context = super(Groups,self).get_context_data(**kwargs)
 		self.filter_groups = []
+		self.acc = Account.objects.get(user=self.request.user)
 		groups = Group.objects.all()
 		for group in groups.all():
 			if group.visibility == "Visible" or Account.objects.get(user=User.objects.get(id=self.request.user.id)) in group.admin.all():
 				self.filter_groups.append(group)
 
 		context['groups'] = self.filter_groups
-		context["count_new_msgs"] = len(Message.objects.filter(to_user=context["my_profile"],seen=False))
-		context["new_notifications"] = new_notification_counter(context["my_profile"].id)
+		context["count_new_msgs"] = len(Message.objects.filter(to_user=self.acc,seen=False))
+		context["new_notifications"] = new_notification_counter(self.acc.id)
+		context["accounts"] = [Account.objects.get(user=friend) for friend in self.acc.friends.all()]
+		context["my_profile"] = self.acc
+		context["shortcuts"] = visits_count(self.acc)
 		return context
 
 @method_decorator(login_required,name='dispatch')
@@ -545,19 +549,25 @@ class EditGroup(ProfileAccountMixin,FormView):
 				user.theme=True
 			user.save()
 		else:
-			print(request.POST)
 			DEFAULT = "default_cover.png"
 			group = Group.objects.get(id=kwargs.get("pk"))
+			group_icon = group.group_cover.url
 			if "rci" in request.POST:
 				group.group_cover.delete()
 				group.group_cover = DEFAULT
-				group_icon = group.group_cover.url
 				remove = RemoveFile(group_icon)
 				remove.remove_file()
 				group.save()
 			else:
-				form = GroupEditForm(request.POST,request.FILES or None,instance=Group.objects.get(id=kwargs.get("pk")))
-				form.save()
+				if "group_cover" in request.FILES:
+					print(request.FILES)
+					form = GroupEditForm(request.POST,request.FILES or None,instance=Group.objects.get(id=kwargs.get("pk")))
+					form.save()
+					remove = RemoveFile(group_icon)
+					remove.remove_file()
+				else:
+					form = GroupEditForm(request.POST,request.FILES or None,instance=Group.objects.get(id=kwargs.get("pk")))
+					form.save()
 		return redirect(request.META["HTTP_REFERER"])
 
 class DeleteGroup(ProfileAccountMixin,DeleteView):
@@ -704,3 +714,11 @@ def get_ip(reqs):
 	else:
 		ip = reqs.META.get('REMOTE_ADDR')
 	return ip,agent
+
+def human_format(num):
+    num = float('{:.3g}'.format(num))
+    magnitude = 0
+    while abs(num)>=1000:
+            magnitude += 1
+            num /= 1000.0
+    return '{}{}'.frmat('{:f}'.format(num).rstrip('0').rstrip('.'),['','K','M','B','T'][magnitude])

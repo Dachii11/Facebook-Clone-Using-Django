@@ -5,6 +5,7 @@ from accounts.models import Account
 import uuid
 from django.utils import timezone
 from mainApp.models import Feelings,ShareFeelingsPosts
+from mainApp.number_format import human_format,get_letter_for_number_format
 
 class Comment(models.Model):
 	comment_types = (
@@ -29,6 +30,15 @@ class Comment(models.Model):
 	feeling_post = models.ForeignKey(Feelings,on_delete=models.CASCADE,null=True,default=None,blank=True,related_name="feeling_post")
 	feeling_shared_post = models.ForeignKey(ShareFeelingsPosts,on_delete=models.CASCADE,null=True,default=None,blank=True,related_name="feeling_share_post")
 	
+	def glsp(self):
+		return get_letter_for_number_format(human_format(self.count_replies(self))[1])
+
+	def count_replies(self,comment):
+		return len(CommentReply.objects.filter(parrent_comment=comment))
+	
+	def get_formated_replies_count(self):
+		return human_format(self.count_replies(self))[0]
+
 	def __str__(self):
 		return self.text[:50]
 

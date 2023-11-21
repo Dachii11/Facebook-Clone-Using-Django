@@ -74,27 +74,23 @@
                         {% if post.likes.all.count == 1 %}
                             <p>you</p>
                         {% else %}
-                            {% if post.likes.all.count == 2 %}
-                           <p>you and {{post.likes.all.count|add:"-1"}} other</p>
-                            {% else %}
-                            <p>you and {{post.likes.all.count|add:"-1"}} others</p>
-                            {% endif %}
+                            <p style="margin-top: 3px;">{{post.mcu}}</p>
                         {% endif %}
                     {% else %}
                         {% if post.likes.all.count > 0%}
-                            <p>{{post.likes.all.count}}</p>
+                            <p style="color:#919191;margin-top: 3px;"> {{post.hf}}{{post.glf}}</p>
                         {% endif %}
                     {% endif %}
                 </div> 
                 <div class="comment">
                     {% if post.group_post_comment.all.count > 0 %}
-                        <p>{{post.group_post_comment.all.count}} <a href="{% url 'posts:group_post_detail' post.id %}">Comments</a></p>
+                        <p>{{post.group_post_comment.all.count}} <a href="{% url 'posts:group_post_detail' post.id %}" style="color:#919191;">Comments</a></p>
                     {% endif %}
-                    {% if post.shares.all.count > 0 %}
-                        {% if post.shares.all.count == 1 %}
-                            <p>{{post.shares.all.count}} Share</p>
+                    {% if post.group_shares.all.count > 0 %}
+                        {% if post.group_shares.all.count == 1 %}
+                            <p>{{post.get_formated_shares}}{{post.glsp}} Share</p>
                         {% else %}
-                            <p>{{post.shares.all.count}} Shares</p>
+                            <p>{{post.get_formated_shares}}{{post.glsp}} Shares</p>
                         {% endif %}
                     {% endif %}
                     {% if post.media_type_html == "video" %}
@@ -215,9 +211,9 @@
                             <p>{{post.created_at|timesince}}</p>
                              {% if comment.likes.all.count > 0 %}
                                 {% if comment.likes.all.count == 1 %}
-                                    <p>{{comment.likes.all.count}} like</p>
+                                    <p>{{comment.get_formated_replies_count}}{{comment.glsp}} like</p>
                                 {% else %}
-                                    <p>{{comment.likes.all.count}} likes</p>
+                                    <p>{{comment.get_formated_replies_count}}{{comment.glsp}} likes</p>
                                 {% endif %}
                             {% endif %}
                         </div>
@@ -260,9 +256,9 @@
                             <p>{{post.created_at|timesince}} ago</p>
                              {% if comment.likes.all.count > 0 %}
                                 {% if comment.likes.all.count == 1 %}
-                                    <p>{{comment.likes.all.count}} like</p>
+                                    <p>{{comment.get_formated_replies_count}}{{comment.glsp}} like</p>
                                 {% else %}
-                                    <p>{{comment.likes.all.count}} likes</p>
+                                    <p>{{comment.get_formated_replies_count}}{{comment.glsp}} likes</p>
                                 {% endif %}
                             {% endif %}
                         </div>
