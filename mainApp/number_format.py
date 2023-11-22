@@ -8,5 +8,4 @@ def human_format(n):
 	return ['{}'.format('{:f}'.format(num).rstrip('0').rstrip('.')),magnitude]
 
 def get_letter_for_number_format(magnitude):
-	print(magnitude)
 	return '{}'.format(['','K','M','B','T'][magnitude])

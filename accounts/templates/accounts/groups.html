@@ -55,7 +55,7 @@
     		<div class="cover"><img src="{{group.group_cover.url}}"></div>
     		<div class="groups_detail">
                <p class="name"><a href="{% url 'accounts:group' group.id %}">{{group.group_name}}</a>
-                    {% if group.blue_tick %}<i class="fa-solid fa-circle-check" style="color:#1778F2;background: #fff;font-size: 16px;padding-left: 5px;"></i>{% endif %}
+                    {% if group.blue_tick %}<img src="{% static 'images/tick.png' %}" style="color:#1778F2;width: 20px;height: 20px;">{% endif %}
                 </p>         
                  <div class="inf">
         			<p class="info">

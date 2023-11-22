@@ -86,6 +86,29 @@
 			font-size: 14px;
 		}
 	}
+	.mmbs .member{
+		display: flex;
+		margin: 5px;
+		background-color: #fff;
+	}
+	.mmbs .member .lp {
+		display: flex;
+	}
+	.mmbs .member .lp p {
+		font-weight: bold;
+	}
+	.mmbs .member .lp span {
+		font-size: 13px;
+		color: #919191;
+	}
+	.mmbs .member .lp {
+		padding-left: 5px;
+	}
+	.mmbs .member .lasd {
+		padding: 5px;
+		box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px;
+		border-radius: 5px;
+	}
 </style>
 {% if my_profile.theme %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
@@ -96,14 +119,14 @@
 {% include 'menu.html' %}
 <div class="main">
 	{% include 'accounts/groups_left_side.html' %}
-    <div class="right_side" style="style="display: block;>
+    <div class="right_side" style="display: block;">
     	<div class="top" style="width:100%;">
     		<div class="cover"><img src="{{group.group_cover.url}}" style="width: 100%;height: 300px;"></div>
     		<div class="top_bottom">
     			<div class="inf">
     				<div class="group_name"><h2>{{group.group_name}}</h2></div>
 	    			<p class="info">
-	                    {% if group.privacy == "public" %}
+	                    {% if group.privacy == "Public" %}
 	                        <i class="fa-solid fa-earth-americas"></i>
 	                    {% else %}
 	                        <i class="fa-solid fa-lock"></i>
@@ -113,10 +136,18 @@
 	                </p>
 	            </div>
 	                <div class="members">
-		    			{% for member in members %}
-		               		<img src="{{member.profile_img.url}}">
-		                {% endfor %}
-		                <button><i class="fa-solid fa-plus"></i>Invite</button>
+			    			{% for member in members %}
+			               		<img src="{{member.profile_img.url}}">
+			                {% endfor %}
+		              	{% if me_in_group %}
+		                	<button id="invite"><i class="fa-solid fa-plus"></i>Invite</button>
+		                {% else %}
+		                	<form method="POST">
+		                		{% csrf_token %}
+		                		<input type="hidden" name="g" value="{{group.id}}">
+		                		<button name="join">Join</button>
+		                	</form>
+		                {% endif %}
 		    		</div>
     		</div>
     		<hr>
@@ -135,6 +166,27 @@
     				<input type="text" name="" placeholder="Search...">
     			</div> -->
     		</div>
+    	</div>
+    	<div class="mmbs">
+    		{% for member in members %}
+    			<div class="member">
+    				<div class="lp">
+    					<img src="{{member.profile_img.url}}">
+    					<div>
+    						<p>{{member.user.first_name}} {{member.user.last_name}}</p>
+    						<span>{{member.from_country}}</span>
+    					</div>
+    				</div>
+
+    				<div>
+    					{% if my_profile in group.admin.all %}
+	 						<div class="lasd">
+	 							<i class="fa-solid fa-ellipsis"></i>
+	 						</div>
+ 						{% endif %}
+    				</div>
+    			</div>
+    		{% endfor %}
     	</div>
      </div>
 </div>

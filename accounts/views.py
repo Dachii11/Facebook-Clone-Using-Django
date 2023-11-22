@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.views.generic.base import View
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView,SingleObjectMixin
@@ -49,7 +49,7 @@ class RemoveFile:
 				os.remove(path)
 		except FileNotFoundError:
 			return
-			
+
 class ThemeMixin(object):
 	def post(self,request,*args,**kwargs):
 		user = Account.objects.get(user=request.user)
@@ -150,8 +150,10 @@ class GroupDetail(PostMixins,SingleObjectMixin,View):
 	def get(self,request,*args,**kwargs):
 		self.object = self.get_object()
 		group = self.get_context_data(object=self.object)
-		visitor =Account.objects.get(user=User.objects.get(username=self.request.user))
-		g = Group.objects.get(id=self.request.get_full_path().split('/')[3])
+		visitor =Account.objects.get(user=request.user)
+		g = Group.objects.get(id=kwargs.get("pk"))
+		if visitor not in g.members.all() and g.visibility=="Hidden":
+			return HttpResponseNotFound("404 Page not found!")
 		try:
 			visit = GroupVisitors.objects.get(group=g,visitor=visitor)
 			visit.count = F('count')+1
@@ -172,6 +174,7 @@ class GroupDetail(PostMixins,SingleObjectMixin,View):
 		context["count_new_msgs"] = len(Message.objects.filter(to_user=context["my_profile"],seen=False))
 		context["new_notifications"] = new_notification_counter(context["my_profile"].id)
 		not_member_private_group = group.privacy == "Private" and context["my_profile"] not in group.members.all()
+		context["not_member_private_group"]= not not_member_private_group
 		context["me_in_group"] = False
 		if context["my_profile"] in group.members.all():
 			context["me_in_group"] = True
@@ -188,7 +191,6 @@ class SignIn(View):
 	template_name = "accounts/login.html"
 
 	def get(self,request,*args,**kwargs):
-		print(request)
 		return render(request,self.template_name,{"form":LoginForm})
 
 	def post(self,request,*args,**kwargs):
@@ -449,29 +451,42 @@ class Friends(ProfileAccountMixin,ListView):
 		return [Account.objects.get(user=account) for account in me.friends.all()]
 
 @method_decorator(login_required,name='dispatch')
-class GroupAbout(ThemeMixin,SingleObjectMixin,View):
+class GroupAbout(PostMixins,SingleObjectMixin,View):
 	model = Group
 	template_name = "accounts/group_about.html"
 	context_object_name = "group"
 
 	def get(self,request,*args,**kwargs):
-		g = Group.objects.get(id=self.request.get_full_path().split('/')[3])
+		g = Group.objects.get(id=kwargs.get("pk"))
 		my_profile = Account.objects.get(user=request.user)
 		data = {"group":g,"my_profile":my_profile,"count_new_msgs":len(Message.objects.filter(to_user=my_profile,seen=False))}
 		if g.who_can_post == 'Everyone' or (g.who_can_post=='Only Admins' and my_profile in g.admin.all()):
 			data.update({"can_post":True})
+		if my_profile in g.members.all():
+			data.update({"me_in_group":True})
 		return render(request,"accounts/group_about.html",data)
 
-class GroupMembers(ThemeMixin,SingleObjectMixin,View):
+class GroupMembers(PostMixins,SingleObjectMixin,View):
 	model = Group
 	def get(self,request,*args,**kwargs):
-		g = Group.objects.get(id=self.request.get_full_path().split('/')[3])
+		g = Group.objects.get(id=kwargs.get("pk"))
 		my_profile = Account.objects.get(user=User.objects.get(username=self.request.user))
 		members = g.members.all()
+		if len(members)>3:
+			display_members = members[:3]
+		else:
+			display_members = members
 		my_profile = Account.objects.get(user=request.user)
-		data = {"group":g,"my_profile":my_profile,"members":members,"count_new_msgs":len(Message.objects.filter(to_user=my_profile,seen=False))}
+		data = {"group":g,
+				"my_profile":my_profile,
+				"members":members,
+				"display_members":display_members,
+				"count_new_msgs":len(Message.objects.filter(to_user=my_profile,seen=False))}
+
 		if g.who_can_post == 'Everyone' or (g.who_can_post=='Only Admins' and my_profile in g.admin.all()):
 			data.update({"can_post":True})
+		if my_profile in members:
+			data.update({"me_in_group":True})
 		return render(request,"accounts/group_members.html",data)
 
 @method_decorator(login_required,name='dispatch')
@@ -480,9 +495,11 @@ class GroupRule(SingleObjectMixin,View):
 	template_name = "accounts/group_rules.html"
 
 	def get(self,request,*args,**kwargs):
-		group = Group.objects.get(id=self.request.get_full_path().split('/')[3])
+		group = Group.objects.get(id=kwargs.get("pk"))
 		rules = GroupRules.objects.filter(group=group)
-		my_profile = Account.objects.get(user=User.objects.get(username=self.request.user))
+		my_profile = Account.objects.get(user=request.user)
+		if my_profile not in group.members.all() and group.visibility == "Hidden":
+			return HttpResponseNotFound("404 Page not found!")
 		return render(request,"accounts/group_rules.html",{"rules":rules,"group":group,"my_profile":my_profile,
 				"count_new_msgs":len(Message.objects.filter(to_user=my_profile,seen=False)),
 				"new_notifications":new_notification_counter(my_profile.id)})
@@ -560,7 +577,6 @@ class EditGroup(ProfileAccountMixin,FormView):
 				group.save()
 			else:
 				if "group_cover" in request.FILES:
-					print(request.FILES)
 					form = GroupEditForm(request.POST,request.FILES or None,instance=Group.objects.get(id=kwargs.get("pk")))
 					form.save()
 					remove = RemoveFile(group_icon)
@@ -593,14 +609,32 @@ class ReportGroup(FormView):
 	template_name = "accounts/report.html"
 	form_class = GroupReportForm
 
-	def get_context_data(self,*args,**kwargs):
-		context = super(ReportGroup,self).get_context_data(**kwargs)
-		context['my_profile'] = Account.objects.get(user=self.request.user)
-		context["group"] = self.get_group()
-		context["count_new_msgs"] = len(Message.objects.filter(to_user=context["my_profile"],seen=False))
-		context["new_notifications"] = new_notification_counter(context["my_profile"].id)
-		return context
+	def get(self,request,*args,**kwargs):
+		user = Account.objects.get(user=request.user)
+		group = self.get_group()
+		if user not in group.members.all() and group.visibility=="Hidden":
+			return HttpResponseNotFound("404 Page not found!")
+		data = self.get_context()
+		data.update({"form":self.form_class})
+		return render(request,self.template_name,data)
 
+	# def get_context_data(self,*args,**kwargs):
+	# 	context = super(ReportGroup,self).get_context_data(**kwargs)
+	# 	context['my_profile'] = Account.objects.get(user=self.request.user)
+	# 	context["group"] = self.get_group()
+	# 	context["count_new_msgs"] = len(Message.objects.filter(to_user=context["my_profile"],seen=False))
+	# 	context["new_notifications"] = new_notification_counter(context["my_profile"].id)
+	# 	return self.get_context()
+
+	def get_context(self):
+		user = Account.objects.get(user=self.request.user)
+		data = {
+			"my_profile": Account.objects.get(user=self.request.user),
+			"group": self.get_group(),
+			"count_new_msgs": len(Message.objects.filter(to_user=user,seen=False)),
+			"new_notifications": new_notification_counter(user.id),
+		}
+		return data
 	def post(self,request,*args,**kwargs):
 		form = GroupEditForm(request.POST)
 		if form.is_valid():

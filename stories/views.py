@@ -55,4 +55,4 @@ def delete_old_stories():
 			remove.remove_file()
 			story.delete()
 			
-delete_old_stories()
+# delete_old_stories()

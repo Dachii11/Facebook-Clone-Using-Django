@@ -72,7 +72,7 @@
     		<div class="cover"><img src="{{group.group_cover.url}}" style="width: 100%;height: 300px;"></div>
     		<div class="top_bottom">
     			<div class="inf">
-    				<div class="group_name" style="display:flex;"><h2 class="group-title">{{group.group_name}}</h2>{% if group.blue_tick %}<i class="fa-solid fa-circle-check" style="color:#1778F2;background: #fff;font-size: 16px;padding-left: 5px;padding-top: 5px;"></i>{% endif %}</div>
+    				<div class="group_name" style="display:flex;"><h2 class="group-title">{{group.group_name}}</h2>{% if group.blue_tick %}<img src="{% static 'images/tick.png' %}" style="color:#1778F2;width: 20px;height: 20px;">{% endif %}</div>
 	    			<p class="info">
 	                    {% if group.privacy == "Public" %}
 	                        <i class="fa-solid fa-earth-americas"></i>
@@ -169,7 +169,11 @@
 			            </div>
 			        </div>
 			        {% endif %}
+			        	{% if not_member_private_group %}
 		   				{% include 'group_posts.html' %}
+		   				{% else %}
+		   					<p style="padding:25px;font-weight: bold;text-align: center;">"{{group.group_name}}" is Private Group and Only members can see who's in the group and what they post.</p>
+			        	{% endif %}
 			        
 			    </div>
 			    	<div class="about" style="width: 40%;height: fit-content;">

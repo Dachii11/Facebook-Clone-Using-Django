@@ -83,7 +83,15 @@
 		    			{% for member in members %}
 		               		<img src="{{member.profile_img.url}}">
 		                {% endfor %}
-		                <button><i class="fa-solid fa-plus"></i>Invite</button>
+		               	{% if me_in_group %}
+		                	<button id="invite"><i class="fa-solid fa-plus"></i>Invite</button>
+		                {% else %}
+		                	<form method="POST">
+		                		{% csrf_token %}
+		                		<input type="hidden" name="g" value="{{group.id}}">
+		                		<button name="join">Join</button>
+		                	</form>
+		                {% endif %}
 		    		</div>
     		</div>
     		<hr>

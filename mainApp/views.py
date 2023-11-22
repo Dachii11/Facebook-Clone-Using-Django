@@ -138,9 +138,16 @@ class PostMixins(object):
 				return redirect(request.META["HTTP_REFERER"])
 			self.remove_friend(request.POST["from_user"],request.POST["to_user"])
 		elif "join" in request.POST:
-			g = Group.objects.get(id=request.POST["g"])
-			g.members.add(user)
-			g.save()
+			try:
+				if Group.objects.get(id=kwargs.get("pk"))==Group.objects.get(id=request.POST["g"]):
+					g = Group.objects.get(id=request.POST["g"])
+					g.members.add(user)
+					g.save()
+				else:
+					print("Malicious Attempt!")
+			except Group.DoesNotExist:
+				print("Malicious Attempt!")
+
 		elif "lvg" in request.POST:
 			g = Group.objects.get(id=request.POST["g"])
 			g.members.remove(user)
