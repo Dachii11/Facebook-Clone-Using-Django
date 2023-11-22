@@ -33,7 +33,6 @@
   list-style-type: none;
   position: absolute;
   padding:0;
-  width: 80%;
   margin: 0 auto;
   margin-top: 50px;
   margin-left: 55px;
@@ -242,7 +241,7 @@
                         {% else %}
                             <li class="list-group-item">
                             <img src="{{account.group_cover.url}}" class="item-pic" style="border-radius: 0;border: none;">
-                            <a href="{% url 'accounts:group' account.id %}">{{account.group_name}}
+                            <a href="{% url 'accounts:group' account.id %}">{{account.group_name}}{% if account.blue_tick %}<img src="{% static 'images/tick.png' %}" style="color:#1778F2;width: 18px;height: 18px;border: none;">{% endif %}
                             <p class="item-text">
                                 <i class="fa-solid fa-earth-americas"></i>
                                 {{account.members.all.count}} members

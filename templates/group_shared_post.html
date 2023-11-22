@@ -51,7 +51,7 @@
                         <div class="friends_name">
                             {% if post.group.display_post_author_username_on_post %}
                             <a class="friends_name" href="{% url 'accounts:profile' post.referer_post.user.id_user %}">{{post.referer_post.user}} <span class="arr-group-name" style="color: #919191;">|</span>
-                            {% endif %} <span class="group-name"><a href="{% url 'accounts:group' post.referer_post.group.id %}"  style="color: #919191;text-decoration: none;">{{post.referer_post.group.group_name}}</a></span></a>
+                            {% endif %} <span class="group-name"><a href="{% url 'accounts:group' post.referer_post.group.id %}"  style="color: #919191;text-decoration: none;">{{post.referer_post.group.group_name}}{% if post.referer_post.group.blue_tick %}<img src="{% static 'images/tick.png' %}" style="color:#1778F2;width: 18px;height: 18px;">{% endif %}</a></span></a>
                             <p class="time">{{post.referer_post.created_at|timesince}} ago<i class="fa-solid fa-user-group"></i></p>
                         </div>
                     </div>

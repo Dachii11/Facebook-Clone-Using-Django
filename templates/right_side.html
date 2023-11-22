@@ -18,7 +18,7 @@
              {% for my_group in my_groups %}
                 <div class="page_img">
                     <img src="{{my_group.group_cover.url}}">
-                    <p>{{my_group.group_name}}{% if my_group.blue_tick %}<img src="{% static 'images/tick.png' %}" style="color:#1778F2;width: 20px;height: 20px;">{% endif %}</p>
+                    <p>{{my_group.group_name}}{% if my_group.blue_tick %}<img src="{% static 'images/tick.png' %}" style="color:#1778F2;width: 20px;height: 20px;margin: 0;margin-top: 5px;">{% endif %}</p>
                 </div>
             {% endfor %}
             <div class="page_icon">
