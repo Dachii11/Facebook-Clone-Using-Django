@@ -28,7 +28,6 @@ class PostMixins(object):
 			text = request.POST['text']
 			post_id = request.POST['post_id']
 			type_of_post = request.POST["type_of_post"]
-			print(type_of_post)
 			if type_of_post == "post":
 				comment = Comment.objects.create(user=user,type_of_comment="PostComment",post=Post.objects.get(id=post_id),text=text)
 				CreateCommentNotification(user,comment)

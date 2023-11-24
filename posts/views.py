@@ -22,7 +22,7 @@ import os
 
 class PostPageMixin(object):
 	def get(self,request,*args,**kwargs):
-		self.object = self.get_object()
+		self.object = self.model.objects.get(id=kwargs.get("pk"))
 		self.me = Account.objects.get(user=User.objects.get(username=self.request.user))
 		try:
 			if self.me not in self.object.views.all():
@@ -58,12 +58,11 @@ class PostFileRemoveMixin(object):
 @method_decorator(login_required,name='dispatch')
 class SharedPostDetail(PostPageMixin,PostMixins,SingleObjectMixin,View):
 	model = SharePost
-	template_name = "posts/post_detail.html"
 
 	def get_context_data(self,*args,**kwargs):
 		context = super(SharedPostDetail,self).get_context_data(**kwargs)
 		context["my_profile"] = Account.objects.get(user=User.objects.get(username=self.request.user))
-		context["post"] = SharePost.objects.get(id=kwargs.get("pk"))
+		context["post"] = SharePost.objects.get(id=self.request.get_full_path().split("/")[3])
 		context["comments"] = Comment.objects.filter(share_post=context["post"],type_of_comment="SharedPostComment")
 		context["shortcuts"] = visits_count(context["my_profile"])
 		context["my_groups"] = Group.objects.filter(admin=context["my_profile"])

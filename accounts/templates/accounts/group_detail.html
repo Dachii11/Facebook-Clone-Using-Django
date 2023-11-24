@@ -47,6 +47,10 @@
 			justify-content: space-between;
 /*			display: flex;*/
 		}
+		.top .members img{
+			display: none;
+		}
+	}
 		.items .item ul {
 			width:100%;
 			justify-content: space-between;
@@ -72,7 +76,7 @@
     		<div class="cover"><img src="{{group.group_cover.url}}" style="width: 100%;height: 300px;"></div>
     		<div class="top_bottom">
     			<div class="inf">
-    				<div class="group_name" style="display:flex;"><h2 class="group-title">{{group.group_name}}</h2>{% if group.blue_tick %}<img src="{% static 'images/tick.png' %}" style="color:#1778F2;width: 20px;height: 20px;">{% endif %}</div>
+    				<div class="group_name" style="display:flex;"><h2 class="group-title" style="font-size: 20px;">{{group.group_name}}{% if group.blue_tick %}<img src="{% static 'images/tick.png' %}" style="color:#1778F2;width: 20px;height: 20px;">{% endif %}</h2></div>
 	    			<p class="info">
 	                    {% if group.privacy == "Public" %}
 	                        <i class="fa-solid fa-earth-americas"></i>
@@ -80,7 +84,7 @@
 	                        <i class="fa-solid fa-lock"></i>
 	                    {% endif %}
 	                    {{group.status}}
-	                     group &middot {{group.members.all.count}} members
+	                     group &middot {{group.hf}}{{group.glf}} members
 	                </p>
 	            </div>
 	                <div class="members">
@@ -94,7 +98,7 @@
 			                {% endfor %}
 			            {% endif %}
 			            {% if me_in_group %}
-		                	<button id="invite"><i class="fa-solid fa-plus"></i>Invite</button>
+		                	<button id="invite" class="invite"><i class="fa-solid fa-plus"></i>Invite</button>
 		                {% else %}
 		                	<form method="POST">
 		                		{% csrf_token %}
@@ -123,7 +127,7 @@
     	</div>
     	<div class="bottom">
     		<div class="bottom-top">
-    			 <div class="about aboutTwo">
+    			 <div class="about aboutTwo" style="height: fit-content;width: 50%;">
 			        	<h3>About</h3>
 			        	<div class="description"><p>{{group.description}}</p></div>
 			        	<div>
@@ -274,11 +278,11 @@
 <script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
 <script src="{% static 'js/emotion.js' %}"></script>
 <script src="{% static 'js/pageScroll.js' %}"></script>
+
 <script>
 	s=document.querySelector(".img .leave_g");
 
 s.addEventListener("click",function(){
-	console.log("das");
 	document.querySelector(".remove").style.display="flex";
 	d = [".remove .s .top i",".cancel"]
 	for(let i=0; i<d.length; i++){

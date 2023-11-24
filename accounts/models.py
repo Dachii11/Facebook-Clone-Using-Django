@@ -76,6 +76,13 @@ class Group(models.Model):
 	blue_tick = models.BooleanField(default=False)
 	created = models.DateTimeField(default=timezone.now)
 
+	def hf(self):
+		c = len(self.members.all())
+		return human_format(c)[0]
+
+	def glf(self):
+		return get_letter_for_number_format(human_format(len(self.members.all()))[1])
+
 	def __str__(self):
 		return self.group_name
 

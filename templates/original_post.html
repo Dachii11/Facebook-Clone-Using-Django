@@ -32,6 +32,7 @@
 {% include 'menu.html' %}
 {% if my_profile.theme %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/light_theme.css' %}">
+    <style type="text/css">.comment a {color:#919191;}</style>
 {% else %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/dark_theme.css' %}">
     <style type="text/css">.aslfa{color: #fff;}</style>
@@ -144,7 +145,7 @@
                 </div> 
                 <div class="comment">
                     {% if post.comments.all.count > 0 %}
-                        <p>{{post.comments.all.count}} <a href="{% url 'posts:post_detail' post.id %}">Comments</a></p>
+                        <p>{{post.comment_formatted}}{{post.get_letter_for_formatted_comments}} <a href="{% url 'posts:post_detail' post.id %}">Comments</a></p>
                     {% endif %}
                     {% if post.shares.all.count > 0 %}
                         {% if post.shares.all.count == 1 %}
@@ -154,7 +155,7 @@
                         {% endif %}
                     {% endif %}
                     {% if post.media_type_html == "video" %}
-                        <p>{{post.views.all.count}} views</p>
+                        <p>{{post.get_views_format}}{{post.get_views_for_formatted_comments}} views</p>
                     {% endif %}
                 </div>
                     <div class="container" id="org_{{post.id}}">

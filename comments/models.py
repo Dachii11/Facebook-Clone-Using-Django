@@ -29,7 +29,7 @@ class Comment(models.Model):
 	group_shared_post = models.ForeignKey(GroupSharePost,on_delete=models.CASCADE,null=True,default=None,blank=True,related_name="group_shared_post")
 	feeling_post = models.ForeignKey(Feelings,on_delete=models.CASCADE,null=True,default=None,blank=True,related_name="feeling_post")
 	feeling_shared_post = models.ForeignKey(ShareFeelingsPosts,on_delete=models.CASCADE,null=True,default=None,blank=True,related_name="feeling_share_post")
-	
+
 	def glsp(self):
 		return get_letter_for_number_format(human_format(self.count_replies(self))[1])
 

@@ -145,7 +145,7 @@
                 </div> 
                 <div class="comment">
                     {% if post.shared_post_comments.all.count > 0 %}
-                        <p>{{post.shared_post_comments.all.count}} <a href="{% url 'posts:shared_post_detail' post.id %}">Comments</a></p>
+                        <p>{{post.comment_formatted}}{{post.get_letter_for_formatted_comments}} <a href="{% url 'posts:shared_post_detail' post.id %}">Comments</a></p>
                     {% endif %}
                     <!-- <p>1.3k Shares</p> -->
                 </div>

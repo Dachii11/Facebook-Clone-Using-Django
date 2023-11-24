@@ -90,6 +90,20 @@ class Post(models.Model):
 	def glsp(self):
 		return get_letter_for_number_format(human_format(self.count_shares(self))[1])
 
+	def comment_formatted(self):
+		c = len(self.comments.all())
+		return human_format(c)[0]		
+
+	def get_letter_for_formatted_comments(self):
+		return get_letter_for_number_format(human_format(len(self.comments.all()))[1])
+
+	def get_views_format(self):
+		c = len(self.views.all())
+		return human_format(c)[0]
+
+	def get_views_for_formatted_comments(self):
+		return get_letter_for_number_format(human_format(len(self.views.all()))[1])
+
 	def mcu(self):
 		num = float('{:.3g}'.format(len(self.likes.all())-1))
 		magnitude = 0
@@ -141,6 +155,13 @@ class SharePost(models.Model):
 				magnitude += 1
 				num /= 1000.0
 		return '{}{}'.format('{:f}'.format(num).rstrip('0').rstrip('.'),['','K','M','B','T'][magnitude])
+
+	def comment_formatted(self):
+		c = len(self.comments.all())
+		return human_format(c)[0]		
+
+	def get_letter_for_formatted_comments(self):
+		return get_letter_for_number_format(human_format(len(self.comments.all()))[1])
 
 class SavedPosts(models.Model):
 	user = models.ForeignKey(Account,on_delete=models.CASCADE)

@@ -69,13 +69,13 @@
 						<div class="dalk">
 							<p>{{notification.sender}} invited you to "{{notification.group_to_invite.group_name}}"</p>
 							<p class="date">{{notification.date|timesince}} ago</p>
-							<div class="btns">
+							<div class="btns" style="display: flex;">
 								<form method="POST">
 									{% csrf_token %}
 									<button class="accept" name="accept" value="{{notification.group_to_invite.id}}">Accept</button>
 									<input type="hidden" name="ud" value="{{notification.receiver.id}}">
-									<a href="{% url 'accounts:group' notification.group_to_invite.id %}"><button class="view">View</button></a>
 								</form>
+								<a href="{% url 'accounts:group' notification.group_to_invite.id %}"><button class="view">View</button></a>
 							</div>
 						</div>
 					</div>
