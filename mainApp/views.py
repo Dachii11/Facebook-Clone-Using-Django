@@ -342,3 +342,6 @@ class FeelingsStatus(FormView):
 class Home(PostMixins,PageMixin,ListView):	
 	model = Post	
 	template_name = 'mainApp/home.html'
+
+
+

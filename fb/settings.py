@@ -47,6 +47,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'mainApp.LogsMiddleware.LogsMiddleware',
 ]
 
 ROOT_URLCONF = 'fb.urls'
@@ -78,7 +79,7 @@ CHANNEL_LAYERS = {
 
 
 DATABASES = {
-    'default': {
+    'default': { 
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'YOUR_DATABASE_NAME',
         'USER': 'MYSQL_USER',

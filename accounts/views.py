@@ -19,7 +19,7 @@ from django.contrib.auth import authenticate,login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from mainApp.models import Feelings,ShareFeelingsPosts,Logs
+from mainApp.models import Feelings,ShareFeelingsPosts,loggin_Logs
 from notifications.models import GroupInviteNotifications
 from posts.models import Post,SharePost
 from operator import attrgetter
@@ -617,14 +617,6 @@ class ReportGroup(FormView):
 		data = self.get_context()
 		data.update({"form":self.form_class})
 		return render(request,self.template_name,data)
-
-	# def get_context_data(self,*args,**kwargs):
-	# 	context = super(ReportGroup,self).get_context_data(**kwargs)
-	# 	context['my_profile'] = Account.objects.get(user=self.request.user)
-	# 	context["group"] = self.get_group()
-	# 	context["count_new_msgs"] = len(Message.objects.filter(to_user=context["my_profile"],seen=False))
-	# 	context["new_notifications"] = new_notification_counter(context["my_profile"].id)
-	# 	return self.get_context()
 
 	def get_context(self):
 		user = Account.objects.get(user=self.request.user)

@@ -3,6 +3,7 @@ from django.utils import timezone
 from accounts.models import Account
 from posts.models import feelings_list
 from mainApp.number_format import human_format,get_letter_for_number_format
+from django.contrib.auth.models import User
 
 class Feelings(models.Model):
 	user = models.ForeignKey(Account,on_delete=models.CASCADE,null=True)
@@ -84,10 +85,18 @@ class ShareFeelingsPosts(models.Model):
 		return f"Shared: {self.id}"
 
 
-class Logs(models.Model):
+class loggin_Logs(models.Model):
 	account_logged_in = models.ForeignKey(Account,on_delete=models.SET_NULL,null=True)
 	ip_address = models.CharField(max_length=80,null=True)
 	user_agent = models.CharField(max_length=500,null=True)
 	city = models.CharField(max_length=100,null=True)
 	country = models.CharField(max_length=100,null=True)
+	time = models.DateTimeField(default=timezone.now)
+
+class Logs(models.Model):
+	ip_address = models.CharField(max_length=80,null=True)
+	method_type = models.CharField(max_length=50,null=True)
+	method = models.CharField(max_length=200,null=True)
+	user = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
+	status_code = models.CharField(max_length=10,null=True)
 	time = models.DateTimeField(default=timezone.now)
