@@ -22,7 +22,10 @@ import os
 
 class PostPageMixin(object):
 	def get(self,request,*args,**kwargs):
-		self.object = self.model.objects.get(id=kwargs.get("pk"))
+		try:
+			self.object = self.model.objects.get(id=kwargs.get("pk"))
+		except self.model.DoesNotExist:
+			return redirect(request.META['HTTP_REFERER'])
 		self.me = Account.objects.get(user=User.objects.get(username=self.request.user))
 		try:
 			if self.me not in self.object.views.all():
@@ -201,10 +204,19 @@ class Share_Post(AccountMixin,CreateView):
 	fields = ("caption","status","tags")
 	template_name = "posts/share_post.html"
 
+	def get(self,request,*args,**kwargs):
+		try:
+			self.object = Post.objects.get(id=kwargs.get("pk"))
+			post = self.get_context_data(object=self.get_object)
+			return render(request,self.template_name,post)
+		except Post.DoesNotExist:
+			return redirect(request.META["HTTP_REFERER"])
+
 	def form_valid(self,form):
 		user = Account.objects.get(user=User.objects.get(username=self.request.user))
 		form.instance.user = user
 		form.instance.post_type = "shared"
+		
 		referer_post = Post.objects.get(id=self.request.get_full_path().split("/")[3])
 		form.instance.referer_post = referer_post
 		form.save()
@@ -239,9 +251,7 @@ class ShareGroupPost(AccountMixin,CreateView):
 		form.instance.user = Account.objects.get(user=User.objects.get(id=self.request.user.id))
 		form.instance.post_type = "groupShared"
 		form.instance.referer_post = GroupPost.objects.get(id=self.request.get_full_path().split("/")[3])
-		print(GroupPost.objects.get(id=self.request.get_full_path().split("/")[3]))
 		form.save()
-		print("asfalfk")
 		return super(ShareGroupPost,self).form_valid(form)
 
 	def get_success_url(self, **kwargs):

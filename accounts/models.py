@@ -22,6 +22,7 @@ class Account(models.Model):
 	bio = models.TextField(max_length=500,blank=True)
 	from_country = models.CharField(max_length=50)
 	theme = models.BooleanField(default=True)
+	blue_tick = models.BooleanField(default=False)
 
 	who_can_see_my_posts_choices = (
 			("Public","Public"),

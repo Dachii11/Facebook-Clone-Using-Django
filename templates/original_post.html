@@ -42,7 +42,7 @@
                 <div class="img_and_name">
                     <img src="{{post.user.profile_img.url}}">
                     <div class="friends_name">
-                        <p><a class="friends_name" href="{% url 'accounts:profile' post.user.id %}">{{post.user}}</a> <span style="font-weight:normal;">
+                        <p><a class="friends_name" href="{% url 'accounts:profile' post.user.id %}">{{post.user}}{% if post.user.blue_tick %}<img src="{% static 'images/tick.png' %}" style="color:#1778F2;width: 20px;height: 20px;margin-right: 0;">{% endif %}</a> <span style="font-weight:normal;">
                         {% if post.tags.all.count > 0 %}
                             is with</span>
                             {% if post.tags.all.count == 1 %}

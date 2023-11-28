@@ -20,7 +20,7 @@
                 <div class="img_and_name">
                     <img src="{{post.user.profile_img.url}}">
                     <div class="friends_name">
-                        <a class="friends_name" href="{% url 'accounts:profile' post.user.id_user %}">{{post.user}}</a> <span>Shared
+                        <a class="friends_name" href="{% url 'accounts:profile' post.user.id_user %}">{{post.user}}{% if post.user.blue_tick %}<img src="{% static 'images/tick.png' %}" style="color:#1778F2;width: 20px;height: 20px;margin-right: 0;">{% endif %}</a> <span>Shared
                         {% if my_profile != post.user %}
                         <a href="{% url 'accounts:profile' post.referer_post.user.id_user %}" class="friends_name"></span> {{post.referer_post.user}}</a>'s <span style="font-weight:bold;">Post</span>
                         {% else %}
@@ -74,7 +74,7 @@
                     <div class="img_and_name">
                         <img src="{{post.referer_post.user.profile_img.url}}">
                         <div class="friends_name" style="font-weight: bold;">
-                            <a class="friends_name" href="{% url 'accounts:profile' post.referer_post.user.id %}">{{post.referer_post.user}}</a>
+                            <a class="friends_name" href="{% url 'accounts:profile' post.referer_post.user.id %}">{{post.referer_post.user}}{% if post.user.blue_tick %}<img src="{% static 'images/tick.png' %}" style="color:#1778F2;width: 20px;height: 20px;margin-right: 0;">{% endif %}</a>
                             <span style="font-weight:normal;">
                         {% if post.referer_post.tags.all.count > 0 %}
                             is with</span>

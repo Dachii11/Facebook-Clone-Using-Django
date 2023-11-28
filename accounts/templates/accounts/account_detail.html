@@ -95,7 +95,7 @@
       <div id="profile-pic">
         <img src="{{account.profile_img.url}}">
       </div>
-      <div id="u-name">{{account.user}}</div>
+      <div id="u-name" style="display:flex;">{{account.user}}{% if account.blue_tick %}<img src="{% static 'images/tick.png' %}" style="color:#1778F2;width: 20px;height: 20px;">{% endif %}</div>
      
 	  <form method="POST" action="">
 		{% csrf_token %}

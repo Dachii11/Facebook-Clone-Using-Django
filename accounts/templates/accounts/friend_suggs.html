@@ -36,7 +36,7 @@
                 <div class="cover"><img src="{{suggestion.from_user.profile_img.url}}"></div>
                 <div class="groups_detail" style="width: 65%;">
                     <p class="name" style="font-weight: 100;">
-                        <a href="{% url 'accounts:profile' suggestion.id %}" style="font-weight:bold;">{{suggestion.from_user.user}}</a> sent you a friend request</p>
+                        <a href="{% url 'accounts:profile' suggestion.id %}" style="font-weight:bold;">{{suggestion.from_user.user}}{% if suggestion.from_user.blue_tick %}<img src="{% static 'images/tick.png' %}" style="color:#1778F2;width: 20px;height: 20px;">{% endif %}</a> sent you a friend request</p>
                     <div class="inf"><p class="info">15 mutual</p></div>
                 </div>
                 <form method="POST" action="">

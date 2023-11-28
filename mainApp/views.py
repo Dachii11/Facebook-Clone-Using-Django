@@ -80,19 +80,38 @@ class PostMixins(object):
 				SavedPosts.objects.create(user=user,post_type=request.POST["post_type"],post_id=request.POST["post_id"]).save()
 		elif "post_like" in request.POST:
 			emotion = list(request.POST)[1][:-2]
+		
 			if "post" in request.POST:
-				post = Post.objects.get(id=request.POST['post_like']) 
+				try:
+					post = Post.objects.get(id=request.POST['post_like'])
+				except Post.DoesNotExist:
+					return redirect(request.META["HTTP_REFERER"])
 			elif "shared_post" in request.POST:
-				post = SharePost.objects.get(id=request.POST["post_like"])
+				try:
+					post = SharePost.objects.get(id=request.POST["post_like"])
+				except SharePost.DoesNotExist:
+					return redirect(request.META["HTTP_REFERER"])
 			elif "group_original_post" in request.POST:
-				post = GroupPost.objects.get(id=request.POST['post_like'])
+				try:
+					post = GroupPost.objects.get(id=request.POST['post_like'])
+				except GroupPost.DoesNotExist:
+					return redirect(request.META["HTTP_REFERER"])
 			elif "group_shared_post" in request.POST:
-				post = GroupSharePost.objects.get(id=request.POST['post_like'])
+				try:
+					post = GroupSharePost.objects.get(id=request.POST['post_like'])
+				except GroupSharePost.DoesNotExist:
+					return redirect(request.META["HTTP_REFERER"])
 			elif "feeling_post" in request.POST:
-				post = Feelings.objects.get(id=request.POST["post_like"])
+				try:
+					post = Feelings.objects.get(id=request.POST["post_like"])
+				except Feelings.DoesNotExist:
+					return redirect(request.META["HTTP_REFERER"])
 			elif "sharedFeelingPost" in request.POST:
-				post = ShareFeelingsPosts.objects.get(id=request.POST["post_like"])
-
+				try:
+					post = ShareFeelingsPosts.objects.get(id=request.POST["post_like"])
+				except ShareFeelingsPosts.DoesNotExist:
+					return redirect(request.META["HTTP_REFERER"])
+					
 			if user not in post.likes.all():
 				self.filter_post_reactions(post,user)
 				if emotion == 'like':

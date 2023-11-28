@@ -15,7 +15,7 @@ if DEBUG:
     
 ALLOWED_HOSTS = ["*"]
 
-CSRF_TRUSTED_ORIGINS = []
+CSRF_TRUSTED_ORIGINS = ["https://0986-2605-6440-a000-b000-00-a973.ngrok-free.app"]
 # Application definition
 
 INSTALLED_APPS = [
@@ -81,9 +81,9 @@ CHANNEL_LAYERS = {
 DATABASES = {
     'default': { 
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'YOUR_DATABASE_NAME',
-        'USER': 'MYSQL_USER',
-        'PASSWORD': 'MySQL password', 
+        'NAME': 'fb_database',
+        'USER': 'root',
+        'PASSWORD': 'Enable_Secure_Cisco51;', 
         'HOST': 'localhost',
         'PORT': '3306',
         }

@@ -321,6 +321,9 @@ class Groups(ListView):
 		elif "parenting" in request.POST:
 			self.groups = Group.objects.filter(group_type="Parenting")
 			self.group_type = "Parenting"
+		elif "news" in request.POST:
+			self.groups = Group.objects.filter(group_type="News")
+			self.group_type = "Parenting"
 		else:
 			self.groups = Group.objects.all()
 			self.group_type = "All"
@@ -403,6 +406,16 @@ class FriendRequests(ProfileAccountMixin,ListView):
 	model = FriendRequest
 	template_name = "accounts/friend_suggs.html"
 	context_object_name = "requests"
+
+	def get(self,request,*args,**kwargs):
+		# self.objects = self.get_object()
+		return render(request,self.template_name,self.get_context_data(object=self.get_object))
+
+	def object_list(self):
+		return self.get_object()
+
+	def get_object(self):
+		return FriendRequest.objects.filter(to_user=Account.objects.get(user=self.request.user))
 
 	def post(self,request,*args,**kwargs):
 		from_user = Account.objects.get(user=User.objects.get(username=request.POST["from_user"]))
@@ -598,6 +611,9 @@ class DeleteGroup(ProfileAccountMixin,DeleteView):
 		return render(request,self.template_name,{"my_profile":pr})
 
 	def form_valid(self,form):
+		group = Group.objects.get(id=self.kwargs.get("pk"))
+		remove = RemoveFile(group.group_cover.url)
+		remove.remove_file()
 		return super(DeleteGroup,self).form_valid(form)
 
 	def get_success_url(self):
@@ -740,11 +756,3 @@ def get_ip(reqs):
 	else:
 		ip = reqs.META.get('REMOTE_ADDR')
 	return ip,agent
-
-def human_format(num):
-    num = float('{:.3g}'.format(num))
-    magnitude = 0
-    while abs(num)>=1000:
-            magnitude += 1
-            num /= 1000.0
-    return '{}{}'.frmat('{:f}'.format(num).rstrip('0').rstrip('.'),['','K','M','B','T'][magnitude])

@@ -24,7 +24,7 @@
                     <img src="{{post.user.profile_img.url}}">
                     <div class="friends_name">
                         <!--  --> 
-                        <a class="friends_name" href="{% url 'accounts:profile' post.user.id_user %}">{{post.user}}</a> <span>Shared <span style="font-weight: bold;">{{post.referer_post.group.group_name}}</span> <span>Post</span>
+                        <a class="friends_name" href="{% url 'accounts:profile' post.user.id_user %}">{{post.user}}{% if post.user.blue_tick %}<img src="{% static 'images/tick.png' %}" style="color:#1778F2;width: 20px;height: 20px;margin-right: 0;">{% endif %}</a> <span>Shared <span style="font-weight: bold;">{{post.referer_post.group.group_name}}</span> <span>Post</span>
                             
                         <p class="time">{{post.created_at|timesince}} ago<i class="fa-solid fa-user-group"></i></p>
                     </div>
@@ -49,8 +49,8 @@
                     <div class="img_and_name">
                         <img src="{{post.referer_post.group.group_cover.url}}">
                         <div class="friends_name">
-                            {% if post.group.display_post_author_username_on_post %}
-                            <a class="friends_name" href="{% url 'accounts:profile' post.referer_post.user.id_user %}">{{post.referer_post.user}} <span class="arr-group-name" style="color: #919191;">|</span>
+                            {% if post.referer_post.group.display_post_author_username_on_post %}
+                            <a class="friends_name" href="{% url 'accounts:profile' post.referer_post.user.id_user %}">{{post.referer_post.user}} {% if post.referer_post.user.blue_tick %}<img src="{% static 'images/tick.png' %}" style="color:#1778F2;width: 20px;height: 20px;margin-right: 0;">{% endif %}<span class="arr-group-name" style="color: #919191;">|</span>
                             {% endif %} <span class="group-name"><a href="{% url 'accounts:group' post.referer_post.group.id %}"  style="color: #919191;text-decoration: none;">{{post.referer_post.group.group_name}}{% if post.referer_post.group.blue_tick %}<img src="{% static 'images/tick.png' %}" style="color:#1778F2;width: 18px;height: 18px;">{% endif %}</a></span></a>
                             <p class="time">{{post.referer_post.created_at|timesince}} ago<i class="fa-solid fa-user-group"></i></p>
                         </div>

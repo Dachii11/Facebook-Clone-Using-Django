@@ -36,7 +36,7 @@
                 <div class="groups">
                     <div class="cover"><img src="{{suggestion.profile_img.url}}"></div>
                     <div class="groups_detail">
-                        <p class="name"><a href="{% url 'accounts:profile' suggestion.id %}">{{suggestion.user.first_name}} {{suggestion.user.last_name}}</a></p>
+                        <p class="name"><a href="{% url 'accounts:profile' suggestion.id %}">{{suggestion.user.first_name}} {{suggestion.user.last_name}}{% if suggestion.blue_tick %}<img src="{% static 'images/tick.png' %}" style="color:#1778F2;width: 20px;height: 20px;">{% endif %}</a></p>
                         <div class="inf"><p style="font-size: 13px;opacity: 0.7;">{{suggestion.user.username}}</p><p class="info">
                            
                         </p></div>
