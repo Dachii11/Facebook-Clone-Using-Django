@@ -47,4 +47,4 @@ It will be updated every day, make sure you have **MySQL** installed.
 ## Finally, run the server...
      python manage.py runserver
      
-![My Image](fb_.png)
+![My Image](FB.png)
